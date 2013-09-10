@@ -1,0 +1,143 @@
+{% extends "index.html" %}
+
+{% block body %}<body>
+<div id="header-wrapper">
+	<header id="header">
+		<div class="5grid-layout">
+			<div class="row">
+				<div class="12u" id="logo"> <!-- Logo -->
+					<h1><a href="#" class="mobileUI-site-name">LOL Zone</a></h1>
+					<p>the place you play</p>
+				</div>
+			</div>
+		</div>
+		<div class="5grid-layout">
+			<div class="row">
+				<div class="12u" id="menu">
+					<nav class="mobileUI-site-nav">
+						<ul>
+							<li></li>
+							<li ><a href="/">Home</a></li>
+							<li><a href="/torneos">Proximos Torneos</a></li>
+							<li><a href="/nosotros">Sobre Nosotros</a></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li><a href="/signin">Iniciar Sesion</a></li>
+							<li><a href="/signup">Registrarse</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+</div>
+<!--BEGIN #signup-form -->
+    <div id="signup-form" style="margin-left: 425px; width: 400px; margin-top: 30px;">
+        
+        <!--BEGIN #subscribe-inner -->
+        <div id="signup-inner">
+        
+		<p>{{username}}, por favor ingrese su nueva clave</p>
+
+            <hr>
+            <form id="send" method="post">
+            	{% csrf_token %}
+		<table style="border: 1px;">
+                <tr>
+			<td><label for="password">Nueva Clave</label></td>
+			<td><input id="password" type="password" name="password" style="width: 200px;" value="" /></td>
+			
+		</tr>
+		<tr>
+			<td><label for="vpassword">Por favor repita la clave</label></td>
+			<td><input id="vpassword" type="password" name="vpassword" style="width: 200px;" value="" /></td>
+			
+		</tr>
+		<tr>
+			<td><label style="color: red">{{ error }}</label></td>
+		</tr>
+		<tr>
+			<td> &nbsp; </td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="2"> <button id="submit" style="margin-left: 150px;" type="submit">Recuperar Clave</button></td>
+		</tr>
+		</table>
+                
+            </form>
+
+
+            </div>
+        
+        <!--END #signup-inner -->
+        </div>
+        
+    <!--END #signup-form -->   
+    </div>
+<div id="footer-wrapper">
+	<div class="5grid-layout">
+		<div class="row" id="footer-content">
+			<div class="3u" id="box1">
+				<section>
+					<h2>Maecenas luctus lectus</h2>
+					<p><a href="#"><img src="images/pics02.png" alt=""></a></p>
+					<p>&nbsp;</p>
+					<p>Donec placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est. Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat.</p>
+				</section>
+			</div>
+			<div class="3u" id="box2">
+				<section>
+					<h2>Donec dictum metus</h2>
+					<ul class="style6">
+						<li class="first">
+							<h3>Mauris vulputate dolor sit amet</h3>
+							<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+						</li>
+						<li>
+							<h3>Fusce ultrices fringilla metus</h3>
+							<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+						</li>
+						<li>
+							<h3>Donec dictum metus in sapien</h3>
+							<p><a href="#">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum.</a></p>
+						</li>
+					</ul>
+				</section>
+			</div>
+			<div class="3u" id="box4">
+				<section>
+					<h2>Nulla luctus eleifend</h2>
+					<p><strong>Aliquam erat volutpat. Pellentesque tristique ante ut risus. </strong></p>
+					<p>&nbsp;</p>
+					<p>Quisque dictum. Integer nisl risus, sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. </p>
+					<p>&nbsp;</p>
+					<p>Donec placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est. Curabitur sit amet nulla. Nam in massa. Sed vel tellus. Curabitur sem urna, consequat.</p>
+				</section>
+			</div>
+			<div class="3u" id="box3">
+				<section>
+					<h2>Contact Information</h2>
+					<p><strong>Phone</strong>: +1 234 567 8900</p>
+					<p><strong>Email</strong>: myemail@myemail.com</p>
+					<p>&nbsp;</p>
+					<p><strong>My CompanyName</strong></p>
+					<p>1234 Pellentesque tristique ante risus </p>
+					<p>State, Plus Country 1234</p>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<div class="5grid-layout" id="copyright">
+		<div class="row">
+			<div class="12u">
+				<p>&copy; Your Site Name | Images: <a href="http://fotogrph.com/">Fotogrph</a> | Design: <a href="http://html5templates.com/">HTML5Templates.com</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+{% endblock %}
