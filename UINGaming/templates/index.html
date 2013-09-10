@@ -1,0 +1,40 @@
+{% load static from staticfiles %}
+<html ng-app="myApp">
+<head>
+    <meta charset='utf8'>
+    <base href="/"/>
+    <title>UIN Gaming</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/carrousel.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}"/>
+</head>
+<body id="body" class="fullscreen">
+<div class="fullscreen" ng-controller="BackgroundCtrl">
+
+    <div class="navbar-container" nav-bar></div>
+
+    <div class="ng-view fullscreen" ng-show="!activeSpinner"></div>
+
+    <div class="general-background" ng-class="bgClass"></div>
+    <div class="spinner" ng-show="activeSpinner"></div>
+
+</div>
+
+<script src="{% static 'js/lib/angular/angular.min.js' %}"></script>
+<script src="{% static 'js/lib/jquery.min.js' %}"></script>
+<script src="{% static 'js/lib/bootstrap.js' %}"></script>
+<script src="{% static 'js/lib/holder.js' %}"></script>
+<script src="{% static 'js/services/EventService.js' %}"></script>
+<script src="{% static 'js/services/HomeService.js' %}"></script>
+<script src="{% static 'js/controllers/EventRegisterCtrl.js' %}"></script>
+<script src="{% static 'js/controllers/BackgroundCtrl.js' %}"></script>
+<script src="{% static 'js/controllers/SignInCtrl.js' %}"></script>
+<script src="{% static 'js/controllers/HomeCtrl.js' %}"></script>
+<script src="{% static 'js/controllers/EventsCtrl.js' %}"></script>
+<script src="{% static 'js/controllers/NavCtrl.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/directives.js' %}"></script>
+<script src="{% static 'js/filters.js' %}"></script>
+<script src="{% static 'js/services.js' %}"></script>
+</body>
+</html>

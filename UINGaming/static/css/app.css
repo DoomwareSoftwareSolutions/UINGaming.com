@@ -1,0 +1,201 @@
+/* app css stylesheet */
+
+.fullscreen {
+    height: 100%;
+    width: 100%;
+}
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.events-container {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    margin-top: -91px;
+    padding-top: 91px;
+}
+
+.center-vert {
+    display: -webkit-box;
+    -webkit-box-pack: center;
+}
+
+.center-hor {
+    display: -webkit-box;
+    -webkit-box-align: center;
+}
+
+.signin-container {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    margin-top: -91px;
+    padding-top: 91px;
+}
+
+.form-container {
+    width: 40%;
+    height: 100%;
+}
+
+.form-padding {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    padding-top: 10px;
+}
+
+.event-icon-a {
+    background-color: rgba(40, 187, 20, 1);
+    border-radius: 25px;
+}
+
+.general-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-clip: content-box;
+}
+
+.events-background {
+    background-image: url("../img/irelia.jpg");
+    filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.signin-background {
+    background-image: url("../img/katafest.jpg");
+    filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.event-register-background {
+    background-image: url("../img/zac.jpg");
+    filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.home-background {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.event-list {
+    width: 80%;
+    max-width: 800px;
+}
+
+.signin-field {
+    margin-top: 5%;
+}
+
+.custom-marketing {
+    max-width: 100%;
+}
+
+.custom-navbar-wrapper {
+    margin-top: 0;
+}
+
+.navbar-container {
+    padding-top: 20px;
+}
+
+.custom-row {
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.custom-carousel {
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.first-row {
+    background-color: rgba(0, 255, 225, 0.5);
+}
+
+.second-row {
+    background-color: rgba(225, 255, 0, 0.5);
+}
+
+.third-row {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.slide-indicator {
+    margin-right: 5px !important;
+}
+
+.carousel .item {
+    transition: .7s ease-in-out opacity;
+    left: 0 !important
+}
+
+.carousel .next.left, .carousel .prev.right {
+    opacity: 1;
+    z-index: 1
+}
+
+.carousel .active.left, .carousel .active.right {
+    opacity: 0;
+    z-index: 2
+}
+
+.spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.8);
+    background-image: url('../img/ajax-loader.gif');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}

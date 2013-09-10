@@ -126,7 +126,7 @@ TEMPLATE_DIRS = (
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
 	'/home/user/Documents/playground/static',
-	'/home/tomas/workspace/UINGaming.com/UINGaming/static'
+	'/home/tomas/workspace/UINGaming.com/UINGaming/templates'
 )
 
 INSTALLED_APPS = (

@@ -37,6 +37,9 @@ nosetests.xml
 .komodotools
 *.komodoproject
 
+# Release config
+**/release.py
+
 lib-cov
 *.seed
 *.log

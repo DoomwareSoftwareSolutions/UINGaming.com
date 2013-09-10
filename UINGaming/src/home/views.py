@@ -15,3 +15,9 @@ def HomeView(request):
         return render_to_response('index.html',information,RequestContext(request))
     else:
         pass # TODO POST METHOD
+
+def SlidesAPI(request):
+    pass
+
+def FeaturesAPI(request):
+    pass

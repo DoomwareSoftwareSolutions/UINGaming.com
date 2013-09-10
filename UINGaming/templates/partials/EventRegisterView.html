@@ -1,0 +1,23 @@
+<div class="signin-container">
+    <div class="container form-container">
+        <div class="form-padding">
+            <h2 class="form-signin-heading">Enter your team information</h2>
+            <input type="text" class="form-control signin-field" placeholder="Name">
+            <input type="text" class="form-control signin-field" maxlength="3" placeholder="Tag (3 letters)">
+
+            <form ng-submit="addMember()">
+                <input type="text" class="form-control signin-field"
+                       ng-model="newMember" placeholder="Member name"
+                       maxlength="20"/>
+            </form>
+
+            <div ng-repeat="member in teamMembers">
+                <span class="glyphicon glyphicon-remove" ng-click="removeMember($index)"></span>{{member}}
+            </div>
+            <!--<textarea style="resize: none;" cols="30" rows="5" class="form-control signin-field"-->
+            <!--placeholder="Members"></textarea>-->
+            <br/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        </div>
+    </div>
+</div>
