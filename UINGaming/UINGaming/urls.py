@@ -14,14 +14,18 @@ urlpatterns = patterns('',
 	# url(r'^WebApp/', include('webapp.foo.urls')),
 	
 	# ############################ #
-	# ########  HTML URLS ######## #
+	# #######  INDEX URLS ######## #
 	# ############################ #
-	url(r'^$',src.home.views.HomeView),
-	url(r'^signup$',src.authentication.views.SignUpView),
-	url(r'^signin$',src.authentication.views.SignInView),
+	url(r'^$',src.utils.api.IndexRequestHandler),
+	url(r'^signup$',src.utils.api.IndexRequestHandler),
+	url(r'^signin$',src.utils.api.IndexRequestHandler),
+	url(r'^home$',src.utils.api.IndexRequestHandler),
+	url(r'^events$',src.utils.api.IndexRequestHandler),
+	#url(r'^passwd_recover$',src.authentication.views.PasswordRecoverView),
+	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormView),
+	
+	
 	url(r'^logout$',src.authentication.views.LogOutView),
-	url(r'^passwd_recover$',src.authentication.views.PasswordRecoverView),
-	url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormView),
 	
 	# Uncomment the admin/doc line below to enable admin documentation:
 	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -44,6 +48,6 @@ urlpatterns = patterns('',
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
-	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsHandler),    
+	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsRequestHandler),    
 )
 

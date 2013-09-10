@@ -26,7 +26,12 @@ def send_partial(url):
 		success = True
 		break
 	    except IOError:
-		continue
+		try:
+		    f = open(d+'\\'+url,'r') #Windows compatibility (Si sere capo)
+		    success = True
+		    break
+		except IOError:
+		    continue
     
     if success:
 	content = f.read()
@@ -38,9 +43,13 @@ def send_partial(url):
     
 
 
-def PartialsHandler(request, page):
+def PartialsRequestHandler(request, page):
     if request.method == 'GET':
 	url = 'partials/' + page + '.html'
         return send_partial(url)
     else:
         pass # TODO POST METHOD
+
+def IndexRequestHandler(request):
+    return render_to_response('index.html')
+     
