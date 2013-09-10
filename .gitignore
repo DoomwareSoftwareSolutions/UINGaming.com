@@ -15,8 +15,7 @@ var
 sdist
 develop-eggs
 .installed.cfg
-lib
-lib64
+__pycache__
 
 # Installer logs
 pip-log.txt
@@ -33,3 +32,25 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Komodo
+.komodotools
+*.komodoproject
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.iml
+.idea/*
+node_modules/*
+
+pids
+logs
+results
+
+npm-debug.log
