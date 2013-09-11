@@ -1,60 +1,137 @@
-
 Especificacion de la API para el subsistema de autenticación de usuario.
+==========================================================================
 
-SIGNUP:
-URL: http://localhost:8000/api/signup
-METHOD POST:
-	Parametros del form:
-		Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
-		{
-			username  	  	: nombre de usuario ingresado.
-			password  	   	: contraseña
-			vpassword 	   	: verificacion de la contraseña
-			email 	  	   	: email del futuro usuario
-			name      	   	: Nombre del futuro usuario (no obligatorio)
-			lastname  	   	: Apellido del futuro usuario (no obligatorio)
-			country   		: Pais de recidencia del futuro usuario (no obligatorio)
-		}
-	Valores devueltos:
-		En caso de error de registro se devolvera la siguiente estructura en formato JSON:
-			{
-				username: "nombre-usuario" 			-> Es el nombre de usuario enviado al servidor.
-				email: "tomas@tomas.com"			-> Es el email enviado al servidor.
-				name: "" 					-> Es el nombre enviado al servidor.
-				lastname: ""					-> Es el apellido enviado al servidor.
-				country: ""					-> Es el pais enviado al servidor.
-				error_code: 3					-> Es el código del error ocurrido.
-				error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
-			}
+# SIGNUP:
+	URL: http://localhost:8000/api/signup
+## METHOD POST:
+## Parametros del form:
+	Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+		username  	  	: nombre de usuario ingresado.
+		password  	   	: contraseña
+		vpassword 	   	: verificacion de la contraseña
+		email 	  	   	: email del futuro usuario
+		name      	   	: Nombre del futuro usuario (no obligatorio)
+		lastname  	   	: Apellido del futuro usuario (no obligatorio)
+		country   		: Pais de recidencia del futuro usuario (no obligatorio)
+	}
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		username: "nombre-usuario" 			-> Es el nombre de usuario enviado al servidor.
+		email: "tomas@tomas.com"			-> Es el email enviado al servidor.
+		name: "" 					-> Es el nombre enviado al servidor.
+		lastname: ""					-> Es el apellido enviado al servidor.
+		country: ""					-> Es el pais enviado al servidor.
+		error_code: 3					-> Es el código del error ocurrido.
+		error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
+	}
 			
-			Codigos de errores con sus respectivas descripciones:
-			error_code = 0 -> NO HUBO ERRORES  			error_description = ''
-			error_code = 1 -> ERROR NOMBRE DE USUARIO INVALIDO	error_description = 'El nombre de usuario no es valido'
-			error_code = 2 -> ERROR CLAVE INVALIDA			error_description = 'La clave no es valida'
-			error_code = 3 -> ERROR CLAVES NO SON IDENTICAS		error_description = 'Las claves no coinciden'
-			error_code = 4 -> ERROR EMAIL INVALIDO			error_description = 'El email ingresado no es valido'
-			error_code = 5 -> ERROR USUARIO YA EXISTE		error_description = 'El usuario ya existe. Ingrese otro'
-			error_code = 6 -> ERROR PARAMETROS INVALIDOS		error_description = 'Parametros Invalidos'
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  			error_description = ''
+	error_code = 1 -> ERROR NOMBRE DE USUARIO INVALIDO	error_description = 'El nombre de usuario no es valido'
+	error_code = 2 -> ERROR CLAVE INVALIDA			error_description = 'La clave no es valida'
+	error_code = 3 -> ERROR CLAVES NO SON IDENTICAS		error_description = 'Las claves no coinciden'
+	error_code = 4 -> ERROR EMAIL INVALIDO			error_description = 'El email ingresado no es valido'
+	error_code = 5 -> ERROR USUARIO YA EXISTE		error_description = 'El usuario ya existe. Ingrese otro'
+	error_code = 6 -> ERROR PARAMETROS INVALIDOS		error_description = 'Parametros Invalidos'
 			
-SIGNIN:
-URL: http://localhost:8000/api/signin
-METHOD POST:
-	Parametros del form:
-		Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
-		{
-			username  	  	: nombre de usuario ingresado.
-			password  	   	: contraseña
-			remember   		: establece si la sesion caduca al cerrar el navegador. True si la sesion debe recordarse, False en otro caso
-		}
-	Valores devueltos:
-		En caso de error de registro se devolvera la siguiente estructura en formato JSON:
-			{
-				username: "nombre-usuario" 			-> Es el nombre de usuario enviado al servidor.
-				error_code: 3					-> Es el código del error ocurrido.
-				error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
-			}
-			
-			Codigos de errores con sus respectivas descripciones:
-			error_code = 0 -> NO HUBO ERRORES  						error_description = ''
-			error_code = 1 -> ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA	error_description = 'No existe el nombre de usuario especificado o la clave no es correcta'
-			error_code = 6 -> ERROR PARAMETROS INVALIDOS					error_description = 'Parametros Invalidos'
+# SIGNIN:
+	URL: http://localhost:8000/api/signin
+## METHOD POST:
+##Parametros del form:
+Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+		username  	  	: nombre de usuario ingresado.
+		password  	   	: contraseña
+		remember   		: establece si la sesion caduca al cerrar el navegador. True si la sesion debe recordarse, False en otro caso
+	}
+## Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		username: "nombre-usuario" 			-> Es el nombre de usuario enviado al servidor.
+		error_code: 3					-> Es el código del error ocurrido.
+		error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
+	}
+	
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  						error_description = ''
+	error_code = 1 -> ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA	error_description = 'No existe el nombre de usuario especificado o la clave no es correcta'
+	error_code = 6 -> ERROR PARAMETROS INVALIDOS					error_description = 'Parametros Invalidos'
+
+=====================================================================================================================================
+	
+# SIGNIN:
+	URL: http://localhost:8000/api/signin
+## METHOD POST:
+##Parametros del form:
+Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+		username  	  	: nombre de usuario ingresado.
+		password  	   	: contraseña
+		remember   		: establece si la sesion caduca al cerrar el navegador. True si la sesion debe recordarse, False en otro caso
+	}
+## Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		username: "nombre-usuario" 			-> Es el nombre de usuario enviado al servidor.
+		error_code: 3					-> Es el código del error ocurrido.
+		error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
+	}
+	
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  						error_description = ''
+	error_code = 1 -> ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA	error_description = 'No existe el nombre de usuario especificado o la clave no es correcta'
+	error_code = 6 -> ERROR PARAMETROS INVALIDOS					error_description = 'Parametros Invalidos'	
+
+=======================================================================================================================================
+
+# PASSWORD RECOVER:
+	URL: http://localhost:8000/api/password_recover
+## METHOD GET:
+Los valores seran devueltos en el siguiente formato:
+	{
+		username: "tomas"  		-> Usuario que esta intentando recuperar la clave. Este valor esta presente solo si recover cookie es true
+		recover-cookie: true		-> Indica si esta seteada la recover cookie. Que ya este seteada significa que el usuario recientemente inicio un tramite de recuperacion de password
+		email: "tomas@tomas.com"	-> Email del usuario. Idem username.
+	}
+
+El valor recover-cookie puede ser true o false dependiendo si esta seteada o no la recover-cookie. Si esta seteada, el usuario no volvera a poder realizar un post a la pagina de password-recover hasta que se le expiere la cookie o resetee el tramite.
+
+## METHOD POST:
+##Parametros del form:
+Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+		username  	  	: nombre de usuario interesado en restablecer su clave.
+	}
+## Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		username: "tomas"  		-> Nombre del usuario posteado
+		error-code: 0			-> Codigo de error.
+		email: "tomas@tomas.com"	-> Email del usuario posteado
+		error-description: ""		-> Descripcion del error sucedido
+	}
+	
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  			error_description = ''
+	error_code = 1 -> ERROR YA EXISTE UN TREMITE		error_description = 'Ya existe un tramite de cambio de clave en esa sesion'
+	error_code = 2 -> ERROR NOMBRE DE USUARIO INVALIDO	error_description = 'El nombre de usuario no es valido'
+	error-code = 3 -> ERROR NOMBRE DE USUARIO NO EXISTE	error-description = 'El nombre de usuario especificado no existe'
+	error_code = 6 -> ERROR PARAMETROS INVALIDOS		error_description = 'Parametros Invalidos'	
+
+=======================================================================================================================================
+
+# PASSWORD RECOVER RESET:
+	URL: http://localhost:8000/api/password_recover_reset
+## METHOD GET:
+Al realizar un get a esta url, lo que sucede es que si existe la recover-cookie, la borra, permitiendo iniciar un nuevo tramite. Esto es util, en caso de que no haya llegado el mail al usuario y quiera volver a intentarlo.
+Los valores seran devueltos en el siguiente formato:
+	{
+		error-code: 1
+		error-description: "No existe la cookie de cambio de clave"
+	}
+
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  			error_description = ''
+	error_code = 1 -> ERROR NO EXISTE LA COOKIE		error_description = 'No existe un tramite de cambio de clave iniciado'

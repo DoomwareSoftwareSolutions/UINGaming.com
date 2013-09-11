@@ -147,7 +147,7 @@ def SignInAPI(request):
     
         # Si los parametros son invalidos
         if params is None:
-            information['error_code'] = 6 # ERROR NOMBRE DE USUARIO INVALIDO
+            information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
             information['error_description'] = 'Parametros Invalidos'
             return api.render_to_json(information);
         
@@ -188,7 +188,7 @@ def SignUpAPI(request):
         
         # Si los parametros son invalidos
         if params is None:
-                information['error_code'] = 6 # ERROR NOMBRE DE USUARIO INVALIDO
+                information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
                 information['error_description'] = 'Parametros Invalidos'
                 return api.render_to_json(information);
                 
@@ -237,4 +237,87 @@ def SignUpAPI(request):
     else:
         raise PermissionDenied
 
+
+# ########################################################################################### #
+# #############################     PASSWORD RECOVER API    ################################# #
+# ########################################################################################### #
+
+# Esta view maneja '/passwd-recover'. Se encarga de pedir el usuario a recuperar y configurar la cookie de seguridad.
+# Ademas envia el mail de recuperacion de contrasenia
+def PasswordRecoverAPI(request):
+    information = {}
+    cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
+    if request.method == 'GET':
+        # GET METHOD: Si la cookie ya esta seteada, informo que ya esta en "tramite" el cambio de clave
+        # si no esta seteada, leo los parametros, los valido.
+        # En caso de ser parametos validos, seteo la cookie, envio el mail de recuperacion y informo el exito
+        if cookie is None:
+            information['recover-cookie'] = False
+            return api.render_to_json(information)
+        else:
+            information['username'] = cookie.split('|')[0]
+            information['email'] = cookie.split('|')[1]
+            information['recover-cookie'] = True
+            return api.render_to_json(information)
     
+    elif request.method == 'POST':
+        # POST METHOD: Si la cookie ya esta seteada, informo que ya esta en "tramite" el cambio de clave
+        # si no esta seteada, informo lo contrario.
+        if cookie != None:
+            information['error-code'] = 1
+            information['error-description'] = 'Ya existe un tramite de cambio de clave en esa sesion'
+            return api.render_to_json(information)
+        else:
+            
+            params = api.json_to_dict(request.body)
+            if params is None:
+                information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
+                information['error_description'] = 'Parametros Invalidos'
+                return api.render_to_json(information);
+            
+            information['username'] = params.get('username', None)
+            
+            if not User.isValidUsername(information['username']):
+                information['error-code'] = 2
+                information['error-description'] = 'El nombre de usuario no es valido'
+                return api.render_to_json(information)
+            
+            else:
+                user = User.getByUsername(information['username'])
+                
+                if user is None:
+                    information['error-code'] = 3
+                    information['error-description'] = 'No existe un tramite de cambio de clave iniciado'
+                    return api.render_to_json(information)
+                
+                else:
+                    information['email'] = user.email;
+                    information['error-code'] = 0
+                    information['error-description'] = ''
+                    
+                    response = api.render_to_json(information)
+                    Crypt.set_secure_cookie(response,'lpwd_ok',information['username']+ '|' + information['email'] , expires=False,  time=7200)
+                    sendRecoveryEmail(user);
+                    return response
+                
+            return render_to_response('passwd_recover.html',information,RequestContext(request))
+    else:
+        raise PermissionDenied
+    
+    
+def PasswordRecoverResetAPI(request):
+    if request.method == 'GET':
+        information = {}
+        cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
+        if cookie is None:
+            information['error-code'] = 1
+            information['error-description'] = 'No existe la cookie de cambio de clave'
+            return api.render_to_json(information)
+        else:
+            information['error-code'] = 0
+            information['error-description'] = ''
+            response = api.render_to_json(information)
+            response.delete_cookie('lpwd_ok')
+            return response
+    else:
+        raise PermissionDenied

@@ -40,6 +40,8 @@ urlpatterns = patterns('',
 	# ############################ #
 	url(r'^api/signup$',src.authentication.views.SignUpAPI),
 	url(r'^api/signin$',src.authentication.views.SignInAPI),
+	url(r'^api/password_recover$',src.authentication.views.PasswordRecoverAPI),
+	url(r'^api/password_recover_reset/$',src.authentication.views.PasswordRecoverResetAPI),
 	
 	# FOR TESTING FRONTEND
 	url(r'^api/slides$',src.home.views.SlidesAPI),
