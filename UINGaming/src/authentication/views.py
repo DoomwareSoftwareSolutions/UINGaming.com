@@ -1,71 +1,10 @@
 from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
-from UINGaming.settings.debug import *
 from src.authentication.models import User
 from src.utils import Crypt, api
-      
-# ########################################################################################### #
-# ##################################    LOGOUT VIEW     ##################################### #
-# ########################################################################################### # 
-  
-# Esta view maneja '/logout'. Se encarga de eliminar la cookie de identificacion de usuario.   
-def LogOutView(request):
-    if request.method == 'GET':
-        response = redirect('/')
-        response.delete_cookie('user_id')
-        return response
-    else:
-        raise PermissionDenied
-  
-
-# ########################################################################################### #
-# ###############################    PASSWD RECOVER VIEW     ################################ #
-# ########################################################################################### #
-  
-def sendRecoveryEmail(user):
-    url = PASSWORD_RECOVERY_URL + user.username
-    message = 'Estimado usuario: \nSi desea recuperar su clave, por favor' + ' ingresar al siguiente link.\n\n' + url + '\n\nMuchas Gracias. UIN Gaming Team'
-    send_mail('UIN Gaming - Sistema de recuperacion de clave',message,
-              TESTING_ADDRESS, [user.email],fail_silently=False);
-
-# Esta view maneja '/passwd-recover'. Se encarga de pedir el usuario a recuperar y configurar la cookie de seguridad.
-# Ademas envia el mail de recuperacion de contrasenia
-def PasswordRecoverView(request):
-    if request.method == 'GET':
-        # GET METHOD: Aca envio el formulario de recuperacion de contrasenia
-        cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
-        if cookie is None:
-            return render_to_response('passwd_recover.html',{},RequestContext(request))
-        else:
-            information = {}
-            information['username'] = cookie.split('|')[0]
-            information['email'] = cookie.split('|')[1]
-            return render_to_response('passwd_recover_confirm.html',information,RequestContext(request))
-    elif request.method == 'POST':
-        information = {}
-        information['username'] = request.POST.get('username', None)
-        if not User.isValidUsername(information['username']):
-            information['error'] = 'Por favor ingrese el nombre de usuario correctamente'
-        else:
-            user = User.getByUsername(information['username'])
-            if user is None:
-                information['error'] = 'El nombre de usuario especificado no existe'
-            else:
-                information['email'] = user.email;
-                response = redirect('/passwd_recover') #Redirect to confirmation
-                Crypt.set_secure_cookie(response,'lpwd_ok',information['username']+ '|' + information['email'] , expires=False,  time=7200)
-                sendRecoveryEmail(user);
-                return response
-            
-        return render_to_response('passwd_recover.html',information,RequestContext(request))
-    else:
-        raise PermissionDenied
- 
-
 
 # ########################################################################################### #
 # ############################    PASSWD RECOVER FORM VIEW      ############################# #
@@ -238,6 +177,22 @@ def SignUpAPI(request):
         raise PermissionDenied
 
 
+
+# ########################################################################################### #
+# ##################################    LOGOUT VIEW     ##################################### #
+# ########################################################################################### # 
+  
+# Esta view maneja '/logout'. Se encarga de eliminar la cookie de identificacion de usuario.   
+def LogOutAPI(request):
+    if request.method == 'GET':
+        response = redirect('/')
+        response.delete_cookie('user_id')
+        return response
+    else:
+        raise PermissionDenied
+    
+    
+
 # ########################################################################################### #
 # #############################     PASSWORD RECOVER API    ################################# #
 # ########################################################################################### #
@@ -297,14 +252,18 @@ def PasswordRecoverAPI(request):
                     
                     response = api.render_to_json(information)
                     Crypt.set_secure_cookie(response,'lpwd_ok',information['username']+ '|' + information['email'] , expires=False,  time=7200)
-                    sendRecoveryEmail(user);
+                    api.sendRecoveryEmail(user);
                     return response
                 
             return render_to_response('passwd_recover.html',information,RequestContext(request))
     else:
         raise PermissionDenied
-    
-    
+
+
+# ########################################################################################### #
+# ########################     PASSWORD RECOVER RESET API    ################################ #
+# ########################################################################################### #
+
 def PasswordRecoverResetAPI(request):
     if request.method == 'GET':
         information = {}

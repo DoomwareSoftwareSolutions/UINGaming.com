@@ -159,7 +159,7 @@ EMAIL_USE_TLS = True
 NOREPLY_ADDRESS = 'noreply@uingaming.com'
 INFO_ADDRESS = 'info@uingaming.com'
 
-PASSWORD_RECOVERY_URL= 'http://localhost:8000/passwd_recover/'
+PASSWORD_RECOVERY_URL= 'http://localhost:8000/password_recover/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

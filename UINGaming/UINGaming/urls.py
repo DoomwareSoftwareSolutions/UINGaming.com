@@ -22,11 +22,10 @@ urlpatterns = patterns('',
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
-	#url(r'^passwd_recover$',src.authentication.views.PasswordRecoverView),
 	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormView),
 	
 	
-	url(r'^logout$',src.authentication.views.LogOutView),
+	
 	
 	# Uncomment the admin/doc line below to enable admin documentation:
 	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -41,7 +40,8 @@ urlpatterns = patterns('',
 	url(r'^api/signup$',src.authentication.views.SignUpAPI),
 	url(r'^api/signin$',src.authentication.views.SignInAPI),
 	url(r'^api/password_recover$',src.authentication.views.PasswordRecoverAPI),
-	url(r'^api/password_recover_reset/$',src.authentication.views.PasswordRecoverResetAPI),
+	url(r'^api/password_recover_reset$',src.authentication.views.PasswordRecoverResetAPI),
+	url(r'^api/logout$',src.authentication.views.LogOutAPI),
 	
 	# FOR TESTING FRONTEND
 	url(r'^api/slides$',src.home.views.SlidesAPI),
