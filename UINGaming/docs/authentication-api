@@ -3,18 +3,18 @@ Especificacion de la API para el subsistema de autenticación de usuario.
 
 SIGNUP:
 URL: http://localhost:8000/api/signup
-METHOD GET:
-	Devuelve el html de la pagina de signup // A ESPECIFICAR CON GONCHU
 METHOD POST:
 	Parametros del form:
-		username  	  	: nombre de usuario ingresado.
-		password  	   	: contraseña
-		vpassword 	   	: verificacion de la contraseña
-		email 	  	   	: email del futuro usuario
-		name      	   	: Nombre del futuro usuario (no obligatorio)
-		lastname  	   	: Apellido del futuro usuario (no obligatorio)
-		country   		: Pais de recidencia del futuro usuario (no obligatorio)
-		csrfmiddlewaretoken 	: Security Issues. Toma el valor de la cookie con clave "csrftoken" que manda Django en cada response.
+		Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+		{
+			username  	  	: nombre de usuario ingresado.
+			password  	   	: contraseña
+			vpassword 	   	: verificacion de la contraseña
+			email 	  	   	: email del futuro usuario
+			name      	   	: Nombre del futuro usuario (no obligatorio)
+			lastname  	   	: Apellido del futuro usuario (no obligatorio)
+			country   		: Pais de recidencia del futuro usuario (no obligatorio)
+		}
 	Valores devueltos:
 		En caso de error de registro se devolvera la siguiente estructura en formato JSON:
 			{
@@ -34,5 +34,4 @@ METHOD POST:
 			error_code = 3 -> ERROR CLAVES NO SON IDENTICAS		error_description = 'Las claves no coinciden'
 			error_code = 4 -> ERROR EMAIL INVALIDO			error_description = 'El email ingresado no es valido'
 			error_code = 5 -> ERROR USUARIO YA EXISTE		error_description = 'El usuario ya existe. Ingrese otro'
-		
-		En caso de que el registro del nuevo usuario se produjera con éxito, el server redirecciona a la pagina principal // A ESPECIFICAR CON GONCHU
+			error_code = 6 -> ERROR PARAMETROS INVALIDOS		error_description = 'Parametros Invalidos'

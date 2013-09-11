@@ -11,6 +11,12 @@ def render_to_json(dictionary):
     response = HttpResponse(json_txt, content_type='application/json')
     return response
 
+def json_to_dict(data):
+    try:
+	data = json.loads(data)
+	return data
+    except ValueError:
+	return None
 
 def send_partial(url):
     response = HttpResponse('', content_type='text/html')

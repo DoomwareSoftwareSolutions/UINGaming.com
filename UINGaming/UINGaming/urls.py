@@ -17,10 +17,11 @@ urlpatterns = patterns('',
 	# #######  INDEX URLS ######## #
 	# ############################ #
 	url(r'^$',src.utils.api.IndexRequestHandler),
-	url(r'^signup$',src.utils.api.IndexRequestHandler),
+	url(r'^register$',src.utils.api.IndexRequestHandler),
 	url(r'^signin$',src.utils.api.IndexRequestHandler),
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
+	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
 	#url(r'^passwd_recover$',src.authentication.views.PasswordRecoverView),
 	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormView),
 	

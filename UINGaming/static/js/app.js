@@ -7,17 +7,19 @@ var depList = [
     'myApp.services',
     'myApp.directives',
     'EventService',
+    'AuthService',
     'HomeService',
     'EventRegisterCtrl',
     'BackgroundCtrl',
     'SignInCtrl',
+    'RegisterCtrl',
     'HomeCtrl',
     'EventsCtrl',
     'NavCtrl'
 ]
 
 angular.module('myApp', depList).
-    config(function ($routeProvider, $locationProvider) {
+    config(function ($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider.
             when('/home', {
                 templateUrl: 'partials/HomeView',
@@ -31,6 +33,10 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/SignInView',
                 controller: 'SignInCtrl'
             }).
+            when('/register', {
+                templateUrl: 'partials/RegisterView',
+                controller: 'RegisterCtrl'
+            }).
             when('/eventregister', {
                 templateUrl: 'partials/EventRegisterView',
                 controller: 'EventRegisterCtrl'
@@ -38,6 +44,9 @@ angular.module('myApp', depList).
             otherwise({
                 redirectTo: '/home'
             });
+            
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
         $locationProvider.html5Mode(true);
     });

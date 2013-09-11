@@ -238,10 +238,7 @@ def PasswordRecoverFormView(request, username):
 # Esta view maneja '/signin'. Renderea el formulario de inicio de sesion y valida los datos ingresados
 # buscando el usuario en la database.
 def SignInAPI(request):
-        if request.method == 'GET':
-            # GET METHOD: Aca envio el formulario de logueo de usuario
-            return render_to_response('signin.html',{},RequestContext(request))
-        elif request.method == 'POST':
+        if request.method == 'POST':
             # POST METHOD: Aca valido la informacion de inicio de sesion
             information = {}
             information['username'] = request.POST.get('username', '')
@@ -270,23 +267,29 @@ def SignInAPI(request):
 # Esta view maneja '/signup'. Renderea el formulario de registro y valida los datos ingresados y guarda el nuevo
 # usuario en la DB
 def SignUpAPI(request):
-    if request.method == 'GET':
-        # GET METHOD: Aca envio el formulario de creacion de usuario
-        return render_to_response('signup.html',{},RequestContext(request)) 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         # POST METHOD: Aca valido la informacion de creacion de usuario
+        # Obtengo los parametros del JSON enviado
+        params = api.json_to_dict(request.body)
         information = {}
         
+        # Si los parametros son invalidos
+        if params is None:
+                information['error_code'] = 6 # ERROR NOMBRE DE USUARIO INVALIDO
+                information['error_description'] = 'Parametros Invalidos'
+                return api.render_to_json(information);
+                
+        
         # Obtengo la informacon ingresada
-        information['username'] = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-        vpassword = request.POST.get('vpassword', '')
-        information['email'] = request.POST.get('email', '')
-        information['name'] = request.POST.get('name', '')
-        information['lastname'] = request.POST.get('lastname', '')
-        information['country'] = request.POST.get('country', '')
+        information['username'] = params.get('username', '')
+        password = params.get('password', '')
+        vpassword = params.get('vpassword', '')
+        information['email'] = params.get('email', '')
+        information['name'] = params.get('name', '')
+        information['lastname'] = params.get('lastname', '')
+        information['country'] = params.get('country', '')
         information['error_code'] = 0 # NO ERROR!
-        leave_open = request.POST.get('remember',None)
+        leave_open = params.get('remember',None)
         
         # Valido los datos.
         if not User.isValidUsername(information['username']):
@@ -317,9 +320,7 @@ def SignUpAPI(request):
             return api.render_to_json(information);
         else:
             # Se creo un usuario, redirijo pero seteo la cookie para identificar
-            response = redirect('/')
-            response.set_signed_cookie('user_id', information['username'])
-            return response
+            return api.render_to_json(information);
     else:
         raise PermissionDenied
 
