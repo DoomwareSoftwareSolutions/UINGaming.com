@@ -17,6 +17,15 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
                 return eventList;
             }, errorOnREST);
     }
+    
+    AuthService.loginUser = function ($q, $scope, userData) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        return $q.all([$http.post('http://localhost:8000/api/signin', userData)])
+            .then(function (results) {
+                eventList = results[0].data;
+                return eventList;
+            }, errorOnREST);
+    }
 
     return AuthService;
 

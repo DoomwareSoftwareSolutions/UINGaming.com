@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.template import RequestContext
 
 import json
@@ -12,50 +13,51 @@ def render_to_json(dictionary):
     return response
 
 def json_to_dict(data):
-    try:
-	data = json.loads(data)
-	return data
-    except ValueError:
-	return None
+	try:
+		data = json.loads(data)
+		return data
+	except ValueError:
+		return None
 
 def send_partial(url):
-    response = HttpResponse('', content_type='text/html')
-    success = False
-    for d in TEMPLATE_DIRS:
-        try:
-	    f = open(d+url,'r')
-	    success = True
-	    break
-	except IOError:
-	    try:
-		f = open(d+'/'+url,'r')
-		success = True
-		break
-	    except IOError:
+	response = HttpResponse('', content_type='text/html')
+	success = False
+	for d in TEMPLATE_DIRS:
 		try:
-		    f = open(d+'\\'+url,'r') #Windows compatibility (Si sere capo)
-		    success = True
-		    break
+			f = open(d+url,'r')
+			success = True
+			break
 		except IOError:
-		    continue
-    
-    if success:
-	content = f.read()
-	response.write(content)
-    else:
-	raise Http404
+			try:
+				f = open(d+'/'+url,'r')
+				success = True
+				break
+			except IOError:
+				try:
+					f = open(d+'\\'+url,'r') #Windows compatibility (Si sere capo)
+					success = True
+					break
+				except IOError:
+				    continue
+
+	if success:
+		content = f.read()
+		response.write(content)
+	else:
+		raise Http404
 	
-    return response
+	return response
     
 
-
+@ensure_csrf_cookie
 def PartialsRequestHandler(request, page):
-    if request.method == 'GET':
-	url = 'partials/' + page + '.html'
-        return send_partial(url)
-    else:
-        pass # TODO POST METHOD
+	if request.method == 'GET':
+		url = 'partials/' + page + '.html'
+		return send_partial(url)
+	else:
+		pass # TODO POST METHOD
 
+@ensure_csrf_cookie
 def IndexRequestHandler(request):
-    return render_to_response('index.html')
-     
+	return render_to_response('index.html', context_instance=RequestContext(request))
+    
