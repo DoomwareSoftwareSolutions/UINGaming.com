@@ -34,7 +34,7 @@ def EventsAPI(request):
 		all_entries = Event.objects.all()
 		for event in all_entries:
 			information.append(event.toDict())
-			return render_to_json(information)
+		return render_to_json(information)
 	#ADD EVENT
 	elif request.method == 'POST':
 		# POST METHOD: Aca valido la informacion de creacion de usuario
