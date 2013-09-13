@@ -78,7 +78,7 @@ Para administrar la base de datos creada correr el siguiente comando. Ingresar e
 	mysql -u usuario -p  UINGaming
 	
 # Correr el proyecto:
-Antes de correr el proyecto tenemos que asegurarnos de que la dirección donde tenemos todos los archivos estaticos(CSS, imagenes, JavaScript) y todos los templates (archivos .html) esté agregada a la ruta de busqueda en el archivo de configuración de Django. Para esto, abrimos debug.py dentro de la carpeta settings y buscamos las variables TEMPLATE_DIRS y STATICFILES_DIRS y agregamos nuestra direccion absoluta. ES IMPORTANTE que sea absoluta, ya que Django no toma rutas relativas (lamentablemente)
+Antes de correr el proyecto tenemos que asegurarnos de que la dirección donde tenemos todos los archivos estaticos(CSS, imagenes, JavaScript) y todos los templates (archivos .html) esté agregada a la ruta de busqueda en el archivo de configuración de Django. Para esto, abrimos debug.py dentro de la carpeta settings y buscamos las variables TEMPLATE_DIRS y STATICFILES_DIRS y agregamos nuestra direccion absoluta. ES IMPORTANTE que sea absoluta, ya que Django no toma rutas relativas (lamentablemente). Tambien hay que hacer esto con la variable LOCALE_PATHS, a la que hay que agregarle la ruta absoluta a la carpeta locale.
     
 La primera vez que se corre el proyecto y tambien siempre que se cambian las clases del modelo que tienen representacion en una base de datos, se debe correr el comando:
      
