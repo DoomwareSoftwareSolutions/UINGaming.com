@@ -47,7 +47,6 @@ urlpatterns = patterns('',
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
 	url(r'^api/events$',src.events.views.EventsAPI),
-	url(r'^api/events/get$',src.events.views.EventsRetrieveAPI),
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
