@@ -1,0 +1,4 @@
+for file in $(ls -R)
+do
+grep .*feature.* $file
+done

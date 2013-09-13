@@ -80,7 +80,7 @@ STATICFILES_DIRS = (
 	# Put strings here, like "/home/html/static" or "C:/www/django/static".
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
-	'/home/user/Documents/playground/static/',
+	'/home/user/Desktop/UINGaming.com/UINGaming/static',
 	'/home/tomas/workspace/UINGaming.com/UINGaming/static'
 
 )
@@ -125,7 +125,7 @@ TEMPLATE_DIRS = (
 	# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
-	'/home/user/Documents/playground/static',
+	'/home/user/Desktop/UINGaming.com/UINGaming/templates',
 	'/home/tomas/workspace/UINGaming.com/UINGaming/templates'
 )
 

@@ -7,7 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from src.events.models import Event
-
+import datetime
 
 class EventTest(TestCase):
 	def testEventsRawCreation(self):
@@ -41,3 +41,9 @@ class EventTest(TestCase):
 		self.assertFalse(Event.isValidDate('2013-00-10'))
 		self.assertFalse(Event.isValidDate('2013-13-10')) 
 		self.assertFalse(Event.isValidDate('2013-asd-10')) 
+	
+	def testQuery(self):
+		u = Event.add("Event1","body",'hads','lol',"2013-09-10")
+		all_entries = Event.objects.all()
+		testDict = {'body': 'body', 'head': 'Event1', 'image': 'hads', 'game': 'lol', 'date': datetime.date(2013, 9, 10), 'id': 5L}
+		self.assertEqual(all_entries[0].toDict(),testDict)

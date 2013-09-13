@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms.models import model_to_dict
 import re
 
 import datetime
@@ -46,3 +47,6 @@ class Event(models.Model):
 		except ValueError:
 			return False
 		return True
+		
+	def toDict(self):
+		return model_to_dict(self)
