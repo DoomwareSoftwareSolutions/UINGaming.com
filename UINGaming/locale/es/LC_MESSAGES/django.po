@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <tomasboccardo@gmail.com>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-13 16:46-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: UINGaming/settings/debug.py:168
+msgid "Spanish"
+msgstr "Español"
+
+#: UINGaming/settings/debug.py:169
+msgid "English"
+msgstr "Ingles"
+
+#: src/authentication/views.py:47
+msgid "Invalid Password"
+msgstr "Contraseña Invalida"
+
+#: src/authentication/views.py:51 src/authentication/views.py:160
+msgid "Passwords don't match"
+msgstr "Las contraseñas no coinciden"
+
+#: src/authentication/views.py:57
+msgid "Username does not exist"
+msgstr "No exite el usuario"
+
+#: src/authentication/views.py:93 src/authentication/views.py:134
+#: src/authentication/views.py:233
+msgid "Invalid parameters"
+msgstr "Parametros invalidos"
+
+#: src/authentication/views.py:103
+msgid "Username does not exist or password is incorrect"
+msgstr "No exite el usuario o la contraseña no es valida"
+
+#: src/authentication/views.py:152 src/authentication/views.py:240
+msgid "Invalid username"
+msgstr "Usuario invalido"
+
+#: src/authentication/views.py:156
+msgid "Invalid password"
+msgstr "Contraseña invalida"
+
+#: src/authentication/views.py:164
+msgid "Invalid mail"
+msgstr "E-Mail invalido"
+
+#: src/authentication/views.py:170
+msgid "Username already exists"
+msgstr "Ya existe el usuario"
+
+#: src/authentication/views.py:226
+msgid "We have already send a password recovery email for your username."
+msgstr "Ya hemos enviado un mail de recuperación de contraseña para este usuario"
+
+#: src/authentication/views.py:248 src/authentication/views.py:276
+msgid "You haven't start the password recovery process"
+msgstr "No ha iniciado el proceso de recuperación de contraseña."
