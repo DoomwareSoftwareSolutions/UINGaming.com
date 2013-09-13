@@ -6,6 +6,7 @@ var depList = [
     'myApp.filters',
     'myApp.services',
     'myApp.directives',
+    'PropertyService',
     'EventService',
     'AuthService',
     'HomeService',

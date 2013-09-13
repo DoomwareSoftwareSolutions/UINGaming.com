@@ -1,15 +1,15 @@
 <div class="signin-container">
     <div class="container form-container">
         <form class="form-padding" ng-submit="signIn()">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <input type="text" class="form-control signin-field" placeholder="Email address" autofocus=""
+            <h2 class="form-signin-heading">{{formTitle}}</h2>
+            <input type="text" class="form-control signin-field" placeholder="{{emailPlaceholder}}" autofocus=""
                    ng-model="user.email">
-            <input type="password" class="form-control signin-field" placeholder="Password"
+            <input type="password" class="form-control signin-field" placeholder="{{passwordPlaceholder}}"
                    ng-model="user.password">
             <label class="checkbox">
-                <input type="checkbox" value="remember-me" ng-model="rememberUser"> Remember me
+                <input type="checkbox" value="remember-me" ng-model="rememberUser"> {{rememberLabel}}
             </label>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{{submitLabel}}</button>
         </form>
     </div>
 </div>

@@ -5,16 +5,20 @@
 var controllerName = 'SignInCtrl';
 
 angular.module(controllerName, []).
-    controller(controllerName, ['$scope', '$http', '$q', 'AuthService', function ($scope, $http, $q, AuthService) {
+    controller(controllerName, ['$scope', '$http', '$q', 'AuthService', 'PropertyService', function ($scope, $http, $q, AuthService, PropertyService) {
 
         $scope.$emit("BackgroundChange", "signin-background");
 
-        $scope.user = {
-            email: '',
-            password: ''
+        var loadFields = function () {
+            PropertyService.loadFields('signIn', 'en', $scope);
+            $scope.user = {
+                email: '',
+                password: ''
+            }
+            $scope.rememberUser = true;
         }
 
-        $scope.rememberUser = true;
+        loadFields();
 
         $scope.signIn = function () {
             $scope.$emit("ShowSpinner");
