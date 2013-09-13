@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
+from django.test.client import Client
 from src.authentication.models import User
 
 class UserTest(TestCase):
@@ -127,3 +128,10 @@ class UserTest(TestCase):
 		self.assertFalse(User.isValidEmail('unstring.com')) #Mail without @
 		self.assertFalse(User.isValidEmail('@otrostring.com')) #Mail without name
 		self.assertFalse(User.isValidEmail('otrostring')) #Normal string
+		
+
+class SigninApiTests(LiveServerTestCase):
+	def testFirstRequest(self):
+		response = self.client.get('%s%s' % (self.live_server_url, '/'))
+		self.assertEqual(response.status_code,200)
+		
