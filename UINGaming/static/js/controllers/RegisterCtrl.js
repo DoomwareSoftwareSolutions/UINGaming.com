@@ -15,10 +15,19 @@ angular.module(controllerName, []).
                 username: '',
                 email: '',
                 password: '',
-                passwordRepeat: '',
-                firstName: '',
-                lastName: ''
+                vpassword: '',
+                name: '',
+                lastname: ''
             }
+        }
+
+        $scope.register = function () {
+            AuthService.registerUser($q, $scope.user)
+                .then(function (results) {
+                    // Prueba funcionamiento mostrando el response
+                    alert(JSON.stringify(results));
+                    $scope.$emit("HideSpinner");
+                }, errorOnREST);
         }
 
         loadFields();
