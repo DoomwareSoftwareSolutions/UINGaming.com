@@ -5,9 +5,14 @@
 var controllerName = 'NavCtrl';
 
 angular.module(controllerName, []).
-    controller(controllerName, function ($scope, $location) {
+    controller(controllerName, [ '$scope', '$location', 'PropertyService', function ($scope, $location, PropertyService) {
 
-        $scope.activeLink = '/home';
+        var loadFields = function () {
+            PropertyService.loadPaths($scope);
+            PropertyService.loadFields('navBar', 'en', $scope);
+        }
+
+        loadFields();
 
         $scope.activeClass = function (linkName) {
             return $scope.activeLink == linkName;
@@ -18,4 +23,4 @@ angular.module(controllerName, []).
             return linkName;
         }
 
-    });
+    }]);
