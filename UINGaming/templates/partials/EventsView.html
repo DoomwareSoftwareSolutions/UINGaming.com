@@ -2,7 +2,7 @@
     <div class="event-list">
         <div class="media" ng-repeat="event in events">
             <a class="pull-left event-icon-a" href="{{event.link}}">
-                <img class="media-object" src="{{event.image}}" alt="Image">
+                <img class="media-object" ng-src="{{event.image}}" alt="Image">
             </a>
 
             <div class="media-body">

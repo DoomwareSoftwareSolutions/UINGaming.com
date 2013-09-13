@@ -10,8 +10,15 @@ angular.module(controllerName, []).
         $scope.$emit("BackgroundChange", "home-background");
         $scope.$emit("ShowSpinner");
 
+        var aspectRatio = 1920 / 1080;
+
         var setCarouselDimensions = function () {
-            $('#homeSlider').height(window.innerHeight);
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+            $('#homeSlider').height(screenWidth / aspectRatio);
+            if ($('#homeSlider').height() > screenHeight) {
+                $('#homeSlider').height(screenHeight);
+            }
         }
 
         $(window).resize(function () {

@@ -120,7 +120,6 @@
 }
 
 .home-background {
-    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .event-list {
@@ -194,7 +193,7 @@
     width: 100%;
     height: 100%;
     z-index: 100;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     background-image: url('../img/ajax-loader.gif');
     background-position: 50% 50%;
     background-repeat: no-repeat;
