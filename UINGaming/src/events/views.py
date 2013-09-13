@@ -1,5 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from src.utils.api import render_to_json
@@ -33,12 +34,12 @@ def EventsAPI(request):
 # Esta view maneja '/signin'. Renderea el formulario de inicio de sesion y valida los datos ingresados
 # buscando el usuario en la database.
 def EventsRetrieveAPI(request):
-    if request.method == 'GET':
-    	information = []
-    	all_entries = Event.objects.all()
-        for event in all_entries:
-        	information.append(event.toDict)
-        return api.render_to_json(information)
-    else:
-        raise PermissionDenied 
+	if request.method == 'GET':
+		information = []
+		all_entries = Event.objects.all()
+		for event in all_entries:
+			information.append(event.toDict)
+			return api.render_to_json(information)
+	else:
+		raise PermissionDenied 
 
