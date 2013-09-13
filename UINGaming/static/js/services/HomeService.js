@@ -7,23 +7,24 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var HomeService = {};
 
-    HomeService.getSlides = function ($q, $scope) {
+    HomeService.getSlides = function ($q) {
         // Promise: http://docs.angularjs.org/api/ng.$q
-        return $q.all([$http.get('http://localhost:8000/api/slides')])
-            .then(function (results) {
-                var slideList = results[0].data;
-                $scope.$emit("HideSpinner");
-                return slideList;
-            }, errorOnREST);
+        var deferred = $q.defer();
+        $http.get('http://localhost:8000/api/slides')
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
     }
 
-    HomeService.getFeatures = function ($q, $scope) {
+    HomeService.getFeatures = function ($q) {
         // Promise: http://docs.angularjs.org/api/ng.$q
-        return $q.all([$http.get('http://localhost:8000/api/features')])
-            .then(function (results) {
-                var featureList = results[0].data;
-                return featureList;
-            }, errorOnREST);
+        var deferred = $q.defer();
+        $http.get('http://localhost:8000/api/features')
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
     }
 
     return HomeService;

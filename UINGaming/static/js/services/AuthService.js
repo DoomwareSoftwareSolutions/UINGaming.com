@@ -9,22 +9,24 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var eventList = [];
 
-    AuthService.registerUser = function ($q, $scope, userData) {
+    AuthService.registerUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q
-        return $q.all([$http.post('http://localhost:8000/api/signup', userData)])
-            .then(function (results) {
-                eventList = results[0].data;
-                return eventList;
-            }, errorOnREST);
+        var deferred = $q.defer();
+        $http.post('http://localhost:8000/api/signup', userData)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
     }
-    
-    AuthService.loginUser = function ($q, $scope, userData) {
+
+    AuthService.loginUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q
-        return $q.all([$http.post('http://localhost:8000/api/signin', userData)])
-            .then(function (results) {
-                eventList = results[0].data;
-                return eventList;
-            }, errorOnREST);
+        var deferred = $q.defer();
+        $http.post('http://localhost:8000/api/signin', userData)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
     }
 
     return AuthService;

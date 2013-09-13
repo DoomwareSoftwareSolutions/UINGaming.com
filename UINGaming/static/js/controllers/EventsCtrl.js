@@ -14,6 +14,10 @@ angular.module(controllerName, []).
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
 
-        $scope.events = EventService.getEvents($q, $scope);
+        EventService.getEvents($q, $scope)
+            .then(function (results) {
+                $scope.events = results;
+                $scope.$emit("HideSpinner");
+            }, errorOnREST);
 
     }]);

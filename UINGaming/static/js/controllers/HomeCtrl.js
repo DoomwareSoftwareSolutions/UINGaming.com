@@ -28,7 +28,16 @@ angular.module(controllerName, []).
 
         $scope.arrowLink = 'home#homeSlider';
 
-        $scope.slides = HomeService.getSlides($q, $scope);
-        $scope.features = HomeService.getFeatures($q, $scope);
+        HomeService.getSlides($q)
+            .then(function (results) {
+                $scope.slides = results;
+                $scope.$emit("HideSpinner");
+            }, errorOnREST);
+
+        HomeService.getFeatures($q)
+            .then(function (results) {
+                $scope.features = results;
+                $scope.$emit("HideSpinner");
+            }, errorOnREST);
 
     }]);

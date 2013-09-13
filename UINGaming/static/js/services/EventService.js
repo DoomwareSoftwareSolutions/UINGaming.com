@@ -11,12 +11,12 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     EventService.getEvents = function ($q, $scope) {
         // Promise: http://docs.angularjs.org/api/ng.$q
-        return $q.all([$http.get('http://localhost:8000/api/events')])
-            .then(function (results) {
-                eventList = results[0].data;
-                $scope.$emit("HideSpinner");
-                return eventList;
-            }, errorOnREST);
+        var deferred = $q.defer();
+        $http.get('http://localhost:8000/api/events')
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
     }
 
     EventService.getEventList = function () {
