@@ -12,14 +12,14 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     PropertyService.properties.signIn = {
         es: {
             formTitle: 'Inicie sesión',
-            emailPlaceholder: 'Dirección de email',
+            usernamePlaceholder: 'Nombre de usuario',
             passwordPlaceholder: 'Contraseña',
             rememberLabel: 'Recordarme',
             submitLabel: 'Iniciar sesión'
         },
         en: {
             formTitle: 'Please sign in',
-            emailPlaceholder: 'Email address',
+            usernamePlaceholder: 'Username',
             passwordPlaceholder: 'Password',
             rememberLabel: 'Remember me',
             submitLabel: 'Sign in'

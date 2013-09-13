@@ -2,8 +2,8 @@
     <div class="container form-container">
         <form class="form-padding" ng-submit="signIn()">
             <h2 class="form-signin-heading">{{formTitle}}</h2>
-            <input type="text" class="form-control signin-field" placeholder="{{emailPlaceholder}}" autofocus=""
-                   ng-model="user.email">
+            <input type="text" class="form-control signin-field" placeholder="{{usernamePlaceholder}}" autofocus=""
+                   ng-model="user.username">
             <input type="password" class="form-control signin-field" placeholder="{{passwordPlaceholder}}"
                    ng-model="user.password">
             <label class="checkbox">

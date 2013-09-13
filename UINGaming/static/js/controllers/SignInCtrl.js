@@ -12,7 +12,7 @@ angular.module(controllerName, []).
         var loadFields = function () {
             PropertyService.loadFields('signIn', 'en', $scope);
             $scope.user = {
-                email: '',
+                username: '',
                 password: ''
             }
             $scope.rememberUser = true;
