@@ -45,5 +45,6 @@ class EventTest(TestCase):
 	def testQuery(self):
 		u = Event.add("Event1","body",'hads','lol',"2013-09-10")
 		all_entries = Event.objects.all()
-		testDict = {'body': 'body', 'head': 'Event1', 'image': 'hads', 'game': 'lol', 'date': datetime.date(2013, 9, 10), 'id': 5L}
+		testDict = {'body': 'body', 'head': 'Event1', 'created': '2013-09-13', 'image': 'hads', 'game': 'lol', 'date': '2013-09-10'}
 		self.assertEqual(all_entries[0].toDict(),testDict)
+		print all_entries[0].toDict()

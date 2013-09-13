@@ -49,4 +49,11 @@ class Event(models.Model):
 		return True
 		
 	def toDict(self):
-		return model_to_dict(self)
+		dic = {}
+		dic['head']=self.head
+		dic['body']=self.body
+		dic['game']=self.game
+		dic['date']=self.date.isoformat()
+		dic['created']=self.created.isoformat()
+		dic['image']=self.image
+		return dic
