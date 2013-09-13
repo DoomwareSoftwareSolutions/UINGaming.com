@@ -1,15 +1,16 @@
 <div class="signin-container">
     <div class="container form-container">
         <form class="form-padding">
-            <h2 class="form-signin-heading">Register</h2>
-            <input type="text" class="form-control signin-field" placeholder="Username" autofocus="true">
-            <input type="text" class="form-control signin-field" placeholder="Email address">
-            <input type="password" class="form-control signin-field" placeholder="Password">
-            <input type="password" class="form-control signin-field" placeholder="Repeat your password">
-            <input type="text" class="form-control signin-field" placeholder="Name">
-            <input type="text" class="form-control signin-field" placeholder="Surname">
-            
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            <h2 class="form-signin-heading">{{formTitle}}</h2>
+
+            <input type="text" class="form-control signin-field" placeholder="{{usernamePlaceholder}}" autofocus="true">
+            <input type="text" class="form-control signin-field" placeholder="{{emailPlaceholder}}">
+            <input type="password" class="form-control signin-field" placeholder="{{passwordPlaceholder}}">
+            <input type="password" class="form-control signin-field" placeholder="{{passwordRepeatPlaceholder}}">
+            <input type="text" class="form-control signin-field" placeholder="{{namePlaceholder}}">
+            <input type="text" class="form-control signin-field" placeholder="{{surnamePlaceholder}}">
+
+            <button class="btn btn-lg btn-primary btn-block register-button" type="submit">{{submitLabel}}</button>
         </form>
     </div>
 </div>

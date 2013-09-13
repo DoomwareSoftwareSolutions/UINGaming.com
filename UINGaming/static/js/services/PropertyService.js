@@ -25,6 +25,28 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             submitLabel: 'Sign in'
         }
     };
+    PropertyService.properties.register = {
+        es: {
+            formTitle: 'Registrar usuario',
+            usernamePlaceholder: 'Nombre de usuario',
+            emailPlaceholder: 'Dirección de email',
+            passwordPlaceholder: 'Contraseña',
+            passwordRepeatPlaceholder: 'Repita la contraseña',
+            namePlaceholder: 'Nombre',
+            surnamePlaceholder: 'Apellido',
+            submitLabel: 'Registrarse'
+        },
+        en: {
+            formTitle: 'Register',
+            usernamePlaceholder: 'Username',
+            emailPlaceholder: 'Email address',
+            passwordPlaceholder: 'Password',
+            passwordRepeatPlaceholder: 'Repeat password',
+            namePlaceholder: 'First name',
+            surnamePlaceholder: 'Last name',
+            submitLabel: 'Register'
+        }
+    };
 
     PropertyService.getProperties = function () {
         return PropertyService.properties;
