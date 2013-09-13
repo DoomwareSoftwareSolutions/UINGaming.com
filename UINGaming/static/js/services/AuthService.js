@@ -7,8 +7,6 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var AuthService = {};
 
-    var eventList = [];
-
     AuthService.registerUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
