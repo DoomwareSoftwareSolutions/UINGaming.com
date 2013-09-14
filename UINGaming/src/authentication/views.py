@@ -1,5 +1,4 @@
-from django.http import HttpResponse, Http404
-from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse, Http404,  HttpResponseNotAllowed
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
@@ -67,7 +66,7 @@ def PasswordRecoverFormView(request, username):
                 return response
                 
     else:
-        raise PermissionDenied
+        return HttpResponseNotAllowed(['POST','GET'])
     
 
 ###############################################################################################################################
@@ -112,7 +111,7 @@ def SignInAPI(request):
                 Crypt.set_secure_cookie(response,'user_id',information['username'],expires=False) # No expira la cookie
             return response
     else:
-        raise PermissionDenied  
+        return HttpResponseNotAllowed(['POST'])
                 
                 
 # ########################################################################################### #
@@ -177,7 +176,7 @@ def SignUpAPI(request):
             # Se creo un usuario, redirijo pero seteo la cookie para identificar
             return api.render_to_json(information);
     else:
-        raise PermissionDenied
+        return HttpResponseNotAllowed(['POST'])
 
 
 
@@ -192,7 +191,7 @@ def LogOutAPI(request):
         response.delete_cookie('user_id')
         return response
     else:
-        raise PermissionDenied
+        return HttpResponseNotAllowed(['GET'])
     
     
 
@@ -260,7 +259,7 @@ def PasswordRecoverAPI(request):
                 
             return render_to_response('passwd_recover.html',information,RequestContext(request))
     else:
-        raise PermissionDenied
+        return HttpResponseNotAllowed(['POST','GET'])
 
 
 # ########################################################################################### #
@@ -282,4 +281,4 @@ def PasswordRecoverResetAPI(request):
             response.delete_cookie('lpwd_ok')
             return response
     else:
-        raise PermissionDenied
+        return HttpResponseNotAllowed(['GET'])

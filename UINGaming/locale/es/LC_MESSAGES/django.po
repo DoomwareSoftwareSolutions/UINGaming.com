@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-13 16:46-0300\n"
+"POT-Creation-Date: 2013-09-13 21:55-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: UINGaming/settings/debug.py:168
+#: UINGaming/settings/debug.py:171
 msgid "Spanish"
 msgstr "Español"
 
-#: UINGaming/settings/debug.py:169
+#: UINGaming/settings/debug.py:172
 msgid "English"
 msgstr "Ingles"
 
-#: src/authentication/views.py:47
+#: src/authentication/views.py:46
 msgid "Invalid Password"
 msgstr "Contraseña Invalida"
 
-#: src/authentication/views.py:51 src/authentication/views.py:160
+#: src/authentication/views.py:50 src/authentication/views.py:159
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
-#: src/authentication/views.py:57
+#: src/authentication/views.py:56
 msgid "Username does not exist"
 msgstr "No exite el usuario"
 
-#: src/authentication/views.py:93 src/authentication/views.py:134
-#: src/authentication/views.py:233
+#: src/authentication/views.py:92 src/authentication/views.py:133
+#: src/authentication/views.py:232 src/events/views.py:60
 msgid "Invalid parameters"
 msgstr "Parametros invalidos"
 
-#: src/authentication/views.py:103
+#: src/authentication/views.py:102
 msgid "Username does not exist or password is incorrect"
 msgstr "No exite el usuario o la contraseña no es valida"
 
-#: src/authentication/views.py:152 src/authentication/views.py:240
+#: src/authentication/views.py:151 src/authentication/views.py:239
 msgid "Invalid username"
 msgstr "Usuario invalido"
 
-#: src/authentication/views.py:156
+#: src/authentication/views.py:155
 msgid "Invalid password"
 msgstr "Contraseña invalida"
 
-#: src/authentication/views.py:164
+#: src/authentication/views.py:163
 msgid "Invalid mail"
 msgstr "E-Mail invalido"
 
-#: src/authentication/views.py:170
+#: src/authentication/views.py:169
 msgid "Username already exists"
 msgstr "Ya existe el usuario"
 
-#: src/authentication/views.py:226
+#: src/authentication/views.py:225
 msgid "We have already send a password recovery email for your username."
 msgstr "Ya hemos enviado un mail de recuperación de contraseña para este usuario"
 
-#: src/authentication/views.py:248 src/authentication/views.py:276
+#: src/authentication/views.py:247 src/authentication/views.py:275
 msgid "You haven't start the password recovery process"
 msgstr "No ha iniciado el proceso de recuperación de contraseña."
+
+#: src/events/views.py:67
+#, fuzzy
+msgid "Event already exists"
+msgstr "Ya existe el evento"

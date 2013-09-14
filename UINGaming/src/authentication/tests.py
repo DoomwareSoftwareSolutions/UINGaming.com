@@ -2,6 +2,8 @@ from django.test import TestCase, LiveServerTestCase
 from django.test.client import Client
 from src.authentication.models import User
 
+import json
+
 class UserTest(TestCase):
 
 	def testUsersRawCreation(self):
@@ -131,7 +133,118 @@ class UserTest(TestCase):
 		
 
 class SigninApiTests(LiveServerTestCase):
-	def testFirstRequest(self):
-		response = self.client.get('%s%s' % (self.live_server_url, '/'))
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+	
+	def testOKLogin(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"1234"}',content_type='application/json')
 		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],0)
+		self.assertEqual(dic['username'],'user1')
+		
+	def testWrongUsername(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"1234"}',content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['username'],'user2')
+	
+	def testWrongPassword(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"12345"}',content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['username'],'user1')
+		
+	def testBothWrong(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"12345"}',content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['username'],'user2')
+		
+	def testInvalidParams(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'))
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],6)
+		
+	def testOtherMethods(self):
+		response = self.client.get('%s%s' % (self.live_server_url, '/api/signin'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.head('%s%s' % (self.live_server_url, '/api/signin'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.put('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"12345"}',content_type='application/json')
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete('%s%s' % (self.live_server_url, '/api/signin'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.options('%s%s' % (self.live_server_url, '/api/signin'))
+		self.assertEqual(response.status_code,405)
+		
+
+class SignupApiTests(LiveServerTestCase):
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+	
+	def testOKSignup(self):
+		data = '{"username":"user2", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],0)
+		self.assertEqual(dic['username'],'user2')
+		
+	def testInvalidUsername(self):
+		data = '{"username":"user2?", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],1)
+	
+	def testInvalidPassword(self):
+		data = '{"username":"user2", "password":"12", "vpassword":"12", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],2)
+		
+	def testInvalidEmail(self):
+		data = '{"username":"user2", "password":"1234", "vpassword":"1234", "email":"us"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],4)
+		
+	def testPasswordsNotMatching(self):
+		data = '{"username":"user2", "password":"12345", "vpassword":"1234", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],3)
+	
+	def testUsernameNotUnique(self):
+		data = '{"username":"user1", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],5)
+	
+	def testInvalidParams(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],6)
+		
+	def testOtherMethods(self):
+		response = self.client.get('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.head('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.put('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.options('%s%s' % (self.live_server_url, '/api/signup'))
+		self.assertEqual(response.status_code,405)
 		
