@@ -1,6 +1,5 @@
 # Create your views here.
-from django.http import HttpResponse
-from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from src.utils.api import render_to_json, json_to_dict
@@ -52,7 +51,7 @@ def EventsAPI(request):
 	
 		return render_to_json(information);
 	else:
-		raise PermissionDenied 
+		return HttpResponseNotAllowed(['GET'],['POST'])
 		
 def objectShouldBeSaved(deserialized_object,information):
 	# Si los parametros son invalidos
@@ -63,8 +62,8 @@ def objectShouldBeSaved(deserialized_object,information):
 	#Vemos si ya existe con la unicidad del head
 	print Event.objects.filter(head=deserialized_object.object.head)
 	try:
-	 	Event.objects.get(head=deserialized_object.object.head)
-	 	information['error_code'] = 2 # ERROR Ya existe el event
+		Event.objects.get(head=deserialized_object.object.head)
+		information['error_code'] = 2 # ERROR Ya existe el event
 		information['error_description'] = _("Event already exists")
 		return False;
 	except Event.DoesNotExist:
