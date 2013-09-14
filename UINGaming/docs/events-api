@@ -7,8 +7,8 @@ Especificacion de la API para el subsistema de eventos.
 ## Parametros del form:
 Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
 [
-    {
-        "pk": 100, #este campo es necesario debido a un bug de django 1.5.X
+    { #este campo es necesario debido a un bug de django 1.5.X. pk es el id, aunque proveamos pk = 1, se creara un nuevo id
+        "pk": 1 
         "model": "events.event",
         "fields": {
             "body": "A new event ",
@@ -29,14 +29,14 @@ En caso de error de registro se devolvera la siguiente estructura en formato JSO
 			
 Codigos de errores con sus respectivas descripciones:
 	error_code = 0 -> NO HUBO ERRORES  		
-	error_code = 1 -> ERROR FECHA INVALIDA	
-	error_code = 2 -> ERROR EVENTO YA EXISTE		
+	error_code = 1 -> ERROR FECHA INVALIDA			
 	error_code = 4 -> ERROR PARAMETROS INVALIDOS		
 
 ## METHOD GET:
 Los valores seran devueltos en el siguiente formato:
 	[
     {
+    	"pk": 104, #id
         "body": "Porque si ",
         "head": "Tomi es un capo",
         "created": "2013-09-13",
@@ -45,6 +45,7 @@ Los valores seran devueltos en el siguiente formato:
         "date": "2013-09-13"
     },
     {
+    	"pk": 105, #id
         "body": "quetall",
         "head": "goasdasd",
         "created": "2013-09-13",

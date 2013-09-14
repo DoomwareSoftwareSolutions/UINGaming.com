@@ -60,15 +60,7 @@ def objectShouldBeSaved(deserialized_object,information):
 		information['error_code'] = 4 # ERROR PARAMETROS INVALIDOS
 		information['error_description'] = _("Invalid parameters")
 		return False;
-	#Vemos si ya existe con la unicidad del head
-	print Event.objects.filter(head=deserialized_object.object.head)
-	try:
-	 	Event.objects.get(head=deserialized_object.object.head)
-	 	information['error_code'] = 2 # ERROR Ya existe el event
-		information['error_description'] = _("Event already exists")
-		return False;
-	except Event.DoesNotExist:
-		return True
+	return True
 	
 	
 		
