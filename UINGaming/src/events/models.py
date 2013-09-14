@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
+from django.core import serializers
 import re
 
 import datetime
@@ -57,3 +58,4 @@ class Event(models.Model):
 		dic['created']=self.created.isoformat()
 		dic['image']=self.image
 		return dic
+	
