@@ -142,6 +142,8 @@ class SigninApiTests(LiveServerTestCase):
 		dic = json.loads(response.content)
 		self.assertEqual(dic['error_code'],0)
 		self.assertEqual(dic['username'],'user1')
+		cookie = response.cookies.get('user_id').value.split(':')[0]
+		self.assertEqual(cookie,'user1')
 		
 	def testWrongUsername(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"1234"}',content_type='application/json')
@@ -208,6 +210,13 @@ class SignupApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
 		self.assertEqual(dic['error_code'],2)
+	
+	def testPasswordsNotMatching(self):
+		data = '{"username":"user2", "password":"12345", "vpassword":"1234", "email":"us@er.com"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
+		self.assertEqual(response.status_code,200)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error_code'],3)
 		
 	def testInvalidEmail(self):
 		data = '{"username":"user2", "password":"1234", "vpassword":"1234", "email":"us"}'
@@ -215,13 +224,6 @@ class SignupApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
 		self.assertEqual(dic['error_code'],4)
-		
-	def testPasswordsNotMatching(self):
-		data = '{"username":"user2", "password":"12345", "vpassword":"1234", "email":"us@er.com"}'
-		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
-		self.assertEqual(response.status_code,200)
-		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],3)
 	
 	def testUsernameNotUnique(self):
 		data = '{"username":"user1", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
@@ -247,4 +249,33 @@ class SignupApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		response = self.client.options('%s%s' % (self.live_server_url, '/api/signup'))
 		self.assertEqual(response.status_code,405)
+	
+class LogoutApiTests(LiveServerTestCase):
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+	
+	def testOKLogout(self):
+		data = '{"username":"user2", "password":"1234"}'
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"1234"}',content_type='application/json')
+		cookie = response.cookies.get('user_id').value.split(':')[0]
+		self.assertEqual(cookie,'user1')
+		response = self.client.get('%s%s' % (self.live_server_url, '/api/logout'))
+		cookie = response.cookies.get('user_id').value
+		self.assertEqual(cookie,'')
 		
+	def testLogoutWithoutLogin(self):
+		response = self.client.get('%s%s' % (self.live_server_url, '/api/logout'))
+		cookie = response.cookies.get('user_id').value
+		self.assertEqual(cookie,'')
+		
+	def testOtherMethods(self):
+		response = self.client.post('%s%s' % (self.live_server_url, '/api/logout'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.head('%s%s' % (self.live_server_url, '/api/logout'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.put('%s%s' % (self.live_server_url, '/api/logout'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete('%s%s' % (self.live_server_url, '/api/logout'))
+		self.assertEqual(response.status_code,405)
+		response = self.client.options('%s%s' % (self.live_server_url, '/api/logout'))
+		self.assertEqual(response.status_code,405)	
