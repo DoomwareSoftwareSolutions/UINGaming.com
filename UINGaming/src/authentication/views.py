@@ -44,17 +44,17 @@ def PasswordRecoverFormView(request, username):
             if not User.isValidPassword(password):
                 # Marco el error de password invaludo
                 valid = False
-                information['error'] = _('Invalid Password')
+                information['error'] = _("Invalid Password")
             elif password != vpassword:
                 # Marco el error de passwords distintas
                 valid = False
-                information['error'] = _('Passwords don\'t match')
+                information['error'] = _("Passwords don't match")
             
             user = User.getByUsername(information['username'])
             if user is None:
                 # Marco el error de usuario inexistente
                 valid = False
-                information['error'] = _('Username does not exist')
+                information['error'] = _("Username does not exist")
                 
             if not valid:
                 # Hubo errores
@@ -90,7 +90,7 @@ def SignInAPI(request):
         # Si los parametros son invalidos
         if params is None:
             information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-            information['error_description'] = _('Invalid parameters')
+            information['error_description'] = _("Invalid parameters")
             return api.render_to_json(information);
         
         information['username'] = params.get('username', '')
@@ -100,7 +100,7 @@ def SignInAPI(request):
         valid = User.isValidLogin(information['username'], password)
         if not valid:
             information['error_code'] = 1 # ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA
-            information['error_description'] = _('Username does not exist or password is incorrect')
+            information['error_description'] = _("Username does not exist or password is incorrect")
             return api.render_to_json(information)
         else:
             information['error_code'] = 0 # NO HUBO ERRORES!
@@ -131,7 +131,7 @@ def SignUpAPI(request):
         # Si los parametros son invalidos
         if params is None:
                 information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-                information['error_description'] = _('Invalid parameters')
+                information['error_description'] = _("Invalid parameters")
                 return api.render_to_json(information);
                 
         
@@ -149,15 +149,15 @@ def SignUpAPI(request):
         # Valido los datos.
         if not User.isValidUsername(information['username']):
             information['error_code'] = 1 # ERROR NOMBRE DE USUARIO INVALIDO
-            information['error_description'] = _('Invalid username')
+            information['error_description'] = _("Invalid username")
         elif not User.isValidPassword(password):
             # Marco el error de password invaludo
             information['error_code'] = 2 # ERROR CLAVE INVALIDA
-            information['error_description'] = _('Invalid password')
+            information['error_description'] = _("Invalid password")
         elif password != vpassword:
             # Marco el error de passwords distintas
             information['error_code'] = 3 # ERROR CLAVES NO SON IDENTICAS
-            information['error_description'] = _('Passwords don\'t match')
+            information['error_description'] = _("Passwords don't match")
         elif not User.isValidEmail(information['email']):
             # Marco el error de password invaludo
             information['error_code'] = 4 # ERROR EMAIL INVALIDO
@@ -167,7 +167,7 @@ def SignUpAPI(request):
             if  user == None:
                 # Marco el error de usuario ya existente
                 information['error_code'] = 5 # ERROR USUARIO YA EXISTE
-                information['error_description'] = _('Username already exists')
+                information['error_description'] = _("Username already exists")
         
         
         if information['error_code'] != 0:
@@ -223,7 +223,7 @@ def PasswordRecoverAPI(request):
         # si no esta seteada, informo lo contrario.
         if cookie != None:
             information['error-code'] = 1
-            information['error-description'] = _('We have already send a password recovery email for your username.')
+            information['error-description'] = _("We have already send a password recovery email for your username.")
             return api.render_to_json(information)
         else:
             
@@ -245,7 +245,7 @@ def PasswordRecoverAPI(request):
                 
                 if user is None:
                     information['error-code'] = 3
-                    information['error-description'] = _('You haven\'t start the password recovery process')
+                    information['error-description'] = _("You haven\'t start the password recovery process")
                     return api.render_to_json(information)
                 
                 else:
@@ -273,7 +273,7 @@ def PasswordRecoverResetAPI(request):
         cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
         if cookie is None:
             information['error-code'] = 1
-            information['error-description'] = _('You haven\'t start the password recovery process')
+            information['error-description'] = _("You haven\'t start the password recovery process")
             return api.render_to_json(information)
         else:
             information['error-code'] = 0

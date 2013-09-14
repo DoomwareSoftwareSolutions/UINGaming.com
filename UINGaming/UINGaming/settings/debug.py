@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 # Django settings for WebApp project.
 
 DEBUG = True
@@ -112,6 +113,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.locale.LocaleMiddleware'
 	# Uncomment the next line for simple clickjacking protection:
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -161,9 +163,14 @@ INFO_ADDRESS = 'info@uingaming.com'
 
 PASSWORD_RECOVERY_URL= 'http://localhost:8000/password_recover/'
 
+LOCALE_PATHS = (
+	'/home/tomas/workspace/UINGaming.com/UINGaming/locale',
+)
 
-ugettext = lambda s: s
-
+LANGUAGES = (
+  ('es', _('Spanish')),
+  ('en', _('English')),
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
