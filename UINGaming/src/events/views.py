@@ -6,6 +6,8 @@ from django.template import RequestContext
 from src.utils.api import render_to_json, json_to_dict
 from src.events.models import Event
 from django.utils.translation import ugettext as _
+from django.core import serializers
+from django.core.exceptions import *
 """
 def EventsAPI(request):
     event1 = dict(heading='Best Lee Sin',
@@ -30,46 +32,43 @@ def EventsAPI(request):
 def EventsAPI(request):
 	#QUERY ALL EVENTS
 	if request.method == 'GET':
-		information = []
-		all_entries = Event.objects.all()
-		for event in all_entries:
-			information.append(event.toDict())
-		return render_to_json(information)
+		information = ""
+		data = serializers.serialize("json", Event.objects.all())
+		response = HttpResponse(data, content_type='application/json')
+		return response
 	#ADD EVENT
 	elif request.method == 'POST':
-		# POST METHOD: Aca valido la informacion de creacion de usuario
 		# Obtengo los parametros del JSON enviado
-		params = json_to_dict(request.body)
-		print request.body
+		for obj in serializers.deserialize("json", request.body):
+			deserialized_object = obj
 		information = {}
-	
-		# Si los parametros son invalidos
-		if params is None:
-			information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-			information['error_description'] = _("Invalid parameters")
-			return render_to_json(information);
-	
-	
-		# Obtengo la informacon ingresada
-		information['head'] = params.get('head', '')
-		information['body'] = params.get('body', '')
-		information['image'] = params.get('image', '')
-		information['date'] = params.get('date', '')
-		information['game'] = params.get('game', '')
 		information['error_code'] = 0 # NO ERROR!
+		information['error_description'] = ""
+		if objectShouldBeSaved(deserialized_object,information):
+			#We set the objects id's to None to create a new entry. (DJANGO 1.5.X BUG)
+			deserialized_object.object.id = None
+			deserialized_object.object.pk = None
+			deserialized_object.save()	
 	
-		# Valido los datos.
-		if not Event.isValidDate(information['date']):
-			information['error_code'] = 1 # ERROR FECHA INVALIDA
-			information['error_description'] = _("Invalid date")
-		else:
-			event = Event.add(information['head'],information['body'],information['image'],information['game'],	information['date'])
-			if	event == None:
-				# Marco el error de evento ya existente
-				information['error_code'] = 2 # ERROR EVENTO YA EXISTE
-				information['error_description'] = _("Event already exists")
-
 		return render_to_json(information);
 	else:
 		raise PermissionDenied 
+		
+def objectShouldBeSaved(deserialized_object,information):
+	# Si los parametros son invalidos
+	if deserialized_object is None:
+		information['error_code'] = 4 # ERROR PARAMETROS INVALIDOS
+		information['error_description'] = _("Invalid parameters")
+		return False;
+	#Vemos si ya existe con la unicidad del head
+	print Event.objects.filter(head=deserialized_object.object.head)
+	try:
+	 	Event.objects.get(head=deserialized_object.object.head)
+	 	information['error_code'] = 2 # ERROR Ya existe el event
+		information['error_description'] = _("Event already exists")
+		return False;
+	except Event.DoesNotExist:
+		return True
+	
+	
 		
