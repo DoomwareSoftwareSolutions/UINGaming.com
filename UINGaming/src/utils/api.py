@@ -10,6 +10,10 @@ from UINGaming.settings.debug import *
 from src.authentication.models import User
 
 
+def set_error(information, error_code, error_description = ''):
+	information['error-code'] = error_code 
+	information['error-description'] = error_description
+
 def render_to_json(dictionary):
     json_txt = json.dumps(dictionary)
     response = HttpResponse(json_txt, content_type='application/json')

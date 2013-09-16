@@ -395,3 +395,70 @@ class PasswordRecoverResetApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		response = self.client.options(self.url)
 		self.assertEqual(response.status_code,405)
+		
+class PasswordRecoveryFormApiTests(LiveServerTestCase):
+	url = ''
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+		self.url = self.live_server_url + '/api/password_recover'
+		self.user1_url = self.url + '/user1'
+		
+	def testChangingPasswordWithPasswordRecoveryCookieReturnErrorCode0(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		response = self.client.post(self.user1_url, '{"password":"12345","vpassword":"12345"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],0)
+	
+	def testChangingPasswordWithoutPasswordRecoveryCookieReturnErrorCode1(self):
+		response = self.client.post(self.user1_url, '{"password":"12345","vpassword":"12345"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],1)
+
+	def testInvalidPasswordReturnErrorCode2(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		response = self.client.post(self.user1_url, '{"password":"12","vpassword":"12"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],2)
+			
+	def testPasswordNotMatchingReturnErrorCode3(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		response = self.client.post(self.user1_url, '{"password":"1235","vpassword":"12345"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],3)
+		
+	def testNotExistingUserGivesErrorCode4(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		u = User.getByUsername('user1')
+		u.delete()
+		response = self.client.post(self.user1_url, '{"password":"12345","vpassword":"12345"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],4)
+		
+	def testChangingCookieReturnErrorCode1(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		mail = response.cookies.get('lpwd_ok').value.split(':')[0].split('|')[1]
+		hashs = response.cookies.get('lpwd_ok').value.split(':')[1]
+		self.client.cookies.get('lpwd_ok').set('lpwd_ok','user2|' + mail,'user2|' + mail + ':' + hashs)
+		response = self.client.post(self.user1_url, '{"password":"12345","vpassword":"12345"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],1)
+		
+	def testOtherMethodsResponse405(self):
+		response = self.client.get(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.head(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.put(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.options(self.user1_url)
+		self.assertEqual(response.status_code,405)

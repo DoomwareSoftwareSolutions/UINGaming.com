@@ -6,69 +6,6 @@ from django.utils.translation import ugettext as _
 from src.authentication.models import User
 from src.utils import Crypt, api
 
-
-
-# ########################################################################################### #
-# ############################    PASSWD RECOVER FORM VIEW      ############################# #
-# ########################################################################################### #
-  
-# Esta view maneja '/passwd-recover/<user>'. Se encarga de verificar la existencia de la cookie 'lpwd_ok' y cambiar la password
-# del solicitante.
-def PasswordRecoverFormView(request, username):
-    # GET METHOD: Aca envio el formulario para el cambio de la contrasenia
-    if request.method == 'GET':
-        cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
-        if cookie is None:
-            return redirect('/')
-        else:
-            # Encontro una cookie valida. Renderiza el formulario de cambio de clave
-            information = {}
-            information['username'] = cookie.split('|')[0]
-            information['email'] = cookie.split('|')[1]
-            if username != information['username']:
-                return redirect('/')
-            else:
-                return render_to_response('passwd_recover_form.html',information,RequestContext(request))
-    elif request.method == 'POST':
-        # POST METHOD: Realizo la validacion de los datos ingresados y cambio la contrasenia
-        cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
-        if cookie is None:
-            return redirect('/')
-        else:
-            information = {}
-            information['username'] = cookie.split('|')[0]
-            password = request.POST.get('password', '')
-            vpassword = request.POST.get('vpassword', '')
-            valid = True
-            if not User.isValidPassword(password):
-                # Marco el error de password invaludo
-                valid = False
-                information['error'] = _("Invalid Password")
-            elif password != vpassword:
-                # Marco el error de passwords distintas
-                valid = False
-                information['error'] = _("Passwords don't match")
-            
-            user = User.getByUsername(information['username'])
-            if user is None:
-                # Marco el error de usuario inexistente
-                valid = False
-                information['error'] = _("Username does not exist")
-                
-            if not valid:
-                # Hubo errores
-                return render_to_response('passwd_recover_form.html',information,RequestContext(request))
-            else:
-                # TODO OK!!
-                user.updateUserPassword(password)
-                response = redirect('/signin')
-                response.delete_cookie('lpwd_ok')
-                return response
-                
-    else:
-        return HttpResponseNotAllowed(['POST','GET'])
-    
-
 ###############################################################################################################################
 #####                                                       APIS                                                          #####
 ###############################################################################################################################
@@ -88,8 +25,7 @@ def SignInAPI(request):
     
         # Si los parametros son invalidos
         if params is None:
-            information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
-            information['error-description'] = _("Invalid parameters")
+            api.set_error(information,6,_("Invalid parameters"))
             return api.render_to_json(information);
         
         information['username'] = params.get('username', '')
@@ -98,12 +34,12 @@ def SignInAPI(request):
         
         valid = User.isValidLogin(information['username'], password)
         if not valid:
-            information['error-code'] = 1 # ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA
-            information['error-description'] = _("Username does not exist or password is incorrect")
+            # ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA
+            api.set_error(information,1,_("Username does not exist or password is incorrect"))
             return api.render_to_json(information)
         else:
-            information['error-code'] = 0 # NO HUBO ERRORES!
-            information['error-description'] = ''
+            # NO HUBO ERRORES!
+            api.set_error(information,0)
             response = api.render_to_json(information)
             if not remember:
                 Crypt.set_secure_cookie(response,'user_id',information['username'],expires=True) # Expira al cerrar el navegador
@@ -129,8 +65,8 @@ def SignUpAPI(request):
         
         # Si los parametros son invalidos
         if params is None:
-                information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
-                information['error-description'] = _("Invalid parameters")
+                # ERROR PARAMETROS INVALIDOS
+                api.set_error(information,6,_("Invalid parameters"))
                 return api.render_to_json(information);
                 
         
@@ -142,31 +78,32 @@ def SignUpAPI(request):
         information['name'] = params.get('name', '')
         information['lastname'] = params.get('lastname', '')
         information['country'] = params.get('country', '')
-        information['error-code'] = 0 # NO ERROR!
+        # NO ERROR!
+        api.set_error(information,0)
         leave_open = params.get('remember',None)
         
         # Valido los datos.
         if not User.isValidUsername(information['username']):
-            information['error-code'] = 1 # ERROR NOMBRE DE USUARIO INVALIDO
-            information['error-description'] = _("Invalid username")
+            # ERROR NOMBRE DE USUARIO INVALIDO
+            api.set_error(information,1,_("Invalid username"))
         elif not User.isValidPassword(password):
             # Marco el error de password invaludo
-            information['error-code'] = 2 # ERROR CLAVE INVALIDA
-            information['error-description'] = _("Invalid password")
+            # ERROR CLAVE INVALIDA
+            api.set_error(information,2,_("Invalid password"))
         elif password != vpassword:
             # Marco el error de passwords distintas
-            information['error-code'] = 3 # ERROR CLAVES NO SON IDENTICAS
-            information['error-description'] = _("Passwords don't match")
+            # ERROR CLAVES NO SON IDENTICAS
+            api.set_error(information,3,_("Passwords don't match"))
         elif not User.isValidEmail(information['email']):
             # Marco el error de password invaludo
-            information['error-code'] = 4 # ERROR EMAIL INVALIDO
-            information['error-description'] = _('Invalid mail')
+            # ERROR EMAIL INVALIDO
+            api.set_error(information,4,_('Invalid mail'))
         else:
             user = User.add(information['username'],password,information['email'],information['name'], information['lastname']);
             if  user == None:
                 # Marco el error de usuario ya existente
-                information['error-code'] = 5 # ERROR USUARIO YA EXISTE
-                information['error-description'] = _("Username already exists")
+                # ERROR USUARIO YA EXISTE
+                api.set_error(information,5,_("Username already exists"))
         
         
         if information['error-code'] != 0:
@@ -189,12 +126,10 @@ def LogOutAPI(request):
     if request.method == 'GET':
         information = {}
         if request.get_signed_cookie('user_id',None) is None:
-            information['error-code'] = 1
-            information['error-description'] = _("There is no user logged in")
+            api.set_error(information,1,_("There is no user logged in"))
             return api.render_to_json(information)
         else:
-            information['error-code'] = 0
-            information['error-description'] = ''
+            api.set_error(information,0)
             response = api.render_to_json(information)
             response.delete_cookie('user_id')
             return response
@@ -229,36 +164,32 @@ def PasswordRecoverAPI(request):
         # POST METHOD: Si la cookie ya esta seteada, informo que ya esta en "tramite" el cambio de clave
         # si no esta seteada, informo lo contrario.
         if cookie != None:
-            information['error-code'] = 1
-            information['error-description'] = _("We have already send a password recovery email for your username.")
+            api.set_error(information,1,_("We have already send a password recovery email for your username."))
             return api.render_to_json(information)
         else:
             
             params = api.json_to_dict(request.body)
             if params is None:
-                information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
-                information['error-description'] = _('Invalid parameters')
+                # ERROR PARAMETROS INVALIDOS
+                api.set_error(information,6,_('Invalid parameters'))
                 return api.render_to_json(information);
             
             information['username'] = params.get('username', None)
             
             if not User.isValidUsername(information['username']):
-                information['error-code'] = 2
-                information['error-description'] = _('Invalid username')
+                api.set_error(information,2,_('Invalid username'))
                 return api.render_to_json(information)
             
             else:
                 user = User.getByUsername(information['username'])
                 
                 if user is None:
-                    information['error-code'] = 3
-                    information['error-description'] = _("You haven\'t start the password recovery process")
+                    api.set_error(information,3,_("You haven't start the password recovery process"))
                     return api.render_to_json(information)
                 
                 else:
                     information['email'] = user.email;
-                    information['error-code'] = 0
-                    information['error-description'] = ''
+                    api.set_error(information,0)
                     
                     response = api.render_to_json(information)
                     Crypt.set_secure_cookie(response,'lpwd_ok',information['username']+ '|' + information['email'] , expires=False,  time=7200)
@@ -279,14 +210,63 @@ def PasswordRecoverResetAPI(request):
         information = {}
         cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
         if cookie is None:
-            information['error-code'] = 1
-            information['error-description'] = _("You haven\'t start the password recovery process")
+            api.set_error(information,1,_("You haven't start the password recovery process"))
             return api.render_to_json(information)
         else:
-            information['error-code'] = 0
-            information['error-description'] = ''
+            api.set_error(information,0)
             response = api.render_to_json(information)
             response.delete_cookie('lpwd_ok')
             return response
     else:
         return HttpResponseNotAllowed(['GET'])
+    
+# ########################################################################################### #
+# ############################    PASSWD RECOVER FORM VIEW      ############################# #
+# ########################################################################################### #
+  
+# Esta view maneja '/passwd-recover/<user>'. Se encarga de verificar la existencia de la cookie 'lpwd_ok' y cambiar la password
+# del solicitante.
+def PasswordRecoverFormAPI(request, username):
+    if request.method == 'POST':
+        # POST METHOD: Realizo la validacion de los datos ingresados y cambio la contrasenia
+        information = {}
+        params = api.json_to_dict(request.body)
+        
+        # Si los parametros son invalidos
+        if params is None:
+                api.set_error(information,6,_('Invalid parameters'))
+                return api.render_to_json(information);
+        
+        cookie = request.get_signed_cookie(key='lpwd_ok', default=None)
+        if cookie is None:
+            api.set_error(information,1,_("You haven't start the password recovery process"))
+            return api.render_to_json(information)
+        else:
+            information['username'] = cookie.split('|')[0]
+            password = params.get('password', '')
+            vpassword = params.get('vpassword', '')
+            api.set_error(information,0)
+            if not User.isValidPassword(password):
+                # Marco el error de password invaludo
+                api.set_error(information,2,_("Invalid password"))
+            elif password != vpassword:
+                # Marco el error de passwords distintas
+                api.set_error(information,3,_("Passwords don't match"))
+            else:
+                user = User.getByUsername(information['username'])
+                if user is None:
+                    # Marco el error de usuario inexistente
+                    api.set_error(information,4,_("Username does not exist"))
+                    
+            if information['error-code'] != 0:
+                # Hubo errores
+                return api.render_to_json(information)
+            else:
+                # TODO OK!!
+                user.updateUserPassword(password)
+                response = api.render_to_json(information)
+                response.delete_cookie('lpwd_ok')
+                return response
+                
+    else:
+        return HttpResponseNotAllowed(['POST'])

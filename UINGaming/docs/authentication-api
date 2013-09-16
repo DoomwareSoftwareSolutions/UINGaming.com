@@ -126,3 +126,28 @@ Los valores seran devueltos en el siguiente formato:
 Codigos de errores con sus respectivas descripciones:
 	error-code = 0 -> NO HUBO ERRORES  				error-description = ''
 	error-code = 1 -> ERROR NO EXISTE LA COOKIE		error-description = 'No existe un tramite de cambio de clave iniciado'
+
+=======================================================================================================================================
+
+# PASSWORD RECOVER FORM:
+Se encarga de cambiar la contrasena del usuario que ha iniciado el tramite de password recover y ha recibido el mail.
+	URL: http://localhost:8000/api/password_recover/<username>
+## METHOD POST:
+Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+		password  	  	: nueva contrasenia.
+		vpassword		: verificacion de contrasenia
+	}
+Los valores seran devueltos en el siguiente formato:
+	{
+		username: user1
+		error-code: 1
+		error-description: "No se ha iniciado el proceso de recuperacion de contrasenia"
+	}
+
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  				error-description = ''
+	error-code = 1 -> ERROR NO EXISTE LA COOKIE		error-description = 'No se ha iniciado el proceso de recuperacion de contrasenia'
+	error-code = 2 -> ERROR CLAVE INVALIDA			error-description = 'Contrasenia invalida'
+	error-code = 3 -> ERROR CLAVES NO COINCIDEN		error-description = 'Contrasenias no coinciden'
+	error-code = 4 -> ERROR USUARIO NO EXISTE		error-description = 'El nombre de usuario no existe'
