@@ -88,8 +88,8 @@ def SignInAPI(request):
     
         # Si los parametros son invalidos
         if params is None:
-            information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-            information['error_description'] = _("Invalid parameters")
+            information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
+            information['error-description'] = _("Invalid parameters")
             return api.render_to_json(information);
         
         information['username'] = params.get('username', '')
@@ -98,12 +98,12 @@ def SignInAPI(request):
         
         valid = User.isValidLogin(information['username'], password)
         if not valid:
-            information['error_code'] = 1 # ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA
-            information['error_description'] = _("Username does not exist or password is incorrect")
+            information['error-code'] = 1 # ERROR NOMBRE DE USUARIO INEXISTENTE O CONTRASENA INCORRECTA
+            information['error-description'] = _("Username does not exist or password is incorrect")
             return api.render_to_json(information)
         else:
-            information['error_code'] = 0 # NO HUBO ERRORES!
-            information['error_description'] = ''
+            information['error-code'] = 0 # NO HUBO ERRORES!
+            information['error-description'] = ''
             response = api.render_to_json(information)
             if not remember:
                 Crypt.set_secure_cookie(response,'user_id',information['username'],expires=True) # Expira al cerrar el navegador
@@ -129,8 +129,8 @@ def SignUpAPI(request):
         
         # Si los parametros son invalidos
         if params is None:
-                information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-                information['error_description'] = _("Invalid parameters")
+                information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
+                information['error-description'] = _("Invalid parameters")
                 return api.render_to_json(information);
                 
         
@@ -142,34 +142,34 @@ def SignUpAPI(request):
         information['name'] = params.get('name', '')
         information['lastname'] = params.get('lastname', '')
         information['country'] = params.get('country', '')
-        information['error_code'] = 0 # NO ERROR!
+        information['error-code'] = 0 # NO ERROR!
         leave_open = params.get('remember',None)
         
         # Valido los datos.
         if not User.isValidUsername(information['username']):
-            information['error_code'] = 1 # ERROR NOMBRE DE USUARIO INVALIDO
-            information['error_description'] = _("Invalid username")
+            information['error-code'] = 1 # ERROR NOMBRE DE USUARIO INVALIDO
+            information['error-description'] = _("Invalid username")
         elif not User.isValidPassword(password):
             # Marco el error de password invaludo
-            information['error_code'] = 2 # ERROR CLAVE INVALIDA
-            information['error_description'] = _("Invalid password")
+            information['error-code'] = 2 # ERROR CLAVE INVALIDA
+            information['error-description'] = _("Invalid password")
         elif password != vpassword:
             # Marco el error de passwords distintas
-            information['error_code'] = 3 # ERROR CLAVES NO SON IDENTICAS
-            information['error_description'] = _("Passwords don't match")
+            information['error-code'] = 3 # ERROR CLAVES NO SON IDENTICAS
+            information['error-description'] = _("Passwords don't match")
         elif not User.isValidEmail(information['email']):
             # Marco el error de password invaludo
-            information['error_code'] = 4 # ERROR EMAIL INVALIDO
-            information['error_description'] = _('Invalid mail')
+            information['error-code'] = 4 # ERROR EMAIL INVALIDO
+            information['error-description'] = _('Invalid mail')
         else:
             user = User.add(information['username'],password,information['email'],information['name'], information['lastname']);
             if  user == None:
                 # Marco el error de usuario ya existente
-                information['error_code'] = 5 # ERROR USUARIO YA EXISTE
-                information['error_description'] = _("Username already exists")
+                information['error-code'] = 5 # ERROR USUARIO YA EXISTE
+                information['error-description'] = _("Username already exists")
         
         
-        if information['error_code'] != 0:
+        if information['error-code'] != 0:
             # Hubo un error al crear el usuario. Envio el diccionario en formato json
             return api.render_to_json(information);
         else:
@@ -187,9 +187,17 @@ def SignUpAPI(request):
 # Esta view maneja '/logout'. Se encarga de eliminar la cookie de identificacion de usuario.   
 def LogOutAPI(request):
     if request.method == 'GET':
-        response = redirect('/')
-        response.delete_cookie('user_id')
-        return response
+        information = {}
+        if request.get_signed_cookie('user_id',None) is None:
+            information['error-code'] = 1
+            information['error-description'] = _("There is no user logged in")
+            return api.render_to_json(information)
+        else:
+            information['error-code'] = 0
+            information['error-description'] = ''
+            response = api.render_to_json(information)
+            response.delete_cookie('user_id')
+            return response
     else:
         return HttpResponseNotAllowed(['GET'])
     
@@ -228,8 +236,8 @@ def PasswordRecoverAPI(request):
             
             params = api.json_to_dict(request.body)
             if params is None:
-                information['error_code'] = 6 # ERROR PARAMETROS INVALIDOS
-                information['error_description'] = _('Invalid parameters')
+                information['error-code'] = 6 # ERROR PARAMETROS INVALIDOS
+                information['error-description'] = _('Invalid parameters')
                 return api.render_to_json(information);
             
             information['username'] = params.get('username', None)

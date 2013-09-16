@@ -136,43 +136,43 @@ class SigninApiTests(LiveServerTestCase):
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 	
-	def testOKLogin(self):
+	def testOKLoginReturnErrorCode0(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"1234"}',content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],0)
+		self.assertEqual(dic['error-code'],0)
 		self.assertEqual(dic['username'],'user1')
 		cookie = response.cookies.get('user_id').value.split(':')[0]
 		self.assertEqual(cookie,'user1')
 		
-	def testWrongUsername(self):
+	def testWrongUsernameReturnErrorCode1(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"1234"}',content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['error-code'],1)
 		self.assertEqual(dic['username'],'user2')
 	
-	def testWrongPassword(self):
+	def testWrongPasswordReturnErrorCode1(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"12345"}',content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['error-code'],1)
 		self.assertEqual(dic['username'],'user1')
 		
-	def testBothWrong(self):
+	def testBothWrongReturnErrorCode1(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user2", "password":"12345"}',content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['error-code'],1)
 		self.assertEqual(dic['username'],'user2')
 		
-	def testInvalidParams(self):
+	def testInvalidParamsReturnErrorCode6(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'))
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],6)
+		self.assertEqual(dic['error-code'],6)
 		
-	def testOtherMethods(self):
+	def testOtherMethodsResponse405(self):
 		response = self.client.get('%s%s' % (self.live_server_url, '/api/signin'))
 		self.assertEqual(response.status_code,405)
 		response = self.client.head('%s%s' % (self.live_server_url, '/api/signin'))
@@ -189,56 +189,56 @@ class SignupApiTests(LiveServerTestCase):
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 	
-	def testOKSignup(self):
+	def testOKSignupReturnErrorCode0(self):
 		data = '{"username":"user2", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],0)
+		self.assertEqual(dic['error-code'],0)
 		self.assertEqual(dic['username'],'user2')
 		
-	def testInvalidUsername(self):
+	def testInvalidUsernameReturnErrorCode1(self):
 		data = '{"username":"user2?", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],1)
+		self.assertEqual(dic['error-code'],1)
 	
-	def testInvalidPassword(self):
+	def testInvalidPasswordReturnErrorCode2(self):
 		data = '{"username":"user2", "password":"12", "vpassword":"12", "email":"us@er.com"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],2)
+		self.assertEqual(dic['error-code'],2)
 	
-	def testPasswordsNotMatching(self):
+	def testPasswordsNotMatchingReturnErrorCode3(self):
 		data = '{"username":"user2", "password":"12345", "vpassword":"1234", "email":"us@er.com"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],3)
+		self.assertEqual(dic['error-code'],3)
 		
-	def testInvalidEmail(self):
+	def testInvalidEmailReturnErrorCode4(self):
 		data = '{"username":"user2", "password":"1234", "vpassword":"1234", "email":"us"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],4)
+		self.assertEqual(dic['error-code'],4)
 	
-	def testUsernameNotUnique(self):
+	def testUsernameNotUniqueReturnErrorCode5(self):
 		data = '{"username":"user1", "password":"1234", "vpassword":"1234", "email":"us@er.com"}'
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'),data,content_type='application/json')
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],5)
+		self.assertEqual(dic['error-code'],5)
 	
-	def testInvalidParams(self):
+	def testInvalidParamsReturnErrorCode6(self):
 		response = self.client.post('%s%s' % (self.live_server_url, '/api/signup'))
 		self.assertEqual(response.status_code,200)
 		dic = json.loads(response.content)
-		self.assertEqual(dic['error_code'],6)
+		self.assertEqual(dic['error-code'],6)
 		
-	def testOtherMethods(self):
+	def testOtherMethodsResponse405(self):
 		response = self.client.get('%s%s' % (self.live_server_url, '/api/signup'))
 		self.assertEqual(response.status_code,405)
 		response = self.client.head('%s%s' % (self.live_server_url, '/api/signup'))
@@ -251,31 +251,147 @@ class SignupApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 	
 class LogoutApiTests(LiveServerTestCase):
+	url = ''
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
+		self.url = self.live_server_url + '/api/logout'
 	
-	def testOKLogout(self):
+	def testLogoutAfterLoginDeleteUserCookieAndReturnErrorCode0(self):
 		data = '{"username":"user2", "password":"1234"}'
-		response = self.client.post('%s%s' % (self.live_server_url, '/api/signin'),'{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
 		cookie = response.cookies.get('user_id').value.split(':')[0]
 		self.assertEqual(cookie,'user1')
-		response = self.client.get('%s%s' % (self.live_server_url, '/api/logout'))
+		response = self.client.get(self.url)
 		cookie = response.cookies.get('user_id').value
 		self.assertEqual(cookie,'')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],0)
 		
-	def testLogoutWithoutLogin(self):
-		response = self.client.get('%s%s' % (self.live_server_url, '/api/logout'))
-		cookie = response.cookies.get('user_id').value
+	def testLogoutWithoutLoginReturnErrorCode1(self):
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],1)
+		
+	def testOtherMethodsResponse405(self):
+		response = self.client.post(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.head(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.put(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.options(self.url)
+		self.assertEqual(response.status_code,405)
+		
+class PaswordRecoverApiTests(LiveServerTestCase):
+	url = ''
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+		self.url = self.live_server_url + '/api/password_recover'
+	
+	def testPostOkGivesErrorCode0AndSetCookie(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],0)
+	
+	def testPostTwiseGivesErrorCode1(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],1)
+		
+	def testPostInvalidUsernameGivesErrorCode2AndSetsNoCookie(self):
+		response = self.client.post(self.url,'{"username":"user1?"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok',None)
+		self.assertIsNone(cookie)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],2)
+		
+	def testPostNonExistingUsernameGivesErrorCode3AndSetsNoCookie(self):
+		response = self.client.post(self.url,'{"username":"user2"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok',None)
+		self.assertIsNone(cookie)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],3)
+		
+	def testPostInvalidParametersGivesErrorCode6AndSetsNoCookie(self):
+		response = self.client.post(self.url)
+		cookie = response.cookies.get('lpwd_ok',None)
+		self.assertIsNone(cookie)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],6)
+		
+	def testGetAfterPostingCorrectUsernameReturnTrueInRecoverCookie(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertTrue(dic['recover-cookie'])
+		self.assertEqual(dic['username'],'user1')
+		self.assertEqual(dic['email'],'u1@user.com')
+	
+	def testGetWithoutPostingCorrectUsernameReturnFalseInRecoverCookie(self):
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertFalse(dic['recover-cookie'])
+		
+	def testGetAfterPostingNonCorrectUsernameReturnFalseInRecoverCookie(self):
+		response = self.client.post(self.url,'{"username":"user2"}',content_type='application/json')
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertFalse(dic['recover-cookie'])
+		
+	def testGetAfterPostingNonValidUsernameReturnFalseInRecoverCookie(self):
+		response = self.client.post(self.url,'{"username":"user2?"}',content_type='application/json')
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertFalse(dic['recover-cookie'])
+		
+	def testGetAfterPostingCorrectUsername(self):
+		response = self.client.post(self.url,'{"username":"user1"}',content_type='application/json')
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertTrue(dic['recover-cookie'])
+		
+	def testOtherMethodsResponse405(self):
+		response = self.client.head(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.put(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete(self.url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.options(self.url)
+		self.assertEqual(response.status_code,405)
+		
+class PasswordRecoverResetApiTests(LiveServerTestCase):
+	url = ''
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+		self.url = self.live_server_url + '/api/password_recover_reset'
+		
+	def testGetAfterStartingPasswordRecoveryProcessShouldRemoveCookie(self):
+		response = self.client.post(self.live_server_url + '/api/password_recover','{"username":"user1"}',content_type='application/json')
+		cookie = response.cookies.get('lpwd_ok').value.split(':')[0]
+		self.assertEqual(cookie,'user1|u1@user.com')
+		response = self.client.get(self.url)
+		cookie = response.cookies.get('lpwd_ok').value
 		self.assertEqual(cookie,'')
 		
-	def testOtherMethods(self):
-		response = self.client.post('%s%s' % (self.live_server_url, '/api/logout'))
+	def testGetWithoutStartingPasswordRecoveryProcessShouldReturnErrorCode1(self):
+		response = self.client.get(self.url)
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],1)
+		
+	def testOtherMethodsResponse405(self):
+		response = self.client.post(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.head('%s%s' % (self.live_server_url, '/api/logout'))
+		response = self.client.head(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.put('%s%s' % (self.live_server_url, '/api/logout'))
+		response = self.client.put(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.delete('%s%s' % (self.live_server_url, '/api/logout'))
+		response = self.client.delete(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.options('%s%s' % (self.live_server_url, '/api/logout'))
-		self.assertEqual(response.status_code,405)	
+		response = self.client.options(self.url)
+		self.assertEqual(response.status_code,405)
