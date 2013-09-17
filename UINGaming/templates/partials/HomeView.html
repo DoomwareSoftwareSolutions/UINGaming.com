@@ -1,70 +1,72 @@
-<div id="homeSlider" class="carousel slide custom-carousel center-hor center-vert">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#homeSlider" data-slide-to="{{$index}}" ng-class="{'active': $first}"
-            ng-repeat="slide in slides" class="slide-indicator"></li>
-    </ol>
-    <div class="carousel-inner">
-        <div class="item" ng-repeat="slide in slides" ng-class="{'active': $first}">
-            <img ng-src="{{slide.image}}" alt="Slide" class="slide-image"/>
-
-            <div class="container">
-                <div class="carousel-caption">
-                    <h1>{{slide.heading}}</h1>
-
-                    <p>{{slide.caption}}</p>
-
-                    <p><a class="btn btn-large btn-primary" href="{{slide.linkRef}}">{{slide.linkText}}</a></p>
+<div class="fullscreen-home">
+    <div id="homeSlider" class="carousel slide custom-carousel center-hor center-vert">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#homeSlider" data-slide-to="{{$index}}" ng-class="{'active': $first}"
+                ng-repeat="slide in slides" class="slide-indicator"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item" ng-repeat="slide in slides" ng-class="{'active': $first}">
+                <img ng-src="{{slide.image}}" alt="Slide" class="slide-image"/>
+    
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>{{slide.heading}}</h1>
+    
+                        <p>{{slide.caption}}</p>
+    
+                        <p><a class="btn btn-large btn-primary" href="{{slide.linkRef}}">{{slide.linkText}}</a></p>
+                    </div>
                 </div>
             </div>
         </div>
+        <a class="left carousel-control" href="{{arrowLink}}" data-slide="prev"><span
+                class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="{{arrowLink}}" data-slide="next"><span
+                class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
-    <a class="left carousel-control" href="{{arrowLink}}" data-slide="prev"><span
-            class="glyphicon glyphicon-chevron-left"></span></a>
-    <a class="right carousel-control" href="{{arrowLink}}" data-slide="next"><span
-            class="glyphicon glyphicon-chevron-right"></span></a>
-</div>
-<div class="container marketing custom-marketing">
-
-    <!-- START THE FEATURETTES -->
-
-    <div class="row featurette custom-row first-row">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">{{features[0].heading}}<span
-                    class="text-muted">{{features[0].subheading}}</span></h2>
-
-            <p class="lead">{{features[0].description}}</p>
+    <div class="container marketing custom-marketing">
+    
+        <!-- START THE FEATURETTES -->
+    
+        <div class="row featurette custom-row first-row">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">{{features[0].heading}}<span
+                        class="text-muted">{{features[0].subheading}}</span></h2>
+    
+                <p class="lead">{{features[0].description}}</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-responsive"
+                     ng-src="{{features[0].image}}" alt="500x500">
+            </div>
         </div>
-        <div class="col-md-5">
-            <img class="featurette-image img-responsive"
-                 ng-src="{{features[0].image}}" alt="500x500">
+    
+        <div class="row featurette custom-row second-row">
+            <div class="col-md-5">
+                <img class="featurette-image img-responsive"
+                     ng-src="{{features[1].image}}" alt="500x500">
+            </div>
+            <div class="col-md-7">
+                <h2 class="featurette-heading">{{features[1].heading}}<span
+                        class="text-muted">{{features[1].subheading}}</span></h2>
+    
+                <p class="lead">{{features[1].description}}</p>
+            </div>
         </div>
+    
+        <div class="row featurette custom-row third-row">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">{{features[2].heading}}<span
+                        class="text-muted">{{features[2].subheading}}</span></h2>
+    
+                <p class="lead">{{features[2].description}}</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-responsive"
+                     ng-src="{{features[2].image}}" alt="500x500">
+            </div>
+        </div>
+    
     </div>
-
-    <div class="row featurette custom-row second-row">
-        <div class="col-md-5">
-            <img class="featurette-image img-responsive"
-                 ng-src="{{features[1].image}}" alt="500x500">
-        </div>
-        <div class="col-md-7">
-            <h2 class="featurette-heading">{{features[1].heading}}<span
-                    class="text-muted">{{features[1].subheading}}</span></h2>
-
-            <p class="lead">{{features[1].description}}</p>
-        </div>
-    </div>
-
-    <div class="row featurette custom-row third-row">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">{{features[2].heading}}<span
-                    class="text-muted">{{features[2].subheading}}</span></h2>
-
-            <p class="lead">{{features[2].description}}</p>
-        </div>
-        <div class="col-md-5">
-            <img class="featurette-image img-responsive"
-                 ng-src="{{features[2].image}}" alt="500x500">
-        </div>
-    </div>
-
 </div>

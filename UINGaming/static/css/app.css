@@ -5,6 +5,11 @@
     width: 100%;
 }
 
+.fullscreen-home {
+    background-image: url("/static/img/background.jpg");
+    background-repeat:repeat;
+}
+
 .menu {
     list-style: none;
     border-bottom: 0.1em solid black;
@@ -156,15 +161,18 @@
 }
 
 .first-row {
-    background-color: rgba(0, 255, 225, 0.5);
+    background-color: rgba(0, 255, 225, 0.1);
+    color: rgb(220, 220, 220);
 }
 
 .second-row {
-    background-color: rgba(225, 255, 0, 0.5);
+    background-color: rgba(225, 255, 0, 0.1);
+    color: rgb(220, 220, 220);
 }
 
 .third-row {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.1);
+    color: rgb(220, 220, 220);
 }
 
 .slide-indicator {
