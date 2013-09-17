@@ -1,13 +1,13 @@
 <div class="events-container">
     <div class="event-list">
         <div class="media" ng-repeat="event in events">
-            <a class="pull-left event-icon-a" href="{{event.link}}">
-                <img class="media-object" ng-src="{{event.image}}" alt="Image">
+            <a class="pull-left event-icon-a" href="{{event.fields.link}}">
+                <img class="media-object" ng-src="{{event.fields.image}}" alt="Image">
             </a>
 
             <div class="media-body">
-                <h4 class="media-heading">{{event.heading}}</h4>
-                {{event.body}}
+                <h4 class="media-heading">{{event.fields.head}}</h4>
+                {{event.fields.body}}
             </div>
         </div>
     </div>
