@@ -143,7 +143,8 @@ INSTALLED_APPS = (
 	# Uncomment the next line to enable admin documentation:
 	# 'django.contrib.admindocs',
 	'src.authentication',
-	'src.events'
+	'src.events',
+	'src.home'
 )
 
 # Email Configuration
