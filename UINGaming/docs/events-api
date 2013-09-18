@@ -16,7 +16,7 @@ Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
             "created": "2013-09-13",
             "image": "asd.png",
             "game": "League of Draven",
-            "date": "2013-09-13"
+            "date": "2013-09-13" # FORMATO VALIDO: "YYYY-MM-DD". Otros formatos serán rechazados
         }
     }
 ]

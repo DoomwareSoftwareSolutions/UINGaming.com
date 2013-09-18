@@ -29,7 +29,15 @@ Una vez instaladas las dependecias basicas, procedemos a instalar la biblioteca 
 Ahora instalaremos Django ejecutando el siguiente comnado:
     
 	sudo pip install Django==1.5.2
-     
+
+Instalamos south, que nos va a autoeditar las tablas
+    
+	sudo easy_install South
+
+Debemos buscar el archivo debug.py y dentro de INSTALLED_APPS agregar 'South'. correr un ./manage.py syncdb & its ok.
+
+Para editar los campos de la database, http://south.readthedocs.org/en/latest/tutorial/part1.html#changing-the-model
+	    
 Verificar que los procesos memcached y mysqld esten corriendo utilizando el comando pgrep. Si no estan corriendo iniciarlos, o reiniciar la pc para que se inicien al bootear
     
 	pgrep memcached 

@@ -14,8 +14,9 @@ class Event(models.Model):
 	body = models.CharField(max_length=256)
 	image = models.CharField(max_length=256)
 	game = models.CharField(max_length=256)
-	date = models.DateField()
-	created = models.DateField(auto_now_add=True)
+	game = models.CharField(max_length=256)
+	date = models.DateTimeField()
+	created = models.DateTimeField(auto_now_add=True)
 	
 		
 	# TODO: AGREGAR CAMPOS QUE FALTEN

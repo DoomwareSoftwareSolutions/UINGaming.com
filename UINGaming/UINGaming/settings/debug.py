@@ -144,7 +144,8 @@ INSTALLED_APPS = (
 	# 'django.contrib.admindocs',
 	'src.authentication',
 	'src.events',
-	'src.home'
+	'src.home',
+	'south'
 )
 
 # Email Configuration
