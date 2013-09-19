@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
 from django.core import serializers
+from src.authentication.models import User
 import re
 
 import datetime
@@ -18,7 +19,7 @@ class Event(models.Model):
 	date = models.DateTimeField()
 	inscriptionDeadline = models.DateTimeField()
 	created = models.DateTimeField(auto_now_add=True)
-	
+	enrolledUsers = models.ManyToManyField(User,through='EventMembership')
 		
 	# TODO: AGREGAR CAMPOS QUE FALTEN
 
@@ -42,15 +43,14 @@ class Event(models.Model):
 			return None
 
 		return event
-	
-	@classmethod
-	def isValidDate(self, date):
-		try:
-			datetime.datetime.strptime(date, '%Y-%m-%d')
-		except ValueError:
-			return False
-		return True
 		
 	def toDict(self):
 		return model_to_dict(self)
 	
+#Relation event-user
+class EventMembership(models.Model):
+	event = models.ForeignKey(Event)
+	user = models.ForeignKey(User)
+	teamName = models.CharField(max_length=256)
+	teamMembers = models.CharField(max_length=1024)
+	paid = models.BooleanField()

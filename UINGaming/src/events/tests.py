@@ -6,7 +6,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from src.events.models import Event
+from src.events.models import Event,EventMembership
+from src.authentication.models import User
 import datetime
 
 class EventTest(TestCase):
@@ -33,15 +34,6 @@ class EventTest(TestCase):
 		U = Event.objects.filter(head = "Event2").get()
 		self.assertEqual(u2, U)
 	
-	def testDate(self):
-		self.assertTrue(Event.isValidDate('2013-09-10')) 
-		self.assertTrue(Event.isValidDate('2013-01-10')) 
-		self.assertTrue(Event.isValidDate('2013-12-10')) 
-		
-		self.assertFalse(Event.isValidDate('2013-00-10'))
-		self.assertFalse(Event.isValidDate('2013-13-10')) 
-		self.assertFalse(Event.isValidDate('2013-asd-10')) 
-	
 	def testQuery(self):
 		u = Event.add(head="Event1",body="body",image='hads',game='lol',date="2013-09-10",inscriptionDeadline="2013-09-10")
 		all_entries = Event.objects.all()
@@ -49,5 +41,22 @@ class EventTest(TestCase):
 		query['date']=str(query['date'])
 		query['inscriptionDeadline']=str(query['inscriptionDeadline'])
 		
-		testDict = {'body': u'body', 'head': u'Event1', 'inscriptionDeadline': '2013-09-10 05:00:00+00:00', 'image': u'hads', 'game': u'lol', 'date': '2013-09-10 05:00:00+00:00', u'id': 5L}
+		testDict = {'body': u'body', 'head': u'Event1', "enrolledUsers":[],'inscriptionDeadline': '2013-09-10 05:00:00+00:00', 'image': u'hads', 'game': u'lol', 'date': '2013-09-10 05:00:00+00:00', u'id': 6L}
 		self.assertEqual(query,testDict)
+		
+	
+	def testMembership(self):
+		u = User.add('ringoStarr','1234','u1@user.com')
+		e = Event.add("Concert","body",'hads','lol',"2013-09-10","2013-09-12")
+		m1 = EventMembership(user=u, event=e,
+			teamName = "LaMera",
+			teamMembers = "Mattlike, Ciboulette",
+			paid = False)
+		m1.save()
+		u2 = User.add('paulMcCartney','4321','u1@user.com')
+		m2 = EventMembership(user=u2, event=e,
+			teamName = "LamerLa",
+			teamMembers = "FedeChampion",
+			paid = False)
+		m2.save()
+		print e.enrolledUsers.all()
