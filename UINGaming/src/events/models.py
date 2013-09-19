@@ -14,8 +14,9 @@ class Event(models.Model):
 	body = models.CharField(max_length=256)
 	image = models.CharField(max_length=256)
 	game = models.CharField(max_length=256)
-	game = models.CharField(max_length=256)
+
 	date = models.DateTimeField()
+	inscriptionDeadline = models.DateTimeField()
 	created = models.DateTimeField(auto_now_add=True)
 	
 		
@@ -25,11 +26,11 @@ class Event(models.Model):
 	# Debemos agregar aqui la informacion adicional del evento
 	# para poder inicializarlo correctamente
 	@classmethod
-	def add(self, head, body, image, game, date):
+	def add(self, head, body, image, game, date,inscriptionDeadline):
 		#checkeo unicidad con head a falta de ideas
 		if Event.objects.filter(head=head).count() != 0:
 			return None
-		e = Event(head=head, body=body, image=image, game=game, date=date)
+		e = Event(head=head, body=body, image=image, game=game, date=date, inscriptionDeadline=inscriptionDeadline)
 		e.save()
 		return e
 
@@ -51,12 +52,5 @@ class Event(models.Model):
 		return True
 		
 	def toDict(self):
-		dic = {}
-		dic['head']=self.head
-		dic['body']=self.body
-		dic['game']=self.game
-		dic['date']=self.date.isoformat()
-		dic['created']=self.created.isoformat()
-		dic['image']=self.image
-		return dic
+		return model_to_dict(self)
 	

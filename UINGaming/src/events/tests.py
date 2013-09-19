@@ -11,8 +11,8 @@ import datetime
 
 class EventTest(TestCase):
 	def testEventsRawCreation(self):
-		e = Event(head = "hello", body = "123452", image = "asd.jpg",game = "lol",date="2013-09-10")
-		e2 = Event(head = "hello2", body = "123452", image = "asd.jpg",game = "lol",date="2013-09-22")
+		e = Event(head = "hello", body = "123452", image = "asd.jpg",game = "lol",date="2013-09-10",inscriptionDeadline="2013-09-10")
+		e2 = Event(head = "hello2", body = "123452", image = "asd.jpg",game = "lol",date="2013-09-22",inscriptionDeadline="2013-09-10")
 		e.save()
 		E = Event.objects.filter(head = "hello").get();
 		self.assertEqual(e.head, E.head)
@@ -26,10 +26,10 @@ class EventTest(TestCase):
 	
 			
 	def testEventsCreation(self):
-		u = Event.add("Event1","body",'hads','lol',"2013-09-10")
+		u = Event.add("Event1","body",'hads','lol',"2013-09-10",inscriptionDeadline="2013-09-10")
 		U = Event.objects.filter(head = "Event1").get()
 		self.assertEqual(u, U)
-		u2 = Event.add("Event2","body",'hads','lol',"2013-09-12")
+		u2 = Event.add("Event2","body",'hads','lol',"2013-09-12",inscriptionDeadline="2013-09-10")
 		U = Event.objects.filter(head = "Event2").get()
 		self.assertEqual(u2, U)
 	
@@ -43,8 +43,11 @@ class EventTest(TestCase):
 		self.assertFalse(Event.isValidDate('2013-asd-10')) 
 	
 	def testQuery(self):
-		u = Event.add("Event1","body",'hads','lol',"2013-09-10")
+		u = Event.add(head="Event1",body="body",image='hads',game='lol',date="2013-09-10",inscriptionDeadline="2013-09-10")
 		all_entries = Event.objects.all()
-		testDict = {'body': 'body', 'head': 'Event1', 'created': '2013-09-13', 'image': 'hads', 'game': 'lol', 'date': '2013-09-10'}
-		self.assertEqual(all_entries[0].toDict(),testDict)
-		print all_entries[0].toDict()
+		query = all_entries[0].toDict()
+		query['date']=str(query['date'])
+		query['inscriptionDeadline']=str(query['inscriptionDeadline'])
+		
+		testDict = {'body': u'body', 'head': u'Event1', 'inscriptionDeadline': '2013-09-10 05:00:00+00:00', 'image': u'hads', 'game': u'lol', 'date': '2013-09-10 05:00:00+00:00', u'id': 5L}
+		self.assertEqual(query,testDict)
