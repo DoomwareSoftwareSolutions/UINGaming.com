@@ -43,6 +43,17 @@ class Slide(models.Model):
 		
 		return slides
 		
+	# Debemos agregar aqui la informacion adicional del slide
+	# para poder inicializarlo correctamente
+	@classmethod
+	def add(self, image, heading, caption, linkText, linkRef, created):
+		#checkeo unicidad con head a falta de ideas
+		if Slide.objects.filter(heading=heading).count() != 0:
+			return None
+		s = Slide(image=image, heading=heading, caption=caption, linkText=linkText, linkRef=linkRef, created=created)
+		s.save()
+		return e
+		
 	def getDictionary(self):
 		return dict(image = self.image,
                   heading = self.heading,
@@ -86,6 +97,17 @@ class Feature(models.Model):
 			return None;
 		
 		return features
+		
+	# Debemos agregar aqui la informacion adicional del feature
+	# para poder inicializarlo correctamente
+	@classmethod
+	def add(self, heading, subheading, description, image, created):
+		#checkeo unicidad con head a falta de ideas
+		if Feature.objects.filter(heading=heading).count() != 0:
+			return None
+		f = Feature(heading=heading, subheading=subheading, description=description, image=image, created=created)
+		f.save()
+		return e
 		
 	def getDictionary(self):
 		return dict(heading = self.heading,
