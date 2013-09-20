@@ -98,7 +98,7 @@ Para inicializar el server corremos el siguiente comando. El server correra en l
    
 	./manage runserver
      
-Para crear una nueva aplicacion (lease un nuevo modulo de la aplicacion que estamos creado, ej. authentication) corremos el siguiente comando:
+Para crear una nueva aplicacion (lease un nuevo modulo de la aplicacion que estamos creado, ej. users) corremos el siguiente comando:
    
 	./manage startapp
      

@@ -40,6 +40,9 @@ nosetests.xml
 # Release config
 **/release.py
 
+# Migrations
+**/migrations/
+
 lib-cov
 *.seed
 *.log

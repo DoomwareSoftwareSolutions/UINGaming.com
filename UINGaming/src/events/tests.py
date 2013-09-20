@@ -7,7 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from src.events.models import Event,EventMembership
-from src.authentication.models import User
+from src.users.models import User
 import datetime
 
 class EventTest(TestCase):

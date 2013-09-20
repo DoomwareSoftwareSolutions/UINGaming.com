@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
-from src.authentication.models import User
+from src.users.models import User
 from src.utils import Crypt, api
 
 ###############################################################################################################################

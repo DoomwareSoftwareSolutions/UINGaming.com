@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 import json
 
 from UINGaming.settings.debug import *
-from src.authentication.models import User
+from src.users.models import User
 
 
 def set_error(information, error_code, error_description = ''):

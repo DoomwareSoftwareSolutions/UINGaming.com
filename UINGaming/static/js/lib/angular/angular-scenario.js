@@ -18120,7 +18120,7 @@ function $HttpProvider() {
      * Before you start creating interceptors, be sure to understand the
      * {@link ng.$q $q and deferred/promise APIs}.
      *
-     * For purposes of global error handling, authentication or any kind of synchronous or
+     * For purposes of global error handling, users or any kind of synchronous or
      * asynchronous preprocessing of received responses, it is desirable to be able to intercept
      * responses for http requests before they are handed over to the application code that
      * initiated these requests. The response interceptors leverage the {@link ng.$q
@@ -18207,7 +18207,7 @@ function $HttpProvider() {
      * server can verify that the cookie matches `X-XSRF-TOKEN` HTTP header, and therefore be sure
      * that only JavaScript running on your domain could have sent the request. The token must be
      * unique for each user and must be verifiable by the server (to prevent the JavaScript from making
-     * up its own tokens). We recommend that the token is a digest of your site's authentication
+     * up its own tokens). We recommend that the token is a digest of your site's users
      * cookie with a {@link https://en.wikipedia.org/wiki/Salt_(cryptography) salt} for added security.
      *
      *

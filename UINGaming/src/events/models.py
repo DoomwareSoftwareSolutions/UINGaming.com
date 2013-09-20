@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
 from django.core import serializers
-from src.authentication.models import User
+from src.users.models import User
 import re
 
 import datetime

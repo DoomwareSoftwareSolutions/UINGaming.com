@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 import src.home.views
-import src.authentication.views
+import src.users.views
 import src.events.views
 import src.utils.api
 # Uncomment the next two lines to enable the admin:
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
-	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormView),
+	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormView),
 	
 	
 	
@@ -37,12 +37,12 @@ urlpatterns = patterns('',
 	# ############################ #
 	# ######### API URLS ######### #
 	# ############################ #
-	url(r'^api/signup$',src.authentication.views.SignUpAPI),
-	url(r'^api/signin$',src.authentication.views.SignInAPI),
-	url(r'^api/password_recover$',src.authentication.views.PasswordRecoverAPI),
-	url(r'^api/password_recover_reset$',src.authentication.views.PasswordRecoverResetAPI),
-	url(r'^api/password_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.authentication.views.PasswordRecoverFormAPI),
-	url(r'^api/logout$',src.authentication.views.LogOutAPI),
+	url(r'^api/signup$',src.users.views.SignUpAPI),
+	url(r'^api/signin$',src.users.views.SignInAPI),
+	url(r'^api/password_recover$',src.users.views.PasswordRecoverAPI),
+	url(r'^api/password_recover_reset$',src.users.views.PasswordRecoverResetAPI),
+	url(r'^api/password_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormAPI),
+	url(r'^api/logout$',src.users.views.LogOutAPI),
 	url(r'^api/events$',src.events.views.EventsAPI),
 	
 	# FOR TESTING FRONTEND

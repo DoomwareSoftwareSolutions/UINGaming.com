@@ -808,7 +808,7 @@ angular.mock.dump = function(object) {
    });
 
 
-   it('should fetch authentication token', function() {
+   it('should fetch users token', function() {
      $httpBackend.expectGET('/auth.py');
      var controller = scope.$new(MyController);
      $httpBackend.flush();
@@ -816,7 +816,7 @@ angular.mock.dump = function(object) {
 
 
    it('should send msg to server', function() {
-     // now you don’t care about the authentication, but
+     // now you don’t care about the users, but
      // the controller will still send the request and
      // $httpBackend will respond without you having to
      // specify the expectation and response for this request

@@ -1,6 +1,6 @@
 from django.test import TestCase, LiveServerTestCase
 from django.test.client import Client
-from src.authentication.models import User
+from src.users.models import User
 
 import json
 
@@ -251,7 +251,6 @@ class SignupApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 	
 class LogoutApiTests(LiveServerTestCase):
-	url = ''
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 		self.url = self.live_server_url + '/api/logout'
@@ -285,7 +284,6 @@ class LogoutApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		
 class PaswordRecoverApiTests(LiveServerTestCase):
-	url = ''
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 		self.url = self.live_server_url + '/api/password_recover'
@@ -366,7 +364,6 @@ class PaswordRecoverApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		
 class PasswordRecoverResetApiTests(LiveServerTestCase):
-	url = ''
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 		self.url = self.live_server_url + '/api/password_recover_reset'
@@ -397,7 +394,6 @@ class PasswordRecoverResetApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		
 class PasswordRecoveryFormApiTests(LiveServerTestCase):
-	url = ''
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 		self.url = self.live_server_url + '/api/password_recover'
@@ -462,3 +458,10 @@ class PasswordRecoveryFormApiTests(LiveServerTestCase):
 		self.assertEqual(response.status_code,405)
 		response = self.client.options(self.user1_url)
 		self.assertEqual(response.status_code,405)
+		
+class UserDataApiTests(LiveServerTestCase):
+	def setUp(self):
+		User.add('user1','1234','u1@user.com')
+		User.add('user2','12345','u2@user.com','User','Two')
+		self.url = self.live_server_url + '/api/user_data'
+		self.user1_url = self.url + '/user1'

@@ -26,50 +26,50 @@ msgstr "Español"
 msgid "English"
 msgstr "Ingles"
 
-#: src/authentication/views.py:28 src/authentication/views.py:69
-#: src/authentication/views.py:174 src/authentication/views.py:237
+#: src/users/views.py:28 src/users/views.py:69
+#: src/users/views.py:174 src/users/views.py:237
 #: src/events/views.py:60
 msgid "Invalid parameters"
 msgstr "Parametros invalidos"
 
-#: src/authentication/views.py:38
+#: src/users/views.py:38
 msgid "Username does not exist or password is incorrect"
 msgstr "No exite el usuario o la contraseña no es valida"
 
-#: src/authentication/views.py:88 src/authentication/views.py:180
+#: src/users/views.py:88 src/users/views.py:180
 msgid "Invalid username"
 msgstr "Usuario invalido"
 
-#: src/authentication/views.py:92 src/authentication/views.py:251
+#: src/users/views.py:92 src/users/views.py:251
 msgid "Invalid password"
 msgstr "Contraseña invalida"
 
-#: src/authentication/views.py:96 src/authentication/views.py:254
+#: src/users/views.py:96 src/users/views.py:254
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
-#: src/authentication/views.py:100
+#: src/users/views.py:100
 msgid "Invalid mail"
 msgstr "E-Mail invalido"
 
-#: src/authentication/views.py:106
+#: src/users/views.py:106
 msgid "Username already exists"
 msgstr "Ya existe el usuario"
 
-#: src/authentication/views.py:129
+#: src/users/views.py:129
 msgid "There is no user logged in"
 msgstr "No hay un usuario con la sesion iniciada"
 
-#: src/authentication/views.py:167
+#: src/users/views.py:167
 msgid "We have already send a password recovery email for your username."
 msgstr "Ya hemos enviado un mail de recuperación de contraseña para este usuario"
 
-#: src/authentication/views.py:187 src/authentication/views.py:213
-#: src/authentication/views.py:242
+#: src/users/views.py:187 src/users/views.py:213
+#: src/users/views.py:242
 msgid "You haven't start the password recovery process"
 msgstr "No ha iniciado el proceso de recuperación de contraseña."
 
-#: src/authentication/views.py:259
+#: src/users/views.py:259
 msgid "Username does not exist"
 msgstr "No exite el usuario"
 
