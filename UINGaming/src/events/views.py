@@ -2,7 +2,7 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from src.events.models import Event
+from src.events.models import Event,EventMembership
 from django.utils.translation import ugettext as _
 from django.core import serializers
 from django.core.exceptions import *
@@ -12,8 +12,8 @@ from src.utils.api import render_to_json
 def EventsAPI(request):
 	#QUERY ALL EVENTS
 	if request.method == 'GET':
-		returnData = ""
-		data = serializers.serialize("json", Event.objects.all())
+		data = serializers.serialize("json", EventMembership.objects.all())
+		print data
 		response = HttpResponse(data, content_type='application/json')
 		return response
 	#ADD EVENT
