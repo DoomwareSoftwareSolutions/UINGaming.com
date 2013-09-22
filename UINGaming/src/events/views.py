@@ -66,11 +66,10 @@ def EventMembershipAPI(request):
 		returnData = {}
 		returnData['error_code'] = 0 # NO ERROR!
 		returnData['error_description'] = ""
-		# Obtengo los parametros del JSON enviado
 		try:
 			for obj in serializers.deserialize("json", request.body):
-				deserialized_object = obj
-		except DeserializationError: #Lo unico que causa error de deserializacion es el formato de la fecha
+				deserialized_object = obj.object
+		except DeserializationError: 
 			returnData['error_code'] = 1 
 			returnData['error_description'] = _("Invalid JSON")
 			return render_to_json(returnData);
@@ -80,14 +79,14 @@ def EventMembershipAPI(request):
 			returnData['error_description'] = _("Invalid parameters")
 			return render_to_json(returnData)
 			
-		if (deserialized_object.object.pk==1):
+		if (deserialized_object.pk==1):
 			#ADD
-			deserialized_object.object.id = None
-			deserialized_object.object.pk = None
-			return addMembership(deserialized_object.object,returnData)
+			deserialized_object.id = None
+			deserialized_object.pk = None
+			return addMembership(deserialized_object,returnData)
 		else:
 			#EDIT
-			return editMembership(deserialized_object.object,returnData)
+			return editMembership(deserialized_object,returnData)
 	
 		return render_to_json(returnData);
 	else:
@@ -114,6 +113,7 @@ def addMembership(obj,returnData):
 	memb.save()
 	return render_to_json(returnData)
 	
+#Edits membership paid status, teamName & teamMembers based on received json
 def editMembership(obj,returnData):
 	try:
 		membership = EventMembership.objects.get(pk=obj.pk)
@@ -121,8 +121,10 @@ def editMembership(obj,returnData):
 		returnData['error_code'] = 5 # ERROR membership not found
 		returnData['error_description'] = _("Invalid membership key")
 	
-	returnData['error_code'] = 6 # ERROR edit not implemented
-	returnData['error_description'] = _("edit not implemented")
+	membership.paid = obj.paid
+	membership.teamName = obj.teamName
+	membership.teamMembers = obj.teamMembers
+	membership.save()
 	return render_to_json(returnData)
 	
 		
