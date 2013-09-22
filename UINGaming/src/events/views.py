@@ -49,7 +49,11 @@ def objectShouldBeSaved(deserialized_object,returnData):
 		return False;
 
 	return True
-	
+
+#TODO separar los edits y adds en servicios distintos, el que inserta no sabe pk
+#OPCION: reservar pk=1 para inserciones (hice esto en events)
+
+#Reminder: estoy queryando users y events por pk (primary key, por defecto un integer incremental)
 def EventMembershipAPI(request):
 	#Query the corresponding membership to the passed eventID. Returns the membership in json format
 	if request.method == 'GET':
@@ -75,15 +79,15 @@ def EventMembershipAPI(request):
 			returnData['error_code'] = 2 # ERROR objeto vacio
 			returnData['error_description'] = _("Invalid parameters")
 			return render_to_json(returnData)
-		print deserialized_object.object.pk
-		querySet = EventMembership.objects.get(pk=deserialized_object.object.pk)
-		if (querySet.count()==0):
+			
+		if (deserialized_object.object.pk==1):
 			#ADD
-			print querySet
+			deserialized_object.object.id = None
+			deserialized_object.object.pk = None
 			return addMembership(deserialized_object.object,returnData)
 		else:
 			#EDIT
-			return editMembership(deserialized_object.object.pk,returnData)
+			return editMembership(deserialized_object.object,returnData)
 	
 		return render_to_json(returnData);
 	else:
@@ -110,9 +114,15 @@ def addMembership(obj,returnData):
 	memb.save()
 	return render_to_json(returnData)
 	
-def editMembership(pk,returnData):
-	returnData['error_code'] = 5 # ERROR edit uninplemented
-	returnData['error_description'] = _("Edit unimplemented")
+def editMembership(obj,returnData):
+	try:
+		membership = EventMembership.objects.get(pk=obj.pk)
+	except EventMembership.DoesNotExist:
+		returnData['error_code'] = 5 # ERROR membership not found
+		returnData['error_description'] = _("Invalid membership key")
+	
+	returnData['error_code'] = 6 # ERROR edit not implemented
+	returnData['error_description'] = _("edit not implemented")
 	return render_to_json(returnData)
 	
 		
