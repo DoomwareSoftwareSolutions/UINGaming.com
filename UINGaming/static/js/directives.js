@@ -10,3 +10,15 @@ angular.module('myApp.directives', []).
     directive('navBar', function () {
         return {templateUrl: 'partials/NavBarView', controller: 'NavCtrl'};
     });
+
+angular.module('myApp.directives').directive('errSrc', 
+function() {
+	return {
+		link: function(scope, element, attrs) {
+			element.bind('error', 
+			function() {
+				element.attr('src', attrs.errSrc);
+			});
+		}
+	}
+});

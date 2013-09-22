@@ -52,5 +52,6 @@ class EventMembership(models.Model):
 	event = models.ForeignKey(Event)
 	user = models.ForeignKey(User)
 	teamName = models.CharField(max_length=256)
+	teamTag = models.CharField(max_length=5)
 	teamMembers = models.CharField(max_length=1024)
 	paid = models.BooleanField()

@@ -27,7 +27,6 @@ def EventsAPI(request):
 			returnData['error_code'] = 2 # ERROR FECHA INVALIDA
 			returnData['error_description'] = _("Invalid date")
 			return render_to_json(returnData);
-			
 		
 		returnData['error_code'] = 0 # NO ERROR!
 		returnData['error_description'] = ""
@@ -87,8 +86,6 @@ def EventMembershipAPI(request):
 		else:
 			#EDIT
 			return editMembership(deserialized_object,returnData)
-	
-		return render_to_json(returnData);
 	else:
 		return HttpResponseNotAllowed(['GET'],['POST'])
 
@@ -117,14 +114,16 @@ def addMembership(obj,returnData):
 def editMembership(obj,returnData):
 	try:
 		membership = EventMembership.objects.get(pk=obj.pk)
+		membership.paid = obj.paid
+		membership.teamName = obj.teamName
+		membership.teamTag = obj.teamTag
+		membership.teamMembers = obj.teamMembers
+		membership.save()
 	except EventMembership.DoesNotExist:
 		returnData['error_code'] = 5 # ERROR membership not found
 		returnData['error_description'] = _("Invalid membership key")
 	
-	membership.paid = obj.paid
-	membership.teamName = obj.teamName
-	membership.teamMembers = obj.teamMembers
-	membership.save()
+	
 	return render_to_json(returnData)
 	
 		
