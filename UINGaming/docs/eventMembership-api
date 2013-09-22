@@ -1,0 +1,57 @@
+Especificacion de la API para el subsistema de eventos.
+==========================================================================
+
+# EVENTS:
+	URL: http://localhost:8000/api/eventMembership
+## METHOD POST:
+## Parametros del form:
+Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+[
+    {
+        "pk": -1, # pk = -1 => ADD; pk != -1 => EDIT
+        "model": "events.eventmembership",
+        "fields": {
+            "paid": false,
+            "teamMembers": "123",
+            "teamTag": "BTTT",
+            "event": 122, #event pk
+            "teamName": "Better than them tinchos",
+            "user": 1 #user pk
+        }
+    }
+]
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		error_code: 3					-> Es el código del error ocurrido.
+		error_description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
+	}
+			
+Codigos de errores con sus respectivas descripciones:
+	error_code = 0 -> NO HUBO ERRORES  		
+	error_code = 1 -> Json invalido	
+	error_code = 2 -> Objeto vacio	
+	error_code = 3 -> Usuario invalido	
+	error_code = 4 -> Evento invalido	
+	error_code = 5 -> (edit) Membership not found		
+	
+
+## METHOD GET:
+
+URL:http://localhost:8000/api/eventMembership?pk=XXX
+Los valores seran devueltos en el siguiente formato:
+[
+    {
+        "pk": XXX, #pk pasado por parametro en el get
+        "model": "events.eventmembership",
+        "fields": {
+            "user": 1,
+            "paid": false,
+            "teamTag": "BTTT",
+            "teamName": "Dem tinchos",
+            "event": 122,
+            "teamMembers": "123"
+        }
+    }
+]
+
