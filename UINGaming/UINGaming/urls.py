@@ -44,7 +44,7 @@ urlpatterns = patterns('',
 	url(r'^api/password_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormAPI),
 	url(r'^api/logout$',src.users.views.LogOutAPI),
 	url(r'^api/events$',src.events.views.EventsAPI),
-	
+	url(r'^api/eventMembership$',src.events.views.EventMembershipAPI),
 	# FOR TESTING FRONTEND
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
