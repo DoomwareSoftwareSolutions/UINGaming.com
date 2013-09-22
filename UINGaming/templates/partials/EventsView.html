@@ -1,7 +1,7 @@
 <div class="events-container">
     <div class="event-list">
         <div class="media" ng-repeat="event in events">
-            <a class="pull-left event-icon-a" href="{{event.fields.link}}">
+            <a class="pull-left event-icon-a" href="../events/link/{{event.pk}}">
                 <img class="media-object" ng-src="{{event.fields.image}}" alt="Image" err-src="static/img/event.png">
             </a>
 

@@ -122,10 +122,7 @@ def addMembership(obj,returnData):
 def editMembership(obj,returnData):
 	try:
 		membership = EventMembership.objects.get(pk=obj.pk)
-		membership.paid = obj.paid
-		membership.teamName = obj.teamName
-		membership.teamTag = obj.teamTag
-		membership.teamMembers = obj.teamMembers
+		membership = obj
 		membership.save()
 	except EventMembership.DoesNotExist:
 		returnData['error_code'] = 5 # ERROR membership not found
