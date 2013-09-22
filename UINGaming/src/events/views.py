@@ -19,36 +19,41 @@ def EventsAPI(request):
 	#ADD EVENT
 	elif request.method == 'POST':
 		returnData = {}
+		returnData['error_code'] = 0 # NO ERROR!
+		returnData['error_description'] = ""
 		# Obtengo los parametros del JSON enviado
 		try:
 			for obj in serializers.deserialize("json", request.body):
-				deserialized_object = obj
+				deserialized_object = obj.object
 		except DeserializationError: #Lo unico que causa error de deserializacion es el formato de la fecha
-			returnData['error_code'] = 2 # ERROR FECHA INVALIDA
+			returnData['error_code'] = 1 # ERROR FECHA INVALIDA
 			returnData['error_description'] = _("Invalid date")
 			return render_to_json(returnData);
 		
-		returnData['error_code'] = 0 # NO ERROR!
-		returnData['error_description'] = ""
-		if objectShouldBeSaved(deserialized_object,returnData):
+		#PK=-1 => ADD
+		if (deserialized_object.pk==-1):
 			#We set the objects id's to None to create a new entry. (DJANGO 1.5.X BUG)
-			deserialized_object.object.id = None
-			deserialized_object.object.pk = None
+			deserialized_object.id = None
+			deserialized_object.pk = None
 			deserialized_object.save()	
-	
-		return render_to_json(returnData);
+			return render_to_json(returnData);
+		else:
+			return editEvent(deserialized_object,returnData)
 	else:
 		return HttpResponseNotAllowed(['GET'],['POST'])
 		
-def objectShouldBeSaved(deserialized_object,returnData):
-	# Si los parametros son invalidos
-	if deserialized_object is None:
-		returnData['error_code'] = 4 # ERROR PARAMETROS INVALIDOS
-		returnData['error_description'] = _("Invalid parameters")
-		return False;
 
-	return True
-
+def editEvent(obj,returnData):
+	try:
+		event = Event.objects.get(pk=obj.pk)
+		event = obj
+		event.save()
+	except Event.DoesNotExist:
+		returnData['error_code'] = 2 # ERROR event not found
+		returnData['error_description'] = _("Invalid event key")
+	
+	return render_to_json(returnData)
+	
 #TODO separar los edits y adds en servicios distintos, el que inserta no sabe pk
 #OPCION: reservar pk=1 para inserciones (hice esto en events)
 
@@ -60,7 +65,6 @@ def EventMembershipAPI(request):
 		data = serializers.serialize("json", EventMembership.objects.filter(event__id=eventPk))
 		response = HttpResponse(data, content_type='application/json')
 		return response
-	#ADD/EDIT MEMBERSHIP TODO
 	elif request.method == 'POST':
 		returnData = {}
 		returnData['error_code'] = 0 # NO ERROR!
@@ -78,7 +82,8 @@ def EventMembershipAPI(request):
 			returnData['error_description'] = _("Invalid parameters")
 			return render_to_json(returnData)
 			
-		if (deserialized_object.pk==1):
+		#PK=-1 => ADD
+		if (deserialized_object.pk==-1):
 			#ADD
 			deserialized_object.id = None
 			deserialized_object.pk = None
@@ -88,6 +93,9 @@ def EventMembershipAPI(request):
 			return editMembership(deserialized_object,returnData)
 	else:
 		return HttpResponseNotAllowed(['GET'],['POST'])
+
+
+
 
 
 def addMembership(obj,returnData):

@@ -11,6 +11,7 @@ angular.module('myApp.directives', []).
         return {templateUrl: 'partials/NavBarView', controller: 'NavCtrl'};
     });
 
+//Provides a directive to define a default image in case theres an error with the one provided
 angular.module('myApp.directives').directive('errSrc', 
 function() {
 	return {
