@@ -60,3 +60,8 @@ logs
 results
 
 npm-debug.log
+
+src/events/migrations/*
+src/home/migrations/*
+src/users/migrations/*
+

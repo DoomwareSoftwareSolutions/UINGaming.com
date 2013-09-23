@@ -40,6 +40,7 @@ urlpatterns = patterns('',
 	# ######### API URLS ######### #
 	# ############################ #
 	url(r'^api/users$',src.users.views.UserProfileAPI),
+	url(r'^api/users/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.UserProfileAPI),
 	url(r'^api/signup$',src.users.views.SignUpAPI),
 	url(r'^api/signin$',src.users.views.SignInAPI),
 	url(r'^api/password_recover$',src.users.views.PasswordRecoverAPI),

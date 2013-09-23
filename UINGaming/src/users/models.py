@@ -11,7 +11,7 @@ email_regexp = re.compile(r"^[\S]+@[\S]+\.[\S]+$")
 # Create your models here.
 
 class User(models.Model):
-	username = models.CharField(max_length=40, unique = True)
+	username = models.CharField(max_length=40, primary_key = True)
 	hashedID = models.CharField(max_length=256)
 	created = models.DateField(auto_now_add=True)
 	email = models.EmailField()

@@ -537,7 +537,33 @@ class UserProfileApiTests(LiveServerTestCase):
 		response = self.client.get(self.url)
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],2)
+		
+	def PostingNewFistnameAndLastnameToUser1InfoLoggedInAsUser1ReturnOK(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "firstname":"User" ,"lastname":"One"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],0)
+		response = self.client.get(self.url + '?user=user1')
+		info = json.loads(response.content)
+		self.assertEqual(info['fistname'],'User')
+		self.assertEqual(info['lasname'],'One')
 	
+	def PostingNewEmailAndPasswordToUser1InfoLoggedInAsUser1ReturnOK(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],0)
+		response = self.client.get(self.url + '?user=user1')
+		info = json.loads(response.content)
+		self.assertEqual(info['email'],'user@mail.com')
+		self.client.get(self.live_server_url + '/api/logout')
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertNotEqual(info['error-code'],0)
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],0)
+		
 	def testOtherMethodsResponse405(self):
 		response = self.client.head(self.url)
 		self.assertEqual(response.status_code,405)

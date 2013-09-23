@@ -276,7 +276,7 @@ def PasswordRecoverFormAPI(request, username):
 # ###############################     USER PROFILE API    ################################### #
 # ########################################################################################### #
 
-def UserProfileAPI(request):
+def UserProfileAPI(request, username=''):
     information={}
     cookie = request.get_signed_cookie(key='user_id', default=None)
     if request.method == 'GET':
@@ -300,8 +300,7 @@ def UserProfileAPI(request):
             api.set_error(information,0)
             information = dict(information.items() + user.toDic().items())
             return api.render_to_json(information);
-            
-    
+
     elif request.method == 'POST':
         # POST METHOD: Si la cookie ya esta seteada, informo que ya esta en "tramite" el cambio de clave
         # si no esta seteada, informo lo contrario.
