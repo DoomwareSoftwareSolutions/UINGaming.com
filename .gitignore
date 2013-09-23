@@ -41,7 +41,7 @@ nosetests.xml
 **/release.py
 
 # Migrations
-**/migrations/
+**/migrations
 
 lib-cov
 *.seed
