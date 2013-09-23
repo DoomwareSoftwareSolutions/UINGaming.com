@@ -92,3 +92,32 @@ class User(models.Model):
 		
 	def updateUserLastname(self, newLastname):
 		User.objects.filter(username = self.username).update(lastname = newLastname)
+		
+	def toDic(self):
+		dic = {}
+		dic['username'] = self.username
+		dic['created'] = self.created.isoformat()
+		dic['email'] = self.email
+		dic['firstname'] = self.firstname
+		dic['lastname'] = self.lastname
+		return dic
+	
+	@classmethod
+	def updateFromDic(self,dic):
+		username = dic.get('username',None)
+		email = dic.get('email',None)
+		firstname = dic.get('firstname',None)
+		lastname = dic.get('lastname',None)
+		if username is None:
+			return None
+		user = User.getByUsername(username)
+		if user is None:
+			return None
+		if email != None and User.isValidEmail(email):
+			user.updateUserEmail(email)
+		if firstname != None:
+			user.updateUserFirstname(firstname)
+		if lastname != None:
+			user.updateUserLastname(lastname)
+			
+		return user
