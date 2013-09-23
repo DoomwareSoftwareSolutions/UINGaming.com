@@ -8,6 +8,7 @@ import src.utils.api
 from django.contrib import admin
 admin.autodiscover()
 
+handler404 = 'mysite.views.my_custom_404_view'
 urlpatterns = patterns('',
 	# Examples:
 	# url(r'^$', 'WebApp.views.home', name='home'),
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
+	url(r'^events/event/get/[0-9]+$',src.utils.api.IndexRequestHandler),
 	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormView),
 	
 	
