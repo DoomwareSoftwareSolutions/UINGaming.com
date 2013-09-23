@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
-	url(r'^events/event/[0-9]+$',src.utils.api.IndexRequestHandler),
+	url(r'^events/[0-9]+$',src.utils.api.IndexRequestHandler),
 	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormView),
 	
 	
