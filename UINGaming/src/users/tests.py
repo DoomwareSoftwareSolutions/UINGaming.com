@@ -1,5 +1,6 @@
 from django.test import TestCase, LiveServerTestCase
 from django.test.client import Client
+from django.core import serializers
 from src.users.models import User
 
 import json
@@ -480,4 +481,19 @@ class UserDataApiTests(LiveServerTestCase):
 		User.add('user1','1234','u1@user.com')
 		User.add('user2','12345','u2@user.com','User','Two')
 		self.url = self.live_server_url + '/api/user_data'
-		self.user1_url = self.url + '/user1'
+		
+	def testObtaingUser1InfoReturnOk(self):
+		response = self.client.get(self.url + '?user=user1')
+		for des_user in serializers.deserialize("json", response.content):
+			user = des_user
+		self.assertEqual(user.username,user1)
+		
+	def testOtherMethodsResponse405(self):
+		response = self.client.head(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.put(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.delete(self.user1_url)
+		self.assertEqual(response.status_code,405)
+		response = self.client.options(self.user1_url)
+		self.assertEqual(response.status_code,405)
