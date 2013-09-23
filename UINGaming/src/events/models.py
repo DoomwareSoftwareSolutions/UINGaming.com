@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django.core import serializers
 from src.users.models import User
 import re
-
+from django.core.urlresolvers import reverse
 import datetime
 
 
@@ -46,11 +46,16 @@ class Event(models.Model):
 		
 	def toDict(self):
 		return model_to_dict(self)
+		
+	@property
+	def get_event_url(self):
+		return self.pk
 	
 #Relation event-user
 class EventMembership(models.Model):
 	event = models.ForeignKey(Event)
 	user = models.ForeignKey(User)
 	teamName = models.CharField(max_length=256)
+	teamTag = models.CharField(max_length=5)
 	teamMembers = models.CharField(max_length=1024)
 	paid = models.BooleanField()

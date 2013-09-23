@@ -28,6 +28,22 @@ class UserTest(TestCase):
 		U = User.objects.filter(username = "user2").get()
 		self.assertEqual(u2, U)
 	
+	def testUsersPartialUsernameSearch(self):
+		u = User.add("tomas","passwd",'user1@mail.com')
+		U = User.getByPartialUsername("tom")
+		self.assertEqual(u, U)
+		U = User.getByPartialUsername("tomas")
+		self.assertEqual(u, U)
+		u2 = User.add("fede", 'passwd','mail@mail.com')
+		U2 = User.getByPartialUsername("fe")
+		self.assertEqual(u2, U2)
+		U2 = User.getByPartialUsername("fede")
+		self.assertEqual(u2, U2)
+		U = User.getByPartialUsername("ToMaS")
+		self.assertEqual(u, U)
+		U = User.getByPartialUsername("To")
+		self.assertEqual(u, U)
+	
 	def testTwoEqualUsersCreation(self):
 		u = User.add("user1","passwd",'user1@mail.com')
 		u2 = User.add("user1","passwd",'user1@mail.com')
@@ -465,7 +481,7 @@ class UserDataApiTests(LiveServerTestCase):
 		User.add('user1','1234','u1@user.com')
 		User.add('user2','12345','u2@user.com','User','Two')
 		self.url = self.live_server_url + '/api/user_data'
-	
+		
 	def testObtaingUser1InfoReturnOk(self):
 		response = self.client.get(self.url + '?user=user1')
 		for des_user in serializers.deserialize("json", response.content):

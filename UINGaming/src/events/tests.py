@@ -59,4 +59,6 @@ class EventTest(TestCase):
 			teamMembers = "FedeChampion",
 			paid = False)
 		m2.save()
+		
+		print e.get_event_url
 		print e.enrolledUsers.all()

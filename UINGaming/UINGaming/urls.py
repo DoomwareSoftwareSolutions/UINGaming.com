@@ -8,6 +8,7 @@ import src.utils.api
 from django.contrib import admin
 admin.autodiscover()
 
+handler404 = 'mysite.views.my_custom_404_view'
 urlpatterns = patterns('',
 	# Examples:
 	# url(r'^$', 'WebApp.views.home', name='home'),
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
+	url(r'^events/event/get/[0-9]+$',src.utils.api.IndexRequestHandler),
 	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormView),
 	
 	
@@ -44,7 +46,7 @@ urlpatterns = patterns('',
 	url(r'^api/password_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormAPI),
 	url(r'^api/logout$',src.users.views.LogOutAPI),
 	url(r'^api/events$',src.events.views.EventsAPI),
-	
+	url(r'^api/eventMembership$',src.events.views.EventMembershipAPI),
 	# FOR TESTING FRONTEND
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
@@ -52,6 +54,8 @@ urlpatterns = patterns('',
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
-	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsRequestHandler),    
+	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsRequestHandler),
+	
+	# PERMALINKS#    
+	url(r'^events/(?P<pk>[a-zA-Z]*$)',src.utils.api.IndexRequestHandler),
 )
-
