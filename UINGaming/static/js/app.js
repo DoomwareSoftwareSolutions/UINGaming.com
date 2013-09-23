@@ -43,7 +43,7 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/EventRegisterView',
                 controller: 'EventRegisterCtrl'
             }).
-            when('/events/event/get/:pk',{
+            when('/events/event/:pk',{
             	templateUrl: 'partials/EventDetail',
             	controller: 'EventDetailCtrl'
             }).
