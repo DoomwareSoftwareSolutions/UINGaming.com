@@ -1,0 +1,14 @@
+<div class="events-container">
+    <div class="event-list">
+        <div class="media" ng-repeat="event in events">
+            <a class="pull-left event-icon-a" href="{{event.pk}}">
+                <img class="media-object" ng-src="{{event.fields.image}}" alt="Image" err-src="static/img/event.png">
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading">{{event.fields.head}}</h4>
+                {{event.fields.body}}
+            </div>
+        </div>
+    </div>
+</div>
