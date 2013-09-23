@@ -18,6 +18,17 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             });
         return deferred.promise;
     }
+    
+    EventService.getEvent = function ($q, $scope, pk) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        var url = 'http://localhost:8000/api/events?pk='+pk;
+        $http.get(url)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
 
     EventService.getEventList = function () {
         return eventList;

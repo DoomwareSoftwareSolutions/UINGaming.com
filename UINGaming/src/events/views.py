@@ -13,9 +13,23 @@ from src.utils.api import render_to_json
 def EventsAPI(request):
 	#QUERY ALL EVENTS
 	if request.method == 'GET':
-		data = serializers.serialize("json", Event.objects.all())
-		response = HttpResponse(data, content_type='application/json')
-		return response
+		eventPk = request.GET.get('pk')
+		#Sin params
+		if eventPk == None:
+			data = serializers.serialize("json", Event.objects.all())
+			response = HttpResponse(data, content_type='application/json')
+			return response
+		else:
+			try:
+				data = serializers.serialize("json",Event.objects.filter(pk=eventPk))
+				response = HttpResponse(data, content_type='application/json')
+				return response
+			except Event.DoesNotExist:
+				returnData = {}
+				returnData['error_code'] = 3 # Event Not Found!
+				returnData['error_description'] = _("Event not found")
+				return render_to_json(returnData);
+				
 	#ADD EVENT
 	elif request.method == 'POST':
 		returnData = {}
@@ -131,4 +145,5 @@ def editMembership(obj,returnData):
 	
 	return render_to_json(returnData)
 	
-		
+
+

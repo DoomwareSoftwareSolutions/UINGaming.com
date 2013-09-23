@@ -16,6 +16,7 @@ var depList = [
     'RegisterCtrl',
     'HomeCtrl',
     'EventsCtrl',
+    'EventDetailCtrl',
     'NavCtrl'
 ]
 
@@ -41,6 +42,10 @@ angular.module('myApp', depList).
             when('/eventregister', {
                 templateUrl: 'partials/EventRegisterView',
                 controller: 'EventRegisterCtrl'
+            }).
+            when('/events/event/get/:pk',{
+            	templateUrl: 'partials/EventDetail',
+            	controller: 'EventDetailCtrl'
             }).
             otherwise({
                 redirectTo: '/home'
