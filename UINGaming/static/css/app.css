@@ -211,6 +211,17 @@
     margin-top: 5%;
 }
 
+
+.addMember-button {
+	margin-top: 5%;
+    height: auto;
+	width: auto;
+	float:auto;
+	vertical-align: middle;
+	border-radius:6px;
+	background-color: #156C77;
+}
+
 .featurette-image {
     border:2px solid #222222;
     border-radius: 40px;

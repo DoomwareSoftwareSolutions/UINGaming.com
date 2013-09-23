@@ -30,6 +30,17 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         return deferred.promise;
     }
 
+	EventService.registerToEvent = function ($q, EventData) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http.post('http://localhost:8000/api/eventMembership', EventData)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
+	
+	
     EventService.getEventList = function () {
         return eventList;
     }
