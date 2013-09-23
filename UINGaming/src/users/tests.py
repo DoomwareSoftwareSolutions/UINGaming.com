@@ -27,6 +27,22 @@ class UserTest(TestCase):
 		U = User.objects.filter(username = "user2").get()
 		self.assertEqual(u2, U)
 	
+	def testUsersPartialUsernameSearch(self):
+		u = User.add("tomas","passwd",'user1@mail.com')
+		U = User.getByPartialUsername("tom")
+		self.assertEqual(u, U)
+		U = User.getByPartialUsername("tomas")
+		self.assertEqual(u, U)
+		u2 = User.add("fede", 'passwd','mail@mail.com')
+		U2 = User.getByPartialUsername("fe")
+		self.assertEqual(u2, U2)
+		U2 = User.getByPartialUsername("fede")
+		self.assertEqual(u2, U2)
+		U = User.getByPartialUsername("ToMaS")
+		self.assertEqual(u, U)
+		U = User.getByPartialUsername("To")
+		self.assertEqual(u, U)
+	
 	def testTwoEqualUsersCreation(self):
 		u = User.add("user1","passwd",'user1@mail.com')
 		u2 = User.add("user1","passwd",'user1@mail.com')

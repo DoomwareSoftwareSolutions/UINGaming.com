@@ -37,6 +37,10 @@ class User(models.Model):
 		return u
 
 	@classmethod
+	def getByPartialUsername(self, partialUsername):
+		return User.objects.get(username__iregex=r'^{0}'.format(partialUsername))
+
+	@classmethod
 	def getByUsername(self, username):
 		try:
 			user = User.objects.filter(username = username).get()
