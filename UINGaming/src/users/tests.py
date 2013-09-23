@@ -476,24 +476,36 @@ class PasswordRecoveryFormApiTests(LiveServerTestCase):
 		response = self.client.options(self.user1_url)
 		self.assertEqual(response.status_code,405)
 		
-class UserDataApiTests(LiveServerTestCase):
+class UserProfileApiTests(LiveServerTestCase):
 	def setUp(self):
 		User.add('user1','1234','u1@user.com')
 		User.add('user2','12345','u2@user.com','User','Two')
-		self.url = self.live_server_url + '/api/user_data'
+		self.url = self.live_server_url + '/api/users'
 		
 	def testObtaingUser1InfoReturnOk(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
 		response = self.client.get(self.url + '?user=user1')
-		for des_user in serializers.deserialize("json", response.content):
-			user = des_user
-		self.assertEqual(user.username,user1)
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],0)
+		self.assertEqual(info['username'],'user1')
+		self.assertEqual(info['email'],'u1@user.com')
+		
+	def testObtaingUser2InfoReturnOk(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user2", "password":"12345"}',content_type='application/json')
+		response = self.client.get(self.url + '?user=user2')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],0)
+		self.assertEqual(info['username'],'user2')
+		self.assertEqual(info['email'],'u2@user.com')
+		self.assertEqual(info['firstname'],'User')
+		self.assertEqual(info['lastname'],'Two')
 		
 	def testOtherMethodsResponse405(self):
-		response = self.client.head(self.user1_url)
+		response = self.client.head(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.put(self.user1_url)
+		response = self.client.put(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.delete(self.user1_url)
+		response = self.client.delete(self.url)
 		self.assertEqual(response.status_code,405)
-		response = self.client.options(self.user1_url)
+		response = self.client.options(self.url)
 		self.assertEqual(response.status_code,405)
