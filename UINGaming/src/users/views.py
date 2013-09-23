@@ -283,7 +283,7 @@ def UserProfileAPI(request):
         # GET METHOD: Devuelve la informacion del usuario recibido en el parametro user.
         # Si la cookie de sesion no esta seteada devuelve error
         if cookie is None:
-            api.set_error(information,1,_("You are not loged in"))
+            api.set_error(information,1,_("You are not logged in"))
             return api.render_to_json(information)
         else:
             username = request.GET.get('user',None)
