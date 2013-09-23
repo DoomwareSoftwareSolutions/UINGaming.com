@@ -2,14 +2,15 @@
     <div class="container form-container">
         <div class="form-padding">
             <h2 class="form-signin-heading">Enter your team information</h2>
-            <input type="text" class="form-control signin-field" placeholder="Name">
-            <input type="text" class="form-control signin-field" maxlength="3" placeholder="Tag (3 letters)">
+            <input type="text" class="form-control signin-field" ng-model="registerData.fields.teamName">
+            <input type="text" class="form-control signin-field" maxlength="3" ng-model="registerData.fields.teamTag">
 
-            <form ng-submit="addMember()">
-                <input type="text" class="form-control signin-field"
-                       ng-model="newMember" placeholder="Member name"
-                       maxlength="20"/>
-            </form>
+          
+            <input type="text" class="form-control signin-field"
+            		ng-model="newMember" placeholder="Member name"
+            		maxlength="20" style="display:inline;width:auto"/>
+            <button class="addMember-button" type="submit" ng-click="addMember()">Add</button>
+         
 
             <div ng-repeat="member in teamMembers">
                 <span class="glyphicon glyphicon-remove" ng-click="removeMember($index)"></span>{{member}}
@@ -17,7 +18,7 @@
             <!--<textarea style="resize: none;" cols="30" rows="5" class="form-control signin-field"-->
             <!--placeholder="Members"></textarea>-->
             <br/>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="register()">Register</button>
         </div>
     </div>
 </div>

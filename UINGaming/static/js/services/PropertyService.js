@@ -72,6 +72,21 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             submitLabel: 'Register'
         }
     };
+    
+     PropertyService.properties.eventRegister = {
+        es: {
+            formTitle: 'Subscribirse a evento',
+            teamNamePlaceholder: 'Nombre del team',
+            teamTagPlaceholder: 'Tag del team',
+            teamMembersPlaceholder: 'Miembros del team',
+        },
+        en: {
+            formTitle: 'Subscribirse a evento',
+            teamNamePlaceholder: 'Nombre del team',
+            teamTagPlaceholder: 'Tag del team',
+            teamMembersPlaceholder: 'Miembros del team',
+        }
+    };
 
     PropertyService.getProperties = function () {
         return PropertyService.properties;
