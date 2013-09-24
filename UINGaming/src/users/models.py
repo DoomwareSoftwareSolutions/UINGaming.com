@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 import re
 
+
 from src.utils import Crypt
 
 username_re = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
@@ -62,62 +63,47 @@ class User(models.Model):
 	@classmethod
 	def isValidUsername(self, username):
 		# Logica de validacion de usuario
-		if username_re.match(username) is None:
+		if username is None:
+			return False
+		elif username_re.match(username) is None:
 			return False
 		return True
 	
 	@classmethod
 	def isValidPassword(self, password):
 		# Logica de validacion de contrasenia
-		if password_re.match(password) is None:
+		if password is None:
+			return False
+		elif password_re.match(password) is None:
 			return False
 		return True
 	
 	@classmethod
 	def isValidEmail(self, email):
 		# Logica de validacion de email
-		if email_regexp.match(email) is None:
+		if email is None:
+			return False
+		elif email_regexp.match(email) is None:
 			return False
 		return True
 	
 	def updateUserPassword(self, passwd):
 		newHash = Crypt.encryptUserInfo(self.username,passwd)
-		User.objects.filter(username = self.username).update(hashedID = newHash)
+		self.hashedID = newHash
 	
 	def updateUserEmail(self, newEMail):
-		User.objects.filter(username = self.username).update(email = newEMail)
-	
+		self.email = newEMail
+		
 	def updateUserFirstname(self, newFirstname):
-		User.objects.filter(username = self.username).update(firstname = newFirstname)
+		self.firstname = newFirstname
 		
 	def updateUserLastname(self, newLastname):
-		User.objects.filter(username = self.username).update(lastname = newLastname)
+		self.lastname = newLastname
 		
 	def toDic(self):
 		dic = {}
 		dic['username'] = self.username
-		dic['created'] = self.created.isoformat()
 		dic['email'] = self.email
 		dic['firstname'] = self.firstname
 		dic['lastname'] = self.lastname
 		return dic
-	
-	@classmethod
-	def updateFromDic(self,dic):
-		username = dic.get('username',None)
-		email = dic.get('email',None)
-		firstname = dic.get('firstname',None)
-		lastname = dic.get('lastname',None)
-		if username is None:
-			return None
-		user = User.getByUsername(username)
-		if user is None:
-			return None
-		if email != None and User.isValidEmail(email):
-			user.updateUserEmail(email)
-		if firstname != None:
-			user.updateUserFirstname(firstname)
-		if lastname != None:
-			user.updateUserLastname(lastname)
-			
-		return user

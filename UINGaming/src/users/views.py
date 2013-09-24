@@ -278,11 +278,11 @@ def PasswordRecoverFormAPI(request, username):
 
 def UserProfileAPI(request, username=''):
     information={}
-    cookie = request.get_signed_cookie(key='user_id', default=None)
+    cookie_value = request.get_signed_cookie(key='user_id', default=None)
     if request.method == 'GET':
         # GET METHOD: Devuelve la informacion del usuario recibido en el parametro user.
         # Si la cookie de sesion no esta seteada devuelve error
-        if cookie is None:
+        if cookie_value is None:
             api.set_error(information,1,_("You are not logged in"))
             return api.render_to_json(information)
         else:
@@ -294,7 +294,7 @@ def UserProfileAPI(request, username=''):
             user = User.getByUsername(username)
             
             if user is None:
-                api.set_error(information,3,_("Username does not exist"))
+                api.set_error(information,3,_("User does not exist"))
                 return api.render_to_json(information);
             
             api.set_error(information,0)
@@ -302,10 +302,9 @@ def UserProfileAPI(request, username=''):
             return api.render_to_json(information);
 
     elif request.method == 'POST':
-        # POST METHOD: Si la cookie ya esta seteada, informo que ya esta en "tramite" el cambio de clave
-        # si no esta seteada, informo lo contrario.
-        if cookie != None:
-            api.set_error(information,1,_("We have already send a password recovery email for your username."))
+        # POST METHOD: Cambia la informacion del usuario. Si el usuario no es el que inicio sesion esto no podra llevarse a cabo
+        if cookie_value == None:
+            api.set_error(information,1,_("You are not logged in"))
             return api.render_to_json(information)
         else:
             
@@ -315,28 +314,48 @@ def UserProfileAPI(request, username=''):
                 api.set_error(information,6,_('Invalid parameters'))
                 return api.render_to_json(information);
             
-            information['username'] = params.get('username', None)
+            if username != cookie_value:
+                api.set_error(information,2,_("You don't have permision to change this data"))
+                return api.render_to_json(information);
+        
+    
+            user = User.getByUsername(username)
+            if user is None:
+                api.set_error(information,3,_("User does not exist"))
+                return api.render_to_json(information);
             
-            if not User.isValidUsername(information['username']):
-                api.set_error(information,2,_('Invalid username'))
-                return api.render_to_json(information)
+            email = params.get('email', None)
+            password = params.get('password', None)
+            vpassword = params.get('vpassword', None)
+            firstname = params.get('firstname', None)
+            lastname = params.get('lastname', None)
             
-            else:
-                user = User.getByUsername(information['username'])
-                
-                if user is None:
-                    api.set_error(information,3,_("You haven't start the password recovery process"))
-                    return api.render_to_json(information)
-                
+            if email != None:
+                if not User.isValidEmail(email):
+                    api.set_error(information,4,_('Invalid email'))
+                    return api.render_to_json(information);
                 else:
-                    information['email'] = user.email;
-                    api.set_error(information,0)
-                    
-                    response = api.render_to_json(information)
-                    Crypt.set_secure_cookie(response,'lpwd_ok',information['username']+ '|' + information['email'] , expires=False,  time=7200)
-                    api.sendRecoveryEmail(user);
-                    return response
-                
-            return render_to_response('passwd_recover.html',information,RequestContext(request))
+                    user.updateUserEmail(email) # Must save after update
+            
+            if firstname != None:
+                user.updateUserFirstname(firstname) # Must save after update
+            if lastname != None:
+                user.updateUserLastname(lastname) # Must save after update
+            
+            if password != None:
+                if not User.isValidPassword(password):
+                    api.set_error(information,5,_('Invalid password'))
+                    return api.render_to_json(information);
+                elif password != vpassword:
+                    # Marco el error de passwords distintas
+                    # ERROR CLAVES NO SON IDENTICAS
+                    api.set_error(information,7,_("Passwords don't match"))
+                    return api.render_to_json(information);             
+                else:
+                    user.updateUserPassword(password) # Must save after update
+            
+            user.save()
+            api.set_error(information,0)
+            return api.render_to_json(information)
     else:
         return HttpResponseNotAllowed(['POST','GET'])

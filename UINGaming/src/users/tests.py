@@ -538,19 +538,19 @@ class UserProfileApiTests(LiveServerTestCase):
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],2)
 		
-	def PostingNewFistnameAndLastnameToUser1InfoLoggedInAsUser1ReturnOK(self):
+	def testPostingNewFistnameAndLastnameToUser1InfoLoggedInAsUser1ReturnOK(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
 		response = self.client.post(self.url + '/user1', '{"username":"user1", "firstname":"User" ,"lastname":"One"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		response = self.client.get(self.url + '?user=user1')
 		info = json.loads(response.content)
-		self.assertEqual(info['fistname'],'User')
-		self.assertEqual(info['lasname'],'One')
+		self.assertEqual(info['firstname'],'User')
+		self.assertEqual(info['lastname'],'One')
 	
-	def PostingNewEmailAndPasswordToUser1InfoLoggedInAsUser1ReturnOK(self):
+	def testPostingNewEmailAndPasswordToUser1InfoLoggedInAsUser1ReturnOK(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
-		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		response = self.client.get(self.url + '?user=user1')
@@ -563,6 +563,17 @@ class UserProfileApiTests(LiveServerTestCase):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"123456"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
+		
+	def testPostingNewEmailAndPasswordToUser1InfoLoggedInAsUser2ReturnErrorCode2(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user2", "password":"12345"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],2)
+	
+	def testPostingNewEmailAndPasswordToUser1InfoNotLoggedInReturnErrorCode1(self):
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],1)
 		
 	def testOtherMethodsResponse405(self):
 		response = self.client.head(self.url)
