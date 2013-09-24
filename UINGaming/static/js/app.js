@@ -17,7 +17,8 @@ var depList = [
     'HomeCtrl',
     'EventsCtrl',
     'EventDetailCtrl',
-    'NavCtrl'
+    'NavCtrl',
+    'ngCookies',
 ]
 
 angular.module('myApp', depList).
