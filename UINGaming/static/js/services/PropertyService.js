@@ -20,6 +20,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         es: {
             pageTitle: 'UIN Gaming',
             signIn: 'Iniciar Sesión',
+            logOut: 'Cerrar Sesión',
             register: 'Registrarse',
             home: 'Home',
             events: 'Eventos',
@@ -28,6 +29,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         en: {
             pageTitle: 'UIN Gaming',
             signIn: 'Sign In',
+            logOut: 'LogOut',
             register: 'Register',
             home: 'Home',
             events: 'Events',

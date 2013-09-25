@@ -9,7 +9,8 @@ angular.module(controllerName, []).
     							function ($q, $scope, $location, PropertyService, AuthService, $cookieStore) {
 		
 		var greeting = "Bienvenido, ";
-		
+        $scope.login = false;
+        
         var loadFields = function () {
             PropertyService.loadPaths($scope);
             PropertyService.loadFields('navBar', 'en', $scope);
@@ -22,10 +23,15 @@ angular.module(controllerName, []).
         
         function setUsername(){
         	var user=$cookieStore.get('user_id');
-			if (user == undefined)
+			if (user == undefined) {
 				$scope.helloUser = "";
-			else
-				$scope.helloUser = greeting+user.split(":")[0]
+                $scope.login = false;
+            } else {
+                $scope.username = user.split(":")[0]
+				$scope.helloUser = greeting+$scope.username
+                $scope.login = true;
+            }
+                
 		}
 		setUsername();
         $scope.clickLink = function (linkName) {

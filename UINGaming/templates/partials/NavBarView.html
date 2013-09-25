@@ -21,19 +21,21 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav pull-right">
-                      	<li class="pull-right">
-                            <a href="">{{helloUser}}</a>
+                         <li class="pull-right" ng-if="login">
+                            <a href="" ng-click="signOut()">{{logOut}}</a>
                         </li>
-                    	 <li class="pull-right">
-                            <a href="" ng-click="signOut()">Sign out</a>
+                        <li class="pull-right" ng-if="login">
+                            <a href="/users/{{username}}">{{helloUser}}</a>
                         </li>
-                        <li class="pull-right">
+                    	
+
+                        <li class="pull-right" ng-if="!login">
                             <a href="{{pathSignIn}}">{{signIn}}</a>
                         </li>
-                        <li class="pull-right">
+                        <li class="pull-right" ng-if="!login">
                             <a href="{{pathRegister}}">{{register}}</a>
                         </li>
-                      
+
                     </ul>
                 </div>
             </div>
