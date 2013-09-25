@@ -11,6 +11,14 @@ angular.module(controllerName, []).
 		var greeting = "Bienvenido, ";
         $scope.login = false;
         
+        var triggerDigest = function () {
+            if (!$scope.$$phase) {
+                $scope.$digest();
+            }
+        }
+        
+        $scope.$on('UserChange', setUsername);
+        
         var loadFields = function () {
             PropertyService.loadPaths($scope);
             PropertyService.loadFields('navBar', 'en', $scope);
@@ -43,11 +51,9 @@ angular.module(controllerName, []).
             $scope.$emit("ShowSpinner");
             AuthService.logOutUser($q)
                 .then(function (results) {
-                    // Prueba funcionamiento mostrando el response
-                    alert(JSON.stringify(results));
+                    $scope.$emit("UserChange");
                     $scope.$emit("HideSpinner");
                 }, errorOnREST);
-                $location.path('/home');
         }
         
         
