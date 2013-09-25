@@ -276,7 +276,7 @@ def PasswordRecoverFormAPI(request, username):
 # ###############################     USER PROFILE API    ################################### #
 # ########################################################################################### #
 
-def UserProfileAPI(request, username=''):
+def UserProfileAPI(request, username):
     information={}
     cookie_value = request.get_signed_cookie(key='user_id', default=None)
     if request.method == 'GET':
@@ -286,7 +286,6 @@ def UserProfileAPI(request, username=''):
             api.set_error(information,1,_("You are not logged in"))
             return api.render_to_json(information)
         else:
-            username = request.GET.get('user',None)
             if username is None:
                 api.set_error(information,2,_("You haven't specified the username"))
                 return api.render_to_json(information)
@@ -303,17 +302,16 @@ def UserProfileAPI(request, username=''):
 
     elif request.method == 'POST':
         # POST METHOD: Cambia la informacion del usuario. Si el usuario no es el que inicio sesion esto no podra llevarse a cabo
+        params = api.json_to_dict(request.body)
+        if params is None:
+            # ERROR PARAMETROS INVALIDOS
+            api.set_error(information,6,_('Invalid parameters'))
+            return api.render_to_json(information);
+        
         if cookie_value == None:
             api.set_error(information,1,_("You are not logged in"))
             return api.render_to_json(information)
         else:
-            
-            params = api.json_to_dict(request.body)
-            if params is None:
-                # ERROR PARAMETROS INVALIDOS
-                api.set_error(information,6,_('Invalid parameters'))
-                return api.render_to_json(information);
-            
             if username != cookie_value:
                 api.set_error(information,2,_("You don't have permision to change this data"))
                 return api.render_to_json(information);

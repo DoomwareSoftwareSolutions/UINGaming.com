@@ -15,6 +15,13 @@ Especificacion de la API para el subsistema de autenticación de usuario.
 		lastname  	   	: Apellido del futuro usuario (no obligatorio)
 		country   		: Pais de recidencia del futuro usuario (no obligatorio)
 	}
+Ejemplo para post:
+{
+ "username": "lucas" ,
+ "password":"12345",
+ "vpassword":"12345",
+ "email":"luc@as.com"
+}
 ##Valores devueltos:
 En caso de error de registro se devolvera la siguiente estructura en formato JSON:
 	{
@@ -25,8 +32,7 @@ En caso de error de registro se devolvera la siguiente estructura en formato JSO
 		country: ""					-> Es el pais enviado al servidor.
 		error-code: 3					-> Es el código del error ocurrido.
 		error-description: "Las claves no coinciden"	-> Es la descripción del error ocurrido.
-	}
-			
+	}			
 Codigos de errores con sus respectivas descripciones:
 	error-code = 0 -> NO HUBO ERRORES  					error-description = ''
 	error-code = 1 -> ERROR NOMBRE DE USUARIO INVALIDO	error-description = 'El nombre de usuario no es valido'
@@ -151,3 +157,54 @@ Codigos de errores con sus respectivas descripciones:
 	error-code = 2 -> ERROR CLAVE INVALIDA			error-description = 'Contrasenia invalida'
 	error-code = 3 -> ERROR CLAVES NO COINCIDEN		error-description = 'Contrasenias no coinciden'
 	error-code = 4 -> ERROR USUARIO NO EXISTE		error-description = 'El nombre de usuario no existe'
+
+
+=======================================================================================================================================
+
+# USER PROFILE:
+Devuelve la informacion del usuario o recibe informacion actualizada para modificar la base de datos
+	URL: http://localhost:8000/api/users/<username>
+## METHOD GET:
+Devuelve los datos del usuario especificado. Los valores seran devueltos en el siguiente formato:
+	{
+		"username": "lucas",
+		"error-code": 0,
+		"error-description": "",
+		"firstname": "",
+		"lastname": "",
+		"email": "luc@as.com"
+	}
+	
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  							error-description = ''
+	error-code = 1 -> ERROR NO HAY SESION INICIADA				error-description = 'No se ha iniciado sesion'
+	error-code = 2 -> ERROR NOMBRE DE USUARIO NO ESPECIFICADO	error-description = 'El nombre de usuario no se ha especificado'
+	error-code = 3 -> ERROR NOMBRE DE USUARIO NO EXISTE			error-description = 'El nombre de usuario especificado no existe'
+
+## METHOD POST:
+##Parametros del form:
+Se cambiaran todos los datos que figuren en el json. Los siguientes datos son entradas posibles, pero no obligatorias.
+	{
+		username  	  	: nombre de usuario # Es opcional, no va a cambiar.
+		password		: Nueva clave		
+		vpassword		: Confirmacion de la nueva clave
+		email			: Nuevo email
+		firstname		: Nuevo Nombre
+		lastname		: Nuevo Apellido
+	}
+## Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+		"error-code": 0, 			-> Codigo de error.
+		"error-description": ""  	-> Descripcion del error sucedido
+	}
+	
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  							error-description = ''
+	error-code = 1 -> ERROR NO HAY SESION INICIADA				error-description = 'No se ha iniciado sesion'
+	error-code = 2 -> ERROR NO SE TIENE PERMISOS 				error-description = 'No tienes permiso para cambiar esta informacion'
+	error-code = 3 -> ERROR NOMBRE DE USUARIO NO EXISTE			error-description = 'El nombre de usuario especificado no existe'
+	error-code = 4 -> ERROR EMAIL INVALIDO						error-description = 'La direccion de email es invalida'
+	error-code = 5 -> ERROR PASSWORD INVALIDO					error-description = 'La clave ingresada es invalida'
+	error-code = 6 -> ERROR PARAMETROS INVALIDOS				error-description = 'Parametros Invalidos'	
+	error-code = 7 -> ERROR PASSWORDS NO COINCIDEN				error-description = 'Las claves ingresadas no coinciden'

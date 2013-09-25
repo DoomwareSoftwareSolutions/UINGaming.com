@@ -86,6 +86,7 @@ class UserTest(TestCase):
 		u = User.add("user1","passwd",'user1@mail.com')
 		self.assertTrue(User.isValidLogin("user1","passwd"))
 		u.updateUserPassword("newpasswd")
+		u.save()
 		self.assertFalse(User.isValidLogin("user1","passwd"))
 		self.assertTrue(User.isValidLogin("user1","newpasswd"))
 				
@@ -94,6 +95,7 @@ class UserTest(TestCase):
 		u = User.getByUsername("user1")
 		self.assertEqual(u.email, 'user1@mail.com')
 		u.updateUserEmail('user2@mail.com')
+		u.save()
 		u = User.getByUsername("user1")
 		self.assertEqual(u.email, 'user2@mail.com')
 		
@@ -102,6 +104,7 @@ class UserTest(TestCase):
 		u = User.getByUsername("user1")
 		self.assertEqual(u.firstname, 'User1')
 		u.updateUserFirstname('User2')
+		u.save()
 		u = User.getByUsername("user1")
 		self.assertEqual(u.firstname, 'User2')
 		
@@ -110,6 +113,7 @@ class UserTest(TestCase):
 		u = User.getByUsername("user1")
 		self.assertEqual(u.lastname, 'One')
 		u.updateUserLastname('Two')
+		u.save()
 		u = User.getByUsername("user1")
 		self.assertEqual(u.lastname, 'Two')
 		
@@ -141,7 +145,7 @@ class UserTest(TestCase):
 		
 	def testEmailValidation(self):
 		self.assertTrue(User.isValidEmail('unstring@otrostring.str')) #Normal mail
-		
+
 		self.assertFalse(User.isValidEmail('unstring@otrostring')) #Mail without.com
 		self.assertFalse(User.isValidEmail('unstring@otrostring.')) #Mail without com
 		self.assertFalse(User.isValidEmail('unstring.com')) #Mail without @
@@ -484,7 +488,7 @@ class UserProfileApiTests(LiveServerTestCase):
 		
 	def testObtaingUser1InfoLogedinAsUser1ReturnOk(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
-		response = self.client.get(self.url + '?user=user1')
+		response = self.client.get(self.url + '/user1')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		self.assertEqual(info['username'],'user1')
@@ -492,7 +496,7 @@ class UserProfileApiTests(LiveServerTestCase):
 		
 	def testObtaingUser1InfoLogedinAsUser2ReturnOk(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user2", "password":"12345"}',content_type='application/json')
-		response = self.client.get(self.url + '?user=user1')
+		response = self.client.get(self.url + '/user1')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		self.assertEqual(info['username'],'user1')
@@ -500,7 +504,7 @@ class UserProfileApiTests(LiveServerTestCase):
 		
 	def testObtaingUser2InfoLogedinAsUser2ReturnOk(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user2", "password":"12345"}',content_type='application/json')
-		response = self.client.get(self.url + '?user=user2')
+		response = self.client.get(self.url + '/user2')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		self.assertEqual(info['username'],'user2')
@@ -510,7 +514,7 @@ class UserProfileApiTests(LiveServerTestCase):
 	
 	def testObtaingUser2InfoLogedinAsUser1ReturnOk(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
-		response = self.client.get(self.url + '?user=user2')
+		response = self.client.get(self.url + '/user2')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
 		self.assertEqual(info['username'],'user2')
@@ -519,31 +523,25 @@ class UserProfileApiTests(LiveServerTestCase):
 		self.assertEqual(info['lastname'],'Two')
 		
 	def testObtaingUser1And2InfoNotLogedinReturnErrorCode(self):
-		response = self.client.get(self.url + '?user=user1')
+		response = self.client.get(self.url + '/user1')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],1)
-		response = self.client.get(self.url + '?user=user2')
+		response = self.client.get(self.url + '/user2')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],1)
 	
 	def testObtaingNonExistingInfoReturnErrorCode3(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
-		response = self.client.get(self.url + '?user=user3')
+		response = self.client.get(self.url + '/user3')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],3)
-		
-	def testNotSpecifingUsernameReturnErrorCode2(self):
-		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
-		response = self.client.get(self.url)
-		info = json.loads(response.content)
-		self.assertEqual(info['error-code'],2)
 		
 	def testPostingNewFistnameAndLastnameToUser1InfoLoggedInAsUser1ReturnOK(self):
 		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
 		response = self.client.post(self.url + '/user1', '{"username":"user1", "firstname":"User" ,"lastname":"One"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
-		response = self.client.get(self.url + '?user=user1')
+		response = self.client.get(self.url + '/user1')
 		info = json.loads(response.content)
 		self.assertEqual(info['firstname'],'User')
 		self.assertEqual(info['lastname'],'One')
@@ -553,7 +551,7 @@ class UserProfileApiTests(LiveServerTestCase):
 		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],0)
-		response = self.client.get(self.url + '?user=user1')
+		response = self.client.get(self.url + '/user1')
 		info = json.loads(response.content)
 		self.assertEqual(info['email'],'user@mail.com')
 		self.client.get(self.live_server_url + '/api/logout')
@@ -569,18 +567,57 @@ class UserProfileApiTests(LiveServerTestCase):
 		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],2)
+		
+	def testPostingNewEmailAndPasswordToUser2InfoLoggedInAsUser1ReturnErrorCode2(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user2', '{"username":"user2", "email":"user2@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],2)
 	
 	def testPostingNewEmailAndPasswordToUser1InfoNotLoggedInReturnErrorCode1(self):
 		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
 		info = json.loads(response.content)
 		self.assertEqual(info['error-code'],1)
 		
+	def testPostInvalidParametersGivesErrorCode6(self):
+		response = self.client.post(self.url + '/user1')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],6)
+		response = self.client.post(self.url + '/user2')
+		dic = json.loads(response.content)
+		self.assertEqual(dic['error-code'],6)
+		
+	def testDeletingUserAfterLoginAndChangingDataGivesErrorCode3(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		User.getByUsername('user1').delete()
+		response = self.client.post(self.url + '/user1', '{"username":"user1", "email":"user1@mail.com" ,"password":"123456","vpassword":"123456"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'],3)
+		
+	def testInvalidEmailGivesErrorCode4(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"email":"User"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'], 4)
+	
+	def testInvalidPasswordGivesErrorCode5(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"password":"T", "vpassword":"T"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'], 5)
+		
+	def testPasswordsNotMatchingGivesErrorCode7(self):
+		response = self.client.post(self.live_server_url + '/api/signin','{"username":"user1", "password":"1234"}',content_type='application/json')
+		response = self.client.post(self.url + '/user1', '{"password":"Tetet", "vpassword":"Tete"}',content_type='application/json')
+		info = json.loads(response.content)
+		self.assertEqual(info['error-code'], 7)
+	
 	def testOtherMethodsResponse405(self):
-		response = self.client.head(self.url)
+		response = self.client.head(self.url + '/user1')
 		self.assertEqual(response.status_code,405)
-		response = self.client.put(self.url)
+		response = self.client.put(self.url + '/user1')
 		self.assertEqual(response.status_code,405)
-		response = self.client.delete(self.url)
+		response = self.client.delete(self.url + '/user1')
 		self.assertEqual(response.status_code,405)
-		response = self.client.options(self.url)
+		response = self.client.options(self.url + '/user1')
 		self.assertEqual(response.status_code,405)
