@@ -6,7 +6,7 @@ var name = 'AuthService';
 angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var AuthService = {};
-
+	
     AuthService.registerUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
@@ -24,9 +24,21 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
             });
-        return deferred.promise;
+    	 return deferred.promise;
     }
 
+	
+	AuthService.logOutUser = function ($q) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http.get('http://localhost:8000/api/logout')
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+                //if (jsonData['error-code']!= 0)error check  			
+            });
+    	 return deferred.promise;
+    }	
+	
     return AuthService;
 
 }]);
