@@ -59,3 +59,23 @@ class EventMembership(models.Model):
 	teamTag = models.CharField(max_length=5)
 	teamMembers = models.CharField(max_length=1024)
 	paid = models.BooleanField()
+
+	
+	""" 
+		Devuelve una lista con todas las memberships de un evento buscando segun su pk
+		Si no encuentra el evento o el evento no tiene subscripciones devuelve una lista vacia
+	"""
+	@classmethod
+	def getByEvent(self, eventPk):
+		events = Event.objects.filter(pk=eventPk)
+		if events == []:
+			return events
+		memberships=[]
+		for event in events:
+			memb = EventMembership.objects.filter(event=event)
+			if event != []:
+				memberships.append(memb)
+		if memberships!= []:
+			return memberships[0]
+		#No encontro ninguna.
+		return []

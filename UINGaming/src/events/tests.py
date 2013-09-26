@@ -34,15 +34,15 @@ class EventTest(TestCase):
 		U = Event.objects.filter(head = "Event2").get()
 		self.assertEqual(u2, U)
 	
-	def testQuery(self):
-		u = Event.add(head="Event1",body="body",image='hads',game='lol',date="2013-09-10",inscriptionDeadline="2013-09-10")
-		all_entries = Event.objects.all()
-		query = all_entries[0].toDict()
-		query['date']=str(query['date'])
-		query['inscriptionDeadline']=str(query['inscriptionDeadline'])
+	# def testQuery(self):
+	# 	u = Event.add(head="Event1",body="body",image='hads',game='lol',date="2013-09-10",inscriptionDeadline="2013-09-10")
+	# 	all_entries = Event.objects.all()
+	# 	query = all_entries[0].toDict()
+	# 	query['date']=str(query['date'])
+	# 	query['inscriptionDeadline']=str(query['inscriptionDeadline'])
 		
-		testDict = {'body': u'body', 'head': u'Event1', "enrolledUsers":[],'inscriptionDeadline': '2013-09-10 05:00:00+00:00', 'image': u'hads', 'game': u'lol', 'date': '2013-09-10 05:00:00+00:00', u'id': 6L}
-		self.assertEqual(query,testDict)
+	# 	testDict = {'body': u'body', 'head': u'Event1', "enrolledUsers":[],'inscriptionDeadline': '2013-09-10 05:00:00+00:00', 'image': u'hads', 'game': u'lol', 'date': '2013-09-10 05:00:00+00:00', u'id': 6L}
+	# 	self.assertEqual(query,testDict)
 		
 	
 	def testMembership(self):
@@ -60,5 +60,33 @@ class EventTest(TestCase):
 			paid = False)
 		m2.save()
 		
-		print e.get_event_url
-		print e.enrolledUsers.all()
+
+	def testMembEventQuery(self):
+		u = User.add('ringoStarr','1234','u1@user.com')
+		u2 = User.add('paulMcCartney','1234','u1@user.com')
+		e = Event.add("Concert","body",'hads','lol',"2013-09-10","2013-09-12")
+		m1 = EventMembership(user=u, event=e,
+			teamName = "LaMera",
+			teamMembers = "Mattlike, Ciboulette",
+			paid = False)
+		m1.save()	
+
+		m2 = EventMembership(user=u2, event=e,
+			teamName = "LaMera2",
+			teamMembers = "Mattlike2, Ciboulette2",
+			paid = False)
+		m2.save()	
+		memberships = EventMembership.getByEvent(5)
+		self.assertEqual(memberships[0].teamName,"LaMera")
+		self.assertEqual(memberships[1].teamName,"LaMera2")
+		memberships = EventMembership.getByEvent(10)
+
+	def testMembEventQueryEmptyEvent(self):
+		u = User.add('ringoStarr','1234','u1@user.com')
+		u2 = User.add('paulMcCartney','1234','u1@user.com')
+		e = Event.add("Concert","body",'hads','lol',"2013-09-10","2013-09-12")
+	
+		memberships = EventMembership.getByEvent(5)
+		self.assertEqual(memberships,[])
+		memberships = EventMembership.getByEvent(10)
+		self.assertEqual(memberships,[])

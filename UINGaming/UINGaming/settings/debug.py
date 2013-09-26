@@ -131,6 +131,8 @@ TEMPLATE_DIRS = (
 	'/home/tomas/workspace/UINGaming.com/UINGaming/templates'
 )
 
+SOUTH_TESTS_MIGRATE = False
+
 INSTALLED_APPS = (
 	'django.contrib.auth',
 	'django.contrib.contenttypes',

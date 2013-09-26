@@ -76,7 +76,7 @@ def EventMembershipAPI(request):
 	#Query the corresponding membership to the passed eventID. Returns the membership in json format
 	if request.method == 'GET':
 		eventPk = request.GET['pk']
-		data = serializers.serialize("json", EventMembership.objects.filter(event__id=eventPk))
+		data = serializers.serialize("json", EventMembership.getByEvent(eventPk))
 		response = HttpResponse(data, content_type='application/json')
 		return response
 	elif request.method == 'POST':

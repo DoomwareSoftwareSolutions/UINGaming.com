@@ -1,16 +1,26 @@
 <div class="events-container">
-    <div class="event-list">
-        <div class="event" ng-repeat="event in events">
-            <img class="media-object" ng-src="{{event.fields.image}}" alt="Image" err-src="static/img/event.png" >
+    <div class="event" >
+        <img class="media-object" ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
 
-            <div class="media-body">
-                <h4 class="media-heading">{{event.fields.head}}</h4>
-                <br>
-                {{event.fields.body}}
-            </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{foundEvent.fields.head}}</h4>
+            <br>
+            {{foundEvent.fields.body}}
         </div>
-        <div>    
-              <a href="{{pathEventRegister}}" class="btn btn-lg btn-primary btn-block register-button">{{eventRegister}}</a>
-        </div>     
-    </div>
+    
+    
+    <!-- enrolled teams -->
+        <br>
+        <p style="size=20px"> Teams inscriptos hasta ahora </p>
+            <div class="media" ng-repeat="membership in memberships"> 
+                Team: {{membership.fields.teamName}}  <br>
+                Tag: {{membership.fields.teamTag}}  <br>
+                Miembros: {{membership.fields.teamMembers}} <br>
+            </div>
+
+        <a href="{{pathEventRegister}}" class="btn btn-lg btn-primary btn-block register-button">{{eventRegister}}</a>
+    </div>  
+   
+   
+      
 </div>

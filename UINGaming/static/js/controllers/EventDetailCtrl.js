@@ -13,7 +13,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
-		
+		$scope.memberships = [];
 		var pk = $routeParams.pk;
         EventService.getEvent($q, $scope, pk)
             .then(function (results) {
@@ -23,9 +23,23 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
             		alert("EVENT NOT FOUND");
             		return;
             	}
-                $scope.events = results;
+                $scope.foundEvent = results[0];
                 EventService.setEventPk(results[0].pk);
+
                 $scope.$emit("HideSpinner");
+            }, errorOnREST);
+        //Now we look for memberships
+
+        EventService.getEventMemberships($q, pk)
+            .then(function (results) {
+                //Sin membresias
+
+                if (JSON.stringify(results)=="[]"){
+                    $scope.memberships = [];
+                    return;
+                }
+                $scope.memberships = results;
+
             }, errorOnREST);
 
     }]);
