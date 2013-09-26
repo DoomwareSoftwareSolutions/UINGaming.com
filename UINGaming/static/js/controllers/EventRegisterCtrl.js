@@ -5,7 +5,7 @@
 var controllerName = 'EventRegisterCtrl';
 var minTeamSize = 5;
 angular.module(controllerName, []).
-    controller(controllerName, ['$scope','PropertyService', 'EventService','$q', 'AuthService', function ($scope, PropertyService,EventService, $q, AuthService) {
+    controller(controllerName, ['$scope','PropertyService', 'EventService','$q', 'AuthService', '$location', function ($scope, PropertyService,EventService, $q, AuthService, $location) {
 
         $scope.$emit("BackgroundChange", "event-register-background");
 
@@ -64,7 +64,10 @@ angular.module(controllerName, []).
             EventService.registerToEvent($q, auxJsonContainer)
                 .then(function (results) {
                     // Prueba funcionamiento mostrando el response
-                    alert(JSON.stringify(results));
+                    if (results['error_code'] != 0)
+                       $location.path( "/events" );
+                    else
+                        alert('error_code: '+results['error_code']+'  error_desc: '+results['error_description']);
                     $scope.$emit("HideSpinner");
                 }, errorOnREST);
         }
