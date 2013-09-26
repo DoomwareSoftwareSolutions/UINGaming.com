@@ -11,6 +11,26 @@ from src.utils import Crypt, api
 #####                                                       APIS                                                          #####
 ###############################################################################################################################
 
+# ########################################################################################### #
+# #############################     SESSION INFO API     #################################### #
+# ########################################################################################### #
+
+def SessionInfoApi(request):
+    if request.method == 'GET':
+        information = {}
+        username = request.get_signed_cookie('user_id',None)
+        if username != None:
+            information['permission'] = User.getByUsername(username).permission
+            information['username'] = username
+            information['loggedIn'] = True
+            return api.render_to_json(information);
+        else:
+            information['loggedIn'] = False
+            return api.render_to_json(information);
+        
+    else: 
+        return HttpResponseNotAllowed(['GET'])  
+        
 
 # ########################################################################################### #
 # ##################################     SIGNIN API     ##################################### #

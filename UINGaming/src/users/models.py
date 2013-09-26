@@ -12,10 +12,18 @@ email_regexp = re.compile(r"^[\S]+@[\S]+\.[\S]+$")
 # Create your models here.
 
 class User(models.Model):
+	ADMIN = 'AD'
+	NORMAL = 'NO'
+	PERMISSION_LIST = (
+		(ADMIN, 'administrator'),
+		(NORMAL, 'normal'),
+	)
+	
 	username = models.CharField(max_length=40, primary_key = True)
 	hashedID = models.CharField(max_length=256)
 	created = models.DateField(auto_now_add=True)
 	email = models.EmailField()
+	permission = models.CharField(max_length=2, choices=PERMISSION_LIST, default=NORMAL)
 	
 	# Aca va mas informacion del usuario que tenemos que agregar ademas en el metodo ADD
 	firstname = models.CharField(max_length=40, blank=True)

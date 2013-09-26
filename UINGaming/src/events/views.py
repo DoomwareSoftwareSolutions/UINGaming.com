@@ -137,6 +137,7 @@ def addMembership(request,obj,returnData):
 #Edits membership paid status, teamName & teamMembers based on received json
 def editMembership(obj,returnData):
 	try:
+		cookie_value = request.get_signed_cookie(key='user_id', default=None)
 		membership = EventMembership.objects.get(pk=obj.pk)
 		membership = obj
 		membership.save()
