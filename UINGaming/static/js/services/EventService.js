@@ -32,6 +32,17 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             
         return deferred.promise;
     }
+    
+    EventService.addEvent = function ($q, EventData) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        EventData.pk = -1;
+        var deferred = $q.defer();
+        $http.post('http://localhost:8000/api/events', EventData)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
 
 	EventService.registerToEvent = function ($q, EventData) {
         // Promise: http://docs.angularjs.org/api/ng.$q

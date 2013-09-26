@@ -16,8 +16,14 @@ angular.module(name, []).factory(name,['$http', '$cookieStore', function ($http,
 		return aux.split(":")[0];
 	}
 
-	AuthService.getUsername = function () {
-		return username;
+	AuthService.getSessionInfo = function ($q) {
+		var deferred = $q.defer();
+        $http.get('http://localhost:8000/api/user-session')
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+                //if (jsonData['error-code']!= 0)error check  			
+            });
+    	 return deferred.promise;
 	}
     AuthService.registerUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q

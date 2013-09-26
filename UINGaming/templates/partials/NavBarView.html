@@ -9,31 +9,31 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/home">{{pageTitle}}</a>
+                    <a class="navbar-brand" ng-href="/home">{{pageTitle}}</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="{{pathHome}}">{{home}}</a>
+                            <a ng-href="{{pathHome}}">{{home}}</a>
                         </li>
                         <li>
-                            <a href="{{pathEvents}}">{{events}}</a>
+                            <a ng-href="{{pathEvents}}">{{events}}</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                          <li class="pull-right" ng-if="login">
-                            <a href="" ng-click="signOut()">{{logOut}}</a>
+                            <a ng-href="" ng-click="signOut()">{{logOut}}</a>
                         </li>
                         <li class="pull-right" ng-if="login">
-                            <a href="/users/{{username}}">{{helloUser}}</a>
+                            <a ng-href="/users/{{username}}">{{helloUser}}</a>
                         </li>
                     	
 
                         <li class="pull-right" ng-if="!login">
-                            <a href="{{pathSignIn}}">{{signIn}}</a>
+                            <a ng-href="{{pathSignIn}}">{{signIn}}</a>
                         </li>
                         <li class="pull-right" ng-if="!login">
-                            <a href="{{pathRegister}}">{{register}}</a>
+                            <a ng-href="{{pathRegister}}">{{register}}</a>
                         </li>
 
                     </ul>
