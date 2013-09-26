@@ -101,7 +101,7 @@ def EventMembershipAPI(request):
 			#ADD
 			deserialized_object.id = None
 			deserialized_object.pk = None
-			return addMembership(deserialized_object,returnData)
+			return addMembership(request,deserialized_object,returnData)
 		else:
 			#EDIT
 			return editMembership(deserialized_object,returnData)
@@ -112,23 +112,25 @@ def EventMembershipAPI(request):
 
 
 
-def addMembership(obj,returnData):
-	try:
-		user = User.objects.filter(pk=obj.user.pk)[0]
-	except User.DoesNotExist:
+def addMembership(request,obj,returnData):
+	cookie_value = request.get_signed_cookie(key='user_id', default=None)
+	user = User.getByUsername(cookie_value)
+	if user is None:
 		returnData['error_code'] = 3 # ERROR invalid user
 		returnData['error_description'] = _("Invalid user")
 		return render_to_json(returnData)
+
 	try:
 		event = Event.objects.filter(pk=obj.event.pk)[0]
 	except Event.DoesNotExist:
 		returnData['error_code'] = 4 # ERROR invalid event
 		returnData['error_description'] = _("Invalid event")
 		return render_to_json(returnData)
-	memb = EventMembership(user=user, event=event,
-			teamName = obj.teamName,
-			teamMembers = obj.teamMembers,
-			paid = obj.paid)
+		
+	memb = obj
+	memb.user=user
+	memb.event = event		
+	
 	memb.save()
 	return render_to_json(returnData)
 	

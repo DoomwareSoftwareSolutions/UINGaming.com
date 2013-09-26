@@ -49,7 +49,6 @@ urlpatterns = patterns('',
 	url(r'^api/logout$',src.users.views.LogOutAPI),
 	url(r'^api/events$',src.events.views.EventsAPI),
 	url(r'^api/eventMembership$',src.events.views.EventMembershipAPI),
-	# FOR TESTING FRONTEND
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
 	
