@@ -1,0 +1,19 @@
+<div class="signin-container">
+    <div class="container form-container">
+        <div class="form-padding">
+            <h2 class="form-signin-heading">Enter your team information</h2>
+            <input type="text" class="form-control signin-field" ng-model="eventData.fields.head">
+            <input type="text" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.body">
+			
+			Fecha<br>
+			<input type="text" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.date">
+			
+			Inscripcion hasta<br>
+			<input type="text" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.inscriptionDeadline">
+
+
+            <br/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="addEvent()">Register</button>
+        </div>
+    </div>
+</div>

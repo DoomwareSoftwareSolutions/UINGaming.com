@@ -46,6 +46,7 @@
     -webkit-box-pack: center;
     margin-top: -91px;
     padding-top: 91px;
+    overflow-y: scroll;
 }
 
 .center-vert {

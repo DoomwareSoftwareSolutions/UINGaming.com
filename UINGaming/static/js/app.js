@@ -18,6 +18,7 @@ var depList = [
     'EventsCtrl',
     'EventDetailCtrl',
     'NavCtrl',
+    'EventAddCtrl',
     'ngCookies',
 ]
 
@@ -47,6 +48,10 @@ angular.module('myApp', depList).
             when('/events/:pk',{
             	templateUrl: 'partials/EventDetail',
             	controller: 'EventDetailCtrl'
+            }).
+            when('/eventAdd',{
+            	templateUrl: 'partials/EventAddView',
+            	controller: 'EventAddCtrl'
             }).
             otherwise({
                 redirectTo: '/home'

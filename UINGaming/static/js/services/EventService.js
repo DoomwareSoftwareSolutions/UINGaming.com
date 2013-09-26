@@ -37,7 +37,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         EventData.pk = -1;
         var deferred = $q.defer();
-        $http.post('http://localhost:8000/api/events', EventData)
+        $http.post('http://localhost:8000/api/events', [EventData])
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
             });
