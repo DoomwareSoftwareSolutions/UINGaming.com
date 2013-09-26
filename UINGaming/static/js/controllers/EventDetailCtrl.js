@@ -7,9 +7,9 @@ var controllerName = 'EventDetailCtrl';
 // $location: http://docs.angularjs.org/api/ng.$location
 
 // $scope: variables que se reflejan en el HTML que este controlador controla.
-// {{events}} en el HTML es $scope.events en este controlador.
-angular.module(controllerName, []).
-    controller(controllerName, ['$scope', '$location', '$http',  '$routeParams','$q', 'EventService', function ($scope, $location, $http, $routeParams, $q,  EventService) {
+// {{events}} en el //HTML es $scope.events en este controlador.
+angular.module(controllerName, []).controller(controllerName, ['$scope', '$location', '$http', '$routeParams','$q', 'EventService',
+'AuthService', function ($scope, $location, $http, $routeParams, $q,  EventService, AuthService) {
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
@@ -24,6 +24,7 @@ angular.module(controllerName, []).
             		return;
             	}
                 $scope.events = results;
+                EventService.setEventPk(results[0].pk);
                 $scope.$emit("HideSpinner");
             }, errorOnREST);
 

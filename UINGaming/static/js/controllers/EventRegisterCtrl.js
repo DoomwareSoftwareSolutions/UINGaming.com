@@ -5,7 +5,7 @@
 var controllerName = 'EventRegisterCtrl';
 var minTeamSize = 5;
 angular.module(controllerName, []).
-    controller(controllerName, ['$scope','PropertyService', 'EventService','$q', function ($scope, PropertyService,EventService,$q) {
+    controller(controllerName, ['$scope','PropertyService', 'EventService','$q', 'AuthService', function ($scope, PropertyService,EventService, $q, AuthService) {
 
         $scope.$emit("BackgroundChange", "event-register-background");
 
@@ -57,7 +57,8 @@ angular.module(controllerName, []).
         $scope.register = function () {
     		//Paso el array a string separado por comas. TODO: escapar las comas / prohibir las comas del member name.
         	$scope.registerData.fields['teamMembers']=$scope.teamMembers.join(",");
-        	
+        	$scope.registerData.fields['event']=EventService.getEventPk();
+            $scope.registerData.fields['user']=AuthService.getUsername();
         	//API expects a json enclosed between brackets
         	var auxJsonContainer=[$scope.registerData];
             EventService.registerToEvent($q, auxJsonContainer)

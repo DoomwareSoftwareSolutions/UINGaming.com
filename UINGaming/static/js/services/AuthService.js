@@ -3,10 +3,22 @@
 var name = 'AuthService';
 
 // $http: http://docs.angularjs.org/api/ng.$http
-angular.module(name, []).factory(name, ['$http', function ($http) {
+angular.module(name, []).factory(name,['$http', '$cookieStore', function ($http, $cookieStore) {
 
     var AuthService = {};
-	
+	var username = "";
+
+
+	AuthService.getUserIDfromCookie = function (){
+		var aux = $cookieStore.get('user_id');
+		if (aux == undefined)
+			return undefined;
+		return aux.split(":")[0];
+	}
+
+	AuthService.getUsername = function () {
+		return username;
+	}
     AuthService.registerUser = function ($q, userData) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
@@ -23,6 +35,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         $http.post('http://localhost:8000/api/signin', userData)
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
+                username = AuthService.getUserIDfromCookie();
             });
     	 return deferred.promise;
     }

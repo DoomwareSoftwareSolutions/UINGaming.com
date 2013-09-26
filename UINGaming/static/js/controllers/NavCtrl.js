@@ -30,12 +30,12 @@ angular.module(controllerName, []).
         }
         
         function setUsername(){
-        	var user=$cookieStore.get('user_id');
+        	var user = AuthService.getUserIDfromCookie();
 			if (user == undefined) {
 				$scope.helloUser = "";
                 $scope.login = false;
             } else {
-                $scope.username = user.split(":")[0]
+                $scope.username = user;
 				$scope.helloUser = greeting+$scope.username
                 $scope.login = true;
             }

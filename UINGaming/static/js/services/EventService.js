@@ -9,6 +9,8 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var eventList = [];
 
+    var currentEventPk = "";
+
     EventService.getEvents = function ($q, $scope) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
@@ -27,6 +29,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
             });
+            
         return deferred.promise;
     }
 
@@ -49,6 +52,13 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         eventList = newList;
     }
 
+    EventService.getEventPk = function(){
+        return currentEventPk;
+    }
+
+    EventService.setEventPk = function(pk){
+        currentEventPk = pk;
+    }
     return EventService;
 
 }]);
