@@ -1,0 +1,28 @@
+<div class="signin-container">
+    <div class="container form-container">
+        <div class="form-padding" style="text-align:center">
+            <label> 
+                Título del evento
+                <input type="text" class="form-control signin-field" ng-model="eventData.fields.head">
+            </label>
+            <br>
+            <label> 
+                Cuerpo del evento
+            <input type="text" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.body">
+			</label>
+			<br>
+            <label> 
+                Fecha del evento
+			<input type="datetime-local" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.date">
+			</label>
+            <br>
+			<label> 
+                Fecha límite para inscripción
+			<input type="datetime-local" class="form-control signin-field" maxlength="3" ng-model="eventData.fields.inscriptionDeadline">
+            </label>
+
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="editEvent()">Register</button>
+        </div>
+    </div>
+</div>

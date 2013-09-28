@@ -19,14 +19,16 @@
         	<td>Miembros</td> 
         	</tr>
               <tr class="table-body" ng-repeat="membership in memberships"> 
-              	<td> {{membership.fields.teamName}} </td> 
-              	<td>{{membership.fields.teamTag}} </td> 
-              	<td>  {{membership.fields.teamMembers}} </td> 
+              	<td>{{membership.fields.teamName}}</td> 
+              	<td>{{membership.fields.teamTag}}</td> 
+              	<td>{{membership.fields.teamMembers}}</td> 
               </tr>
             </div>
 		</table>
 		<br>
+        <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" class="btn btn-lg btn-primary btn-block register-button">Editar evento</button>
         <a ng-href="{{pathEventRegister}}" class="btn btn-lg btn-primary btn-block register-button">{{eventRegister}}</a>
+
     </div>  
    
    

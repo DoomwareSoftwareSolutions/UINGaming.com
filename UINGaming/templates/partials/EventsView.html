@@ -10,9 +10,10 @@
                 Fecha realización: {{event.fields.date}}<br>
                 Límite inscripción: {{event.fields.inscriptionDeadline}}
             </div>
+            <hr>
         </div>
         
-        <a ng-href="/eventAdd" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">Add event</a>
+        <a ng-href="{{pathEventAdd}}" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">Add event</a>
     </div>
   
 </div>

@@ -9,17 +9,18 @@ var controllerName = 'EventDetailCtrl';
 // $scope: variables que se reflejan en el HTML que este controlador controla.
 // {{events}} en el //HTML es $scope.events en este controlador.
 angular.module(controllerName, []).controller(controllerName, ['$scope', '$location', '$http', '$routeParams','$q', 'EventService',
-'AuthService', function ($scope, $location, $http, $routeParams, $q,  EventService, AuthService) {
+'AuthService','PropertyService' , function ($scope, $location, $http, $routeParams, $q,  EventService, AuthService, PropertyService) {
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
 		$scope.memberships = [];
 		var pk = $routeParams.pk;
+        PropertyService.loadPaths($scope);
         EventService.getEvent($q, $scope, pk)
             .then(function (results) {
             	//Invalid event id
             	if (JSON.stringify(results)=="[]"){
-            		$location.path( "/events" );
+            		$location.path($scope.pathEvents);
             		alert("EVENT NOT FOUND");
             		return;
             	}
@@ -41,5 +42,12 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
                 $scope.memberships = results;
 
             }, errorOnREST);
+
+
+        function edit(event){
+
+
+        }
+
 
     }]);
