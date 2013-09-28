@@ -8,9 +8,11 @@ angular.module(controllerName, []).
     controller(controllerName, ['$scope', '$location', '$http', '$q', 'AuthService', 'PropertyService', function ($scope, $location, $http, $q, AuthService, PropertyService) {
 
         $scope.$emit("BackgroundChange", "signin-background");
-
+        $scope.error =false;
+        $scope.errorDescription = "";
         var loadFields = function () {
             PropertyService.loadFields('signIn', 'en', $scope);
+            PropertyService.loadPaths($scope);
             $scope.user = {
                 username: '',
                 password: ''
@@ -27,10 +29,11 @@ angular.module(controllerName, []).
 					if (results['error-code'] == 0) {
 						$scope.$emit("UserChange");
 						$scope.$emit("HideSpinner");
-						$location.path("/home");
+						$location.path($scope.pathHome);
 					} else {
 						$scope.$emit("HideSpinner");
-						alert('Error')
+						$scope.error = true;
+                        $scope.errorDescription = "Error: "+results['error-description'];
 					}
 					
                 }, errorOnREST);

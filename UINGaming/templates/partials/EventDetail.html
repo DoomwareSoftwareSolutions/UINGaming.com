@@ -1,9 +1,9 @@
 <div class="events-container">
     <div class="event" >
-        <img class="media-object" ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
-
-        <div class="media-body">
-            <h4 class="media-heading">{{foundEvent.fields.head}}</h4>
+        <img class="media-object"  ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
+	<br>
+        <div class="media-body" style="text-align:center;color:white">
+            <h4 class="media-heading"><strong>{{foundEvent.fields.head}}</strong></h4>
             <br>
             {{foundEvent.fields.body}}
         </div>
@@ -12,12 +12,20 @@
     <!-- enrolled teams -->
         <br>
         <p style="size=20px"> Teams inscriptos hasta ahora </p>
-            <div class="media" ng-repeat="membership in memberships"> 
-                Team: {{membership.fields.teamName}}  <br>
-                Tag: {{membership.fields.teamTag}}  <br>
-                Miembros: {{membership.fields.teamMembers}} <br>
+        <table border="1">
+        	<tr class="table-head">
+        	<td>Team</td> 
+        	<td>Tag</td> 
+        	<td>Miembros</td> 
+        	</tr>
+              <tr class="table-body" ng-repeat="membership in memberships"> 
+              	<td> {{membership.fields.teamName}} </td> 
+              	<td>{{membership.fields.teamTag}} </td> 
+              	<td>  {{membership.fields.teamMembers}} </td> 
+              </tr>
             </div>
-
+		</table>
+		<br>
         <a ng-href="{{pathEventRegister}}" class="btn btn-lg btn-primary btn-block register-button">{{eventRegister}}</a>
     </div>  
    

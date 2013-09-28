@@ -6,6 +6,9 @@
                    ng-model="user.username">
             <input type="password" class="form-control signin-field" placeholder="{{passwordPlaceholder}}"
                    ng-model="user.password">
+
+            <div style="color:red;padding-top:10px" ng-if="error">{{errorDescription}}</div>
+            
             <label class="checkbox">
                 <input type="checkbox" value="remember-me" ng-model="rememberUser"> {{rememberLabel}}
             </label>

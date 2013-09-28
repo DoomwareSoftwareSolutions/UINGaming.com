@@ -15,9 +15,9 @@
             <div ng-repeat="member in teamMembers">
                 <span class="glyphicon glyphicon-remove" ng-click="removeMember($index)"></span>{{member}}
             </div>
-            <!--<textarea style="resize: none;" cols="30" rows="5" class="form-control signin-field"-->
-            <!--placeholder="Members"></textarea>-->
-            <br/>
+            
+            <div style="color:red;padding-top:10px" ng-if="error">{{errorDescription}}</div>
+            <br>
             <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="register()">Register</button>
         </div>
     </div>
