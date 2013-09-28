@@ -10,6 +10,7 @@
     
     
     <!-- enrolled teams -->
+    <div ng-if="memberships.length!=0">
         <br>
         <p style="size=20px"> Teams inscriptos hasta ahora </p>
         <table border="1">
@@ -24,10 +25,16 @@
               	<td>{{membership.fields.teamMembers}}</td> 
               </tr>
             </div>
-		</table>
-		<br>
-        <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" class="btn btn-lg btn-primary btn-block register-button">Editar evento</button>
-        <a ng-href="{{pathEventRegister}}" class="btn btn-lg btn-primary btn-block register-button">{{eventRegister}}</a>
+		    </table>
+    </div>
+
+    <span ng-if="memberships.length==0" style="color:white;">
+      <br>
+      No hay anotados en este evento, inscribite! 
+    </span> <a ng-href="{{pathEventRegister}}" style="width: 50%;padding: 2px;background-color: red;border-radius: 10px;color: white;">{{eventRegister}}</a>
+    <br>
+    <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" style="background-color:white">Editar evento</a>
+        
 
     </div>  
    
