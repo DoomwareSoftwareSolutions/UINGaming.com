@@ -50,6 +50,9 @@ angular.module('myApp', depList).
             	templateUrl: 'partials/EventDetail',
             	controller: 'EventDetailCtrl'
             }).
+            when('/eventDelete',{
+                controller: 'EventDetailCtrl'
+            }).
             when('/eventAdd',{
             	templateUrl: 'partials/EventAddView',
             	controller: 'EventAddCtrl'

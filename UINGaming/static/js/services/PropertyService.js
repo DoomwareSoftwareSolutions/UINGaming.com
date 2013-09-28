@@ -16,7 +16,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathEvents: '/events',
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
-        pathEventEdit: 'eventEdit'
+        pathEventEdit: '/eventEdit',
     }
     PropertyService.properties.navBar = {
         es: {

@@ -12,6 +12,19 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     var currentEventPk;
 
     var serverUrl = "http://localhost:8000";
+
+    EventService.deleteEvent = function ($q, pk) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        var url = serverUrl+"/"+'api/eventDelete?pk='+pk;
+        $http.get(url)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+            
+        return deferred.promise;
+    }
+
     EventService.getEvents = function ($q, $scope) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();

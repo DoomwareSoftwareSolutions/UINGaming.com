@@ -14,6 +14,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
 		$scope.memberships = [];
+        $scope.pathEventDelete = EventService.pathEventDelete;
 		var pk = $routeParams.pk;
         PropertyService.loadPaths($scope);
         EventService.getEvent($q, $scope, pk)
@@ -44,8 +45,15 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
             }, errorOnREST);
 
 
-        function edit(event){
-
+        $scope.deleteEvent = function(pk){
+            EventService.deleteEvent($q, pk)
+                .then(function (results) {
+                    if (results['error-code']!=0){
+                        alert("ERROR: "+results['error-description']);
+                        return;
+                    }
+                    $location.path($scope.pathEvents);
+                }, errorOnREST);
 
         }
 

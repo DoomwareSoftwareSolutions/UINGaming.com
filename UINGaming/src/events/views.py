@@ -150,3 +150,24 @@ def editMembership(obj,returnData):
 	
 
 
+def EventDeleteAPI(request):
+	if request.method == 'GET':
+		eventPk = request.GET.get('pk')
+		returnData = {}
+		if eventPk == None:
+			returnData['error-code'] = 1 # Event Not Found!
+			returnData['error-description'] = _("Event not found")
+			return render_to_json(returnData);
+		else:
+			try:
+				event = Event.objects.filter(pk=eventPk).get()
+				event.delete()
+				returnData['error-code'] = 0 # Event Not Found!
+				returnData['error-description'] = ""
+				return render_to_json(returnData);
+			except Event.DoesNotExist:
+				returnData['error-code'] = 1 # Event Not Found!
+				returnData['error-description'] = _("Event not found")
+				return render_to_json(returnData);
+	else:
+		return HttpResponseNotAllowed(['GET'],['POST'])
