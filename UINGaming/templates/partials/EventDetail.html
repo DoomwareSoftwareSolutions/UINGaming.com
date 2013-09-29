@@ -33,8 +33,8 @@
       No hay anotados en este evento, inscribite! 
     </span> <a ng-href="{{pathEventRegister}}" style="width: 50%;padding: 2px;background-color: red;border-radius: 10px;color: white;">{{eventRegister}}</a>
     <br>
-    <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" style="background-color:white">Editar evento</a>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="deleteEvent(foundEvent.pk)">Delete event</button>
+    <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" ng-if="admin" style="background-color:white">Editar evento</a>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="deleteEvent(foundEvent.pk)">Delete event</button>
         
 
     </div>  
