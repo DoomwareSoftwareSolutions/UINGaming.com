@@ -82,7 +82,7 @@ STATICFILES_DIRS = (
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
 	'/home/user/Desktop/UINGaming.com/UINGaming/static',
-	'/home/tomas/workspace/UINGaming.com/UINGaming/static'
+	'/home/fede/Desktop/UINGaming.com/UINGaming/static'
 
 )
 
@@ -128,7 +128,7 @@ TEMPLATE_DIRS = (
 	# Always use forward slashes, even on Windows.
 	# Don't forget to use absolute paths, not relative paths.
 	'/home/user/Desktop/UINGaming.com/UINGaming/templates',
-	'/home/tomas/workspace/UINGaming.com/UINGaming/templates'
+	'/home/fede/Desktop/UINGaming.com/UINGaming/templates'
 )
 
 SOUTH_TESTS_MIGRATE = False
@@ -168,7 +168,7 @@ INFO_ADDRESS = 'info@uingaming.com'
 PASSWORD_RECOVERY_URL= 'http://localhost:8000/password_recover/'
 
 LOCALE_PATHS = (
-	'/home/tomas/workspace/UINGaming.com/UINGaming/locale',
+	'/home/fede/Desktop/UINGaming.com/UINGaming/locale',
 )
 
 LANGUAGES = (

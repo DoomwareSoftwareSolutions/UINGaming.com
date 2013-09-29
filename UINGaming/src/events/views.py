@@ -16,9 +16,12 @@ def EventsAPI(request):
 		eventPk = request.GET.get('pk')
 		#Sin params
 		if eventPk == None:
-			data = serializers.serialize("json", Event.objects.all())
-			response = HttpResponse(data, content_type='application/json')
-			return response
+			data_from_query = Event.objects.all();
+			if (data_from_query.count() == 0):
+				return HttpResponse("", content_type='application/json')
+				
+			data = serializers.serialize("json", data_from_query)
+			return HttpResponse(data, content_type='application/json')
 		else:
 			try:
 				data = serializers.serialize("json",Event.objects.filter(pk=eventPk))
