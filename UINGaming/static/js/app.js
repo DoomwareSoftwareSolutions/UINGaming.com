@@ -16,6 +16,7 @@ var depList = [
     'RegisterCtrl',
     'HomeCtrl',
     'EventsCtrl',
+    'EventsEnrolledCtrl',
     'EventDetailCtrl',
     'EventEditCtrl',
     'NavCtrl',
@@ -33,6 +34,10 @@ angular.module('myApp', depList).
             when('/events', {
                 templateUrl: 'partials/EventsView',
                 controller: 'EventsCtrl'
+            }).
+            when('/eventsEnrolled', {
+                templateUrl: 'partials/EventsView',
+                controller: 'EventsEnrolledCtrl'
             }).
             when('/signin', {
                 templateUrl: 'partials/SignInView',

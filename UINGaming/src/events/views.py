@@ -70,7 +70,26 @@ def editEvent(obj,returnData):
 		returnData['error_description'] = _("Invalid event key")
 	
 	return render_to_json(returnData)
+
+def EventsByUserAPI(request):
+	if request.method == 'GET':
+		userPk = request.GET.get('pk')
+		try:
+			user = User.getByPk(userPk)
+			memberships = EventMembership.objects.filter(user=user)
+		except:
+			returnData = {}
+			returnData['error_code'] = 2 # User Not Found!
+			returnData['error_description'] = _("User not found")
+			return render_to_json(returnData);
 	
+		if memberships.count() == 0:
+			return render_to_json( [] );
+		
+		data = serializers.serialize("json",Event.objects.filter(pk=memberships[0].event.pk))
+		response = HttpResponse(data, content_type='application/json')
+		return response
+
 #TODO separar los edits y adds en servicios distintos, el que inserta no sabe pk
 #OPCION: reservar pk=1 para inserciones (hice esto en events)
 
@@ -78,8 +97,14 @@ def editEvent(obj,returnData):
 def EventMembershipAPI(request):
 	#Query the corresponding membership to the passed eventID. Returns the membership in json format
 	if request.method == 'GET':
-		eventPk = request.GET['pk']
-		data = serializers.serialize("json", EventMembership.getByEvent(eventPk))
+		if 'eventPk' in request.GET.keys():
+			eventPk = request.GET['eventPk']
+			data = serializers.serialize("json", EventMembership.getByEvent(eventPk))
+
+		if 'userPk' in request.GET.keys():
+			userPk = request.GET['userPk']
+			data = serializers.serialize("json", EventMembership.getByUser(userPk))
+			
 		response = HttpResponse(data, content_type='application/json')
 		return response
 	elif request.method == 'POST':

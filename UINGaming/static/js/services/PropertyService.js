@@ -14,6 +14,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathRegister: '/register',
         pathHome: '/home',
         pathEvents: '/events',
+        pathEventsEnrolled: '/eventsEnrolled',
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
         pathEventEdit: '/eventEdit',
@@ -26,6 +27,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             register: 'Registrarse',
             home: 'Home',
             events: 'Eventos',
+            eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Registrarse a Evento'
         },
         en: {
@@ -35,6 +37,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             register: 'Register',
             home: 'Home',
             events: 'Events',
+            eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Event Register'
         }
     };

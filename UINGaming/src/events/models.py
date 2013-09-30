@@ -79,3 +79,18 @@ class EventMembership(models.Model):
 			return memberships[0]
 		#No encontro ninguna.
 		return []
+
+	@classmethod
+	def getByUser(self, userPk):
+		users = User.objects.filter(pk=userPk)
+		if users == []:
+			return users
+		memberships=[]
+		for user in users:
+			memb = EventMembership.objects.filter(user=user)
+			if user != []:
+				memberships.append(memb)
+		if memberships!= []:
+			return memberships[0]
+		#No encontro ninguna.
+		return []

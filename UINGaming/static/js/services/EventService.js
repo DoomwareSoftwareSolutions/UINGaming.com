@@ -35,6 +35,16 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         return deferred.promise;
     }
     
+    EventService.getEventsByUser = function ($q, $scope, pk) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http.get(serverUrl+"/"+'api/eventsByUser?pk='+pk)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
+    
     EventService.getEvent = function ($q, $scope, pk) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
@@ -82,7 +92,19 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     EventService.getEventMemberships = function ($q, pk) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
-        var url = serverUrl+"/"+'api/eventMembership?pk='+pk;
+        var url = serverUrl+"/"+'api/eventMembership?eventPk='+pk;
+        $http.get(url)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+            
+        return deferred.promise;
+    }
+    
+    EventService.getUserMemberships = function ($q, pk) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        var url = serverUrl+"/"+'api/eventMembership?userPk='+pk;
         $http.get(url)
             .success(function (jsonData) {
                 deferred.resolve(jsonData);

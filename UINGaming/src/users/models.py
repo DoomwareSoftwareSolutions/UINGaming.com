@@ -59,6 +59,10 @@ class User(models.Model):
 		return user
 	
 	@classmethod
+	def getByPk(self, pk):
+		return self.getByUsername(pk);
+	
+	@classmethod
 	def isValidLogin(self, username, passwd):
 		user = User.getByUsername(username)
 		if not user:

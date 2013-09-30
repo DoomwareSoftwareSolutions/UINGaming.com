@@ -38,7 +38,9 @@ Codigos de errores con sus respectivas descripciones:
 
 ## METHOD GET:
 
-URL:http://localhost:8000/api/eventMembership?pk=XXX
+URL:http://localhost:8000/api/eventMembership?eventPk=XXX
+URL:http://localhost:8000/api/eventMembership?userPk=XXX
+
 Los valores seran devueltos en el siguiente formato:
 [
     {

@@ -19,6 +19,9 @@
                         <li>
                             <a ng-href="{{pathEvents}}">{{events}}</a>
                         </li>
+                        <li ng-if="login">
+                            <a ng-href="{{pathEventsEnrolled}}">{{eventsEnrolled}}</a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                          <li class="pull-right" ng-if="login">

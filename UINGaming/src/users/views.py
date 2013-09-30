@@ -20,10 +20,12 @@ def SessionInfoApi(request):
         information = {}
         username = request.get_signed_cookie('user_id',None)
         if username != None:
-            information['permission'] = User.getByUsername(username).permission
-            information['username'] = username
-            information['loggedIn'] = True
-            return api.render_to_json(information);
+			user = User.getByUsername(username)
+			information['permission'] = user.permission
+			information['pk'] = user.pk
+			information['username'] = username
+			information['loggedIn'] = True
+			return api.render_to_json(information);
         else:
             information['loggedIn'] = False
             return api.render_to_json(information);
