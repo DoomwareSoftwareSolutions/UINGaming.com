@@ -58,5 +58,23 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
 
         }
 
+        function checkSubscription(){
+            AuthService.getSessionInfo($q).then(function(results) {
+                if (results.loggedIn) {
+                    var userPk = results.pk;
+                    EventService.getMembershipByUserAndEvent($q, userPk, pk)
+                    .then(function (results) {  
+                        if (JSON.stringify(results) != "[]"){
+                            $scope.subscribed=true;
+                            $scope.suscribedTeam = results[0].fields.teamName;
+                        }
+                        else 
+                            $scope.subscribed=false;
+                        $scope.$emit("HideSpinner");
+                    }, errorOnREST);
+                }
+            })
+        }
 
+        checkSubscription();
     }]);
