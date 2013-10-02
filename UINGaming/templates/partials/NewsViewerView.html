@@ -1,0 +1,17 @@
+<div class="events-container">
+    <div class="event-list">		
+        <div class="media">
+            <div class="media-body">
+                <h3 class="media-heading" style="color:white">{{current_new.header}}</h3>
+                <br>
+                <h4>{{current_new.subheader}}</h4>
+				<br>{{current_new.body}}<br>
+				<img src="{{current_new.img}}">
+            </div>
+            <hr>
+        </div>
+        
+        <a ng-href="{{pathNewsEdit}}/{{current_new.pk}}" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">{{editNewPlaceholder}} </a>
+    </div>
+  
+</div>
