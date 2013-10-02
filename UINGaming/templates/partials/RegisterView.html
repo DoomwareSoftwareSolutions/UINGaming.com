@@ -15,7 +15,9 @@
                    ng-model="user.name">
             <input type="text" class="form-control signin-field" placeholder="{{surnamePlaceholder}}"
                    ng-model="user.lastname">
-
+            
+            <div style="color:red;padding-top:10px" ng-if="error">{{errorDescription}}</div>
+            
             <button class="btn btn-lg btn-primary btn-block register-button" type="submit">
                 {{submitLabel}}
             </button>

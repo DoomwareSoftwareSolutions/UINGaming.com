@@ -26,6 +26,7 @@ angular.module(controllerName, []).
             $scope.$emit("ShowSpinner");
             AuthService.loginUser($q, $scope.user)
                 .then(function (results) {
+					$scope.error = false;
 					if (results['error-code'] == 0) {
 						$scope.$emit("UserChange");
 						$scope.$emit("HideSpinner");
