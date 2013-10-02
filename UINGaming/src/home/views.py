@@ -71,16 +71,51 @@ def NewsViewerAPI(request):
 		
 		information = new.toDic()
 		api.set_error(information,0,'')
-		return api.render_to_json(information)	
+		return api.render_to_json(information)
 	else:
 		return HttpResponseNotAllowed(['GET'])
 	
-def NewsListAPI(request):
+def NewsAPI(request):
 	if request.method == 'GET':
 		begin = request.GET.get('begin',0)
 		end = request.GET.get('end',10)
 		information = {}
 		news = New.getList(begin,end)
 		return api.render_to_json(map(New.toDic,news))
+	elif request.method == 'POST':
+		# POST METHOD: Aca valido la informacion de creacion de usuario
+		# Obtengo los parametros del JSON enviado
+		params = api.json_to_dict(request.body)
+		information = {}
+		
+		# Si los parametros son invalidos
+		if params is None:
+			# ERROR PARAMETROS INVALIDOS
+			api.set_error(information,6,_("Invalid parameters"))
+			return api.render_to_json(information);
+		
+		# Obtengo la informacon ingresada
+		information['header'] = params.get('header', '')
+		information['subheader'] = params.get('subheader', '')
+		information['body'] = params.get('body', '')
+		information['image'] = params.get('image', '')
+		# NO ERROR!
+		api.set_error(information,0)
+		
+		# Valido los datos.
+		if information['header'] == '':
+			# ERROR TITULO EN BLANCO
+			api.set_error(information,1,_("Header can't be blank"))
+		elif information['image'] == '':
+			# ERROR IMAGEN EN BLANCO
+			api.set_error(information,2,_("Image can't be blank"))
+		else:
+			new = New.add(information['header'],information['subheader'],information['body'],information['image'])
+			if  new == None:
+				# ERROR AL CREAR NOTICIA
+				api.set_error(information,3,_("Error creating new"))
+				
+		return api.render_to_json(information);
 	else:
-		return HttpResponseNotAllowed(['GET'])
+		return HttpResponseNotAllowed(['POST','GET'])
+	

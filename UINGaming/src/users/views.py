@@ -134,7 +134,9 @@ def SignUpAPI(request):
             return api.render_to_json(information);
         else:
             # Se creo un usuario, redirijo pero seteo la cookie para identificar
-            return api.render_to_json(information);
+            response = api.render_to_json(information)
+            Crypt.set_secure_cookie(response,'user_id',information['username'],expires=True) # Expira al cerrar el navegador
+            return response
     else:
         return HttpResponseNotAllowed(['POST'])
 
