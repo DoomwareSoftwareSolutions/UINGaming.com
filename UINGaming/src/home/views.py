@@ -75,7 +75,7 @@ def NewsViewerAPI(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 	
-def NewsAPI(request):
+def NewsAPI(request, pk=None):
 	if request.method == 'GET':
 		begin = request.GET.get('begin',0)
 		end = request.GET.get('end',10)
@@ -110,7 +110,20 @@ def NewsAPI(request):
 			# ERROR IMAGEN EN BLANCO
 			api.set_error(information,2,_("Image can't be blank"))
 		else:
-			new = New.add(information['header'],information['subheader'],information['body'],information['image'])
+			if pk is None:
+				new = New.add(information['header'],information['subheader'],information['body'],information['image'])
+			else:
+				try:
+					new = New.objects.filter(pk=pk).get()
+				except:
+					api.set_error(information,4,_("The new you are trying to edit does not exist"))
+					api.render_to_json(information);
+				new.updateHeader(information['header'])
+				new.updateSubHeader(information['subheader'])
+				new.updateBody(information['body'])
+				new.updateImage(information['image'])
+				new.save()
+					
 			if  new == None:
 				# ERROR AL CREAR NOTICIA
 				api.set_error(information,3,_("Error creating new"))
