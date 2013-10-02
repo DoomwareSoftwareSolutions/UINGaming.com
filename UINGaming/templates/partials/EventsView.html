@@ -6,11 +6,11 @@
 		
         <div class="media" ng-repeat="event in events">
             <a class="pull-left event-icon-a" href="events/{{event.pk}}">
-                <img class="media-object" ng-src="{{event.fields.image}}" alt="Image" err-src="static/img/event.png">
+                <img class="media-object" ng-src="static/img/event.png" alt="Image" err-src="static/img/event.png">
             </a>
 
             <div class="media-body">
-                <h4 class="media-heading">{{event.fields.head}}</h4>
+                <h4 class="media-heading" style="color:white">{{event.fields.head}}</h4>
                 Fecha realización: {{event.fields.date}}<br>
                 Límite inscripción: {{event.fields.inscriptionDeadline}}
             </div>

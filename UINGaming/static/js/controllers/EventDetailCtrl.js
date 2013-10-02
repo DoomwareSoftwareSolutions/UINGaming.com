@@ -14,6 +14,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
 		$scope.memberships = [];
+        $scope.members = [];
         $scope.pathEventDelete = EventService.pathEventDelete;
 		var pk = $routeParams.pk;
         PropertyService.loadPaths($scope);
