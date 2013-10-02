@@ -115,3 +115,59 @@ class Feature(models.Model):
                   description = self.description,
                   image = self.image
     )
+
+class New(models.Model):
+	header = models.CharField(max_length=256)
+	subheader = models.CharField(max_length=256)
+	body = models.CharField(max_length=256)
+	image = models.CharField(max_length=256)
+	created = models.DateTimeField(auto_now_add=True)
+	
+	
+	@classmethod
+	def add(self, header, subheader, body, image):
+		if header == '' or image == '':
+			return None
+		n = New(header=header, subheader=subheader, body=body, image=image)
+		n.save()
+		return n
+	
+	@classmethod
+	def getLast(self, quantity=1):
+		try:
+			news = New.objects.all().order_by('-created')[0:quantity];
+		except ObjectDoesNotExist:
+			return None;
+		
+		return news
+	
+	@classmethod
+	def delete(self, new):
+		try:
+			n = New.objects.filter(pk = pk).get()
+		except ObjectDoesNotExist:
+			return False
+		
+		n.delete()
+		return True
+
+	def updateHeader(self, header):
+		self.header = header
+	
+	def updateSubHeader(self, subheader):
+		self.subheader = subheader
+		
+	def updateBody(self, body):
+		self.body = body
+		
+	def updateImage(self, image):
+		self.image = image
+	
+	def toDic(self):
+		dic = {}
+		dic['pk'] = self.pk
+		dic['header'] = self.header
+		dic['subheader'] = self.subheader
+		dic['body'] = self.body
+		dic['image'] = self.image
+		return dic
