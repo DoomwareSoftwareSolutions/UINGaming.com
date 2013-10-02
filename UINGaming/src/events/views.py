@@ -97,11 +97,16 @@ def EventsByUserAPI(request):
 def EventMembershipAPI(request):
 	#Query the corresponding membership to the passed eventID. Returns the membership in json format
 	if request.method == 'GET':
+		data=""
 		if 'eventPk' in request.GET.keys():
 			eventPk = request.GET['eventPk']
-			data = serializers.serialize("json", EventMembership.getByEvent(eventPk))
-
-		if 'userPk' in request.GET.keys():
+			if 'userPk' in request.GET.keys():
+				userPk = request.GET['userPk']
+				data = serializers.serialize("json", EventMembership.getByUserAndEvent(eventPk,userPk))
+			else:
+				eventPk = request.GET['eventPk']
+				data = serializers.serialize("json", EventMembership.getByEvent(eventPk))
+		elif 'userPk' in request.GET.keys():
 			userPk = request.GET['userPk']
 			data = serializers.serialize("json", EventMembership.getByUser(userPk))
 			

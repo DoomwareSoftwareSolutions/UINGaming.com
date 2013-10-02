@@ -94,3 +94,20 @@ class EventMembership(models.Model):
 			return memberships[0]
 		#No encontro ninguna.
 		return []
+
+
+	@classmethod
+	def getByUserAndEvent(self, eventPk, userPk):
+		users = User.objects.filter(pk=userPk)
+		if users == []:
+			return users
+		events = Event.objects.filter(pk=eventPk)
+		if events == []:
+			return events
+		memberships=[]
+		memberships = EventMembership.objects.filter(user=users[0],event=events[0])
+		
+		if memberships!= []:
+			return memberships
+		#No encontro ninguna.
+		return []
