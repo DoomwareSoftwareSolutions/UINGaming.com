@@ -8,6 +8,7 @@ var depList = [
     'myApp.directives',
     'PropertyService',
     'EventService',
+    'NewsService',
     'AuthService',
     'HomeService',
     'EventRegisterCtrl',
@@ -16,6 +17,7 @@ var depList = [
     'RegisterCtrl',
     'HomeCtrl',
     'EventsCtrl',
+    'NewsCtrl',
     'EventsEnrolledCtrl',
     'EventDetailCtrl',
     'EventEditCtrl',
@@ -65,6 +67,10 @@ angular.module('myApp', depList).
             when('/eventEdit',{
                 templateUrl: 'partials/EventEditView',
                 controller: 'EventEditCtrl'
+            }).
+            when('/news',{
+                templateUrl: 'partials/NewsView',
+                controller: 'NewsCtrl'
             }).
             otherwise({
                 redirectTo: '/home'

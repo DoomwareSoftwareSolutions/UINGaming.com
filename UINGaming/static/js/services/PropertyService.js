@@ -18,6 +18,9 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
         pathEventEdit: '/eventEdit',
+        pathNews: '/news',
+        pathNewsViewer: '/news-viewer',
+        pathNewsAdd: '/news-add',
     }
     PropertyService.properties.navBar = {
         es: {
@@ -26,6 +29,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             logOut: 'Cerrar Sesión',
             register: 'Registrarse',
             home: 'Home',
+            news: 'Noticias',
             events: 'Eventos',
             eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Registrarse a Evento'
@@ -36,6 +40,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             logOut: 'LogOut',
             register: 'Register',
             home: 'Home',
+            news: 'News',
             events: 'Events',
             eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Event Register'
@@ -94,7 +99,16 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             teamMembersPlaceholder: 'Miembros del team',
         }
     };
-
+    
+    PropertyService.properties.news = {
+        es: {
+            continueReadingPlaceholder: 'Continuar leyendo',
+        },
+        en: {
+            continueReadingPlaceholder: 'Continue reading',
+        }
+    };
+    
     PropertyService.getProperties = function () {
         return PropertyService.properties;
     }

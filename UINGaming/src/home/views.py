@@ -56,13 +56,17 @@ def FeaturesAPI(request):
 		return render_to_json(featuresList)
 	#elif request.method == 'POST':
 
-def NewsViewerAPI(request, newpk):
+def NewsViewerAPI(request):
 	if request.method == 'GET':
 		information = {}
+		newpk = request.GET.get('pk',None)
+		if newpk is None:
+			api.set_error(information,1,_("No new was specify"))
+			return api.render_to_json(information)
 		try:
 			new = New.objects.filter(pk=newpk).get()
 		except:
-			api.set_error(information,1,_("The new does not exist"))
+			api.set_error(information,2,_("The new does not exist"))
 			return api.render_to_json(information)
 		
 		information = new.toDic()
