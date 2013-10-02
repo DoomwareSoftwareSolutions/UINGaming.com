@@ -133,9 +133,9 @@ class New(models.Model):
 		return n
 	
 	@classmethod
-	def getLast(self, quantity=1):
+	def getList(self, begin=0,end=1,):
 		try:
-			news = New.objects.all().order_by('-created')[0:quantity];
+			news = New.objects.all().order_by('-created')[begin:end];
 		except ObjectDoesNotExist:
 			return None;
 		

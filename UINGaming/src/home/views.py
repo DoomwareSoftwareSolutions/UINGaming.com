@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404,  HttpResponseNotAllowed
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from src.utils.api import render_to_json
+from django.utils.translation import ugettext as _
 
-from src.home.models import Slide, Feature
+from src.utils.api import render_to_json
+from src.utils import api
+from src.home.models import Slide, Feature, New
 
 def SlidesAPI(request):
 	if request.method == 'GET':
@@ -53,3 +55,28 @@ def FeaturesAPI(request):
 		
 		return render_to_json(featuresList)
 	#elif request.method == 'POST':
+
+def NewsViewerAPI(request, newpk):
+	if request.method == 'GET':
+		information = {}
+		try:
+			new = New.objects.filter(pk=newpk).get()
+		except:
+			api.set_error(information,1,_("The new does not exist"))
+			return api.render_to_json(information)
+		
+		information = new.toDic()
+		api.set_error(information,0,'')
+		return api.render_to_json(information)	
+	else:
+		return HttpResponseNotAllowed(['GET'])
+	
+def NewsListAPI(request):
+	if request.method == 'GET':
+		begin = request.GET.get('begin',0)
+		end = request.GET.get('end',10)
+		information = {}
+		news = New.getList(begin,end)
+		return api.render_to_json(map(New.toDic,news))
+	else:
+		return HttpResponseNotAllowed(['GET'])

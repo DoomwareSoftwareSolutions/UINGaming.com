@@ -57,6 +57,8 @@ urlpatterns = patterns('',
 	url(r'^api/eventMembership$',src.events.views.EventMembershipAPI),
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
+	url(r'^api/news',src.home.views.NewsListAPI),
+	url(r'^api/news-viewer/(?P<newpk>[a-zA-Z0-9]*$)$',src.home.views.NewsViewerAPI),
 	
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
