@@ -18,6 +18,11 @@ angular.module(controllerName, []).
 		AuthService.getSessionInfo($q).then(function(results) {
 			if (results.loggedIn) {
 				var userPk = results.pk;
+							
+				AuthService.getUserProfile($q, userPk).then(function(results) {
+					$scope.user = results;	
+				})
+				
 				EventService.getEventsByUser($q, $scope, userPk)
 				.then(function (results) {
 					$scope.events = results;
