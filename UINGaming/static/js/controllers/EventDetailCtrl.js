@@ -61,8 +61,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
 		
 		$scope.editEventf = function(pk){
 			var url = "/eventEdit?pk="+pk
-			alert(url)
-            $location.url(url)
+			$location.url(url)
 		}
 		
         function checkSubscription(){

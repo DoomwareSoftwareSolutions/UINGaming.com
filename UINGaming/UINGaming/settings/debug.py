@@ -83,7 +83,8 @@ STATICFILES_DIRS = (
 	# Don't forget to use absolute paths, not relative paths.
 	'/home/user/Desktop/UINGaming.com/UINGaming/static',
 	'/home/fede/Desktop/UINGaming.com/UINGaming/static',
-	'/home/tomas/workspace/UINGaming.com/UINGaming/static'
+	'/home/tomas/workspace/UINGaming.com/UINGaming/static',
+	'/home/tboccardo/workspace/UINGaming.com/UINGaming/static',
 
 )
 
@@ -130,7 +131,8 @@ TEMPLATE_DIRS = (
 	# Don't forget to use absolute paths, not relative paths.
 	'/home/user/Desktop/UINGaming.com/UINGaming/templates',
 	'/home/fede/Desktop/UINGaming.com/UINGaming/templates',
-	'/home/tomas/workspace/UINGaming.com/UINGaming/templates'
+	'/home/tomas/workspace/UINGaming.com/UINGaming/templates',
+	'/home/tboccardo/workspace/UINGaming.com/UINGaming/templates',
 )
 
 SOUTH_TESTS_MIGRATE = False
