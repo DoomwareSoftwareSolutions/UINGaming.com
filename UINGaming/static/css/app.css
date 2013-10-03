@@ -240,17 +240,21 @@ padding: 10px;
 text-align:center;
 }
 
-table,th, td{
-border: 1px solid black;
-
+.table-whole{
+    border-radius: 10px;
+    border-color: black;
 }
 
 .table-head{
-	background-color:#bfcada;
+	background-color:#b1dafb;
 	color:black;
 }
 
 .table-body{
-	background-color:white;
-	color: red;
+	background-color:#ccddee;
+	color: black;
+}
+
+.table-body:hover {
+    background-color:lightgray;
 }
