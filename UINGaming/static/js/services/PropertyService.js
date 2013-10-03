@@ -101,6 +101,20 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         }
     };
     
+    PropertyService.properties.eventsdetail = {
+        es: {
+            registerToEvent: "Registrar al evento",
+            editEvent: "Editar el evento",
+            deleteEvent: "Eliminar el evento"
+        },
+        en: {
+            registerToEvent: "Register to event",
+            editEvent: "Edit event",
+            deleteEvent: "Delete event"
+        }
+        
+    };
+    
     PropertyService.properties.news = {
         es: {
             continueReadingPlaceholder: 'Continuar leyendo',

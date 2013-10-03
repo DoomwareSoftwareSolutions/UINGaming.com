@@ -1,49 +1,52 @@
 <div class="events-container">
     <div class="event" >
-        <img class="media-object"  ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
-	<br>
-        <div class="media-body" style="text-align:center;color:white">
-            <h4 class="media-heading"><strong>{{foundEvent.fields.head}}</strong></h4>
-            <br>
-            {{foundEvent.fields.body}}
-        </div>
-    <br>
-    <p style="size=20px;color:white"> Teams inscriptos hasta ahora: {{memberships.length}} </p>
-    <!-- enrolled teams -->
-    <div ng-if="memberships.length!=0">    
-       <br>
-       <p style="size=20px;color:white">Inscriptos:</p>
-        <table border="1">
-        	<tr class="table-head">
-        	<td>Team</td> 
-        	<td>Tag</td> 
-        	<td>Miembros</td> 
-          <td ng-if="admin">Pagó?</td> 
-        	</tr>
-              <tr class="table-body" ng-repeat="membership in memberships"> 
-              	<td>{{membership.fields.teamName}}</td> 
-              	<td>{{membership.fields.teamTag}}</td> 
-              	<td>{{membership.fields.teamMembers}}</td>
-                <!-- Pagó ? -->
-                <td ng-if="admin && membership.fields.paid">Sí</td>  
-                <td ng-if="admin && !membership.fields.paid">No</td>  
-              </tr>
-            </div>
-		    </table>
-    </div>
-
-    <span ng-if="memberships.length==0" style="color:white;">
-      <br>
-      No hay anotados en este evento, inscribite! 
-    </span> <a ng-if="!subscribed" ng-href="{{pathEventRegister}}" style="width: 50%;padding: 2px;background-color: red;border-radius: 10px;color: white;">{{eventRegister}}</a>
-    <br>
-    <p ng-if="subscribed" style="color:pink">
-    Ya estas anotado en este evento, con el team <b>{{suscribedTeam}}</b>.
-    </p>
-    <a ng-href="{{pathEventEdit+'?pk='+foundEvent.pk}}" ng-if="admin" style="background-color:white">Editar evento</a>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="deleteEvent(foundEvent.pk)">Delete event</button>
-        
-
+		<span class="event-description">
+			<img  ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
+			<br>
+			<div class="media-body" style="text-align:center;color:white">
+				<h4 class="media-heading"><strong>{{foundEvent.fields.head}}</strong></h4>
+				<br>
+				{{foundEvent.fields.body}}
+			</div>
+			<br>
+			<p style="size=20px;color:white"> Teams inscriptos hasta ahora: {{memberships.length}} </p>
+			<!-- enrolled teams -->
+			<div ng-if="memberships.length!=0">    
+			<br>
+			<p style="size=20px;color:white">Inscriptos:</p>
+			<table border="1">
+				<tr class="table-head">
+				<td>Team</td> 
+				<td>Tag</td> 
+				<td>Miembros</td> 
+			  <td ng-if="admin">Pagó?</td> 
+				</tr>
+				  <tr class="table-body" ng-repeat="membership in memberships"> 
+					<td>{{membership.fields.teamName}}</td> 
+					<td>{{membership.fields.teamTag}}</td> 
+					<td>{{membership.fields.teamMembers}}</td>
+					<!-- Pagó ? -->
+					<td ng-if="admin && membership.fields.paid">Sí</td>  
+					<td ng-if="admin && !membership.fields.paid">No</td>  
+				  </tr>
+				</div>
+				</table>
+			</div>
+			
+		<span ng-if="memberships.length==0" style="color:white;">
+			<br>
+			No hay anotados en este evento, inscribite! 
+			</span> <a class="btn btn-success" ng-if="!subscribed" ng-href="{{pathEventRegister}}">{{registerToEvent}}</a>
+			<br>
+			<p ng-if="subscribed" style="color:pink">
+			Ya estas anotado en este evento, con el team <b>{{suscribedTeam}}</b>.
+			</p>
+		</span>
+		<span class="event-management">
+			<h2 style="color: white;">Event Management</h2>
+			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="editEventf(foundEvent.pk)">{{editEvent}}</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="deleteEventf(foundEvent.pk)">{{deleteEvent}}</button>
+		</span>    
     </div>  
    
    

@@ -66,7 +66,4 @@ urlpatterns = patterns('',
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
 	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsRequestHandler),
-	
-	# PERMALINKS#    
-	url(r'^events/(?P<pk>[a-zA-Z]*$)',src.utils.api.IndexRequestHandler),
 )

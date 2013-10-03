@@ -18,7 +18,8 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
         $scope.pathEventDelete = EventService.pathEventDelete;
 		var pk = $routeParams.pk;
         PropertyService.loadPaths($scope);
-        EventService.getEvent($q, $scope, pk)
+        
+		EventService.getEvent($q, $scope, pk)
             .then(function (results) {
             	//Invalid event id
             	if (JSON.stringify(results)=="[]"){
@@ -28,7 +29,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
             	}
                 $scope.foundEvent = results[0];
                 EventService.setEventPk(results[0].pk);
-
+				PropertyService.loadFields('eventsdetail', 'en', $scope);
                 $scope.$emit("HideSpinner");
             }, errorOnREST);
         //Now we look for memberships
@@ -46,18 +47,24 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
             }, errorOnREST);
 
 
-        $scope.deleteEvent = function(pk){
+        $scope.deleteEventf = function(pk){
             EventService.deleteEvent($q, pk)
                 .then(function (results) {
                     if (results['error-code']!=0){
                         alert("ERROR: "+results['error-description']);
-                        return;
+                        return
                     }
                     $location.path($scope.pathEvents);
                 }, errorOnREST);
 
         }
-
+		
+		$scope.editEventf = function(pk){
+			var url = "/eventEdit?pk="+pk
+			alert(url)
+            $location.url(url)
+		}
+		
         function checkSubscription(){
             AuthService.getSessionInfo($q).then(function(results) {
                 if (results.loggedIn) {

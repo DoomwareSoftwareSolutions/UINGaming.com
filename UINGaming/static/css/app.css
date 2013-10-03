@@ -231,8 +231,19 @@
 }
 
 .event{
-	margin-left: auto;
-	margin-right: auto;
+	width: 85%%;
+}
+
+.event-description{
+    float: left;
+    width: 80%;
+    text-align: center;
+}
+
+.event-management{
+    float: right;
+    text-align: center;
+    width: 20%;
 }
 
 td{
