@@ -59,7 +59,6 @@ urlpatterns = patterns('',
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
 	url(r'^api/news$',src.home.views.NewsAPI),
-	url(r'^api/news/(?P<pk>[0-9]+$)$',src.home.views.NewsAPI),
 	url(r'^api/news-viewer$',src.home.views.NewsViewerAPI),
         url(r'^api/news-delete$',src.home.views.NewsDeleteAPI),
 	

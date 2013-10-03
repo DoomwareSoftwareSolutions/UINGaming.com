@@ -75,7 +75,7 @@ def NewsViewerAPI(request):
 	else:
 		return HttpResponseNotAllowed(['GET'])
 	
-def NewsAPI(request, pk=None):
+def NewsAPI(request):
 	if request.method == 'GET':
 		begin = request.GET.get('begin',0)
 		end = request.GET.get('end',10)
@@ -95,6 +95,7 @@ def NewsAPI(request, pk=None):
 			return api.render_to_json(information);
 		
 		# Obtengo la informacon ingresada
+		pk = params.get('pk', None)
 		information['header'] = params.get('header', '')
 		information['subheader'] = params.get('subheader', '')
 		information['body'] = params.get('body', '')
@@ -117,7 +118,7 @@ def NewsAPI(request, pk=None):
 					new = New.objects.filter(pk=pk).get()
 				except:
 					api.set_error(information,4,_("The new you are trying to edit does not exist"))
-					api.render_to_json(information);
+					return api.render_to_json(information);
 				new.updateHeader(information['header'])
 				new.updateSubHeader(information['subheader'])
 				new.updateBody(information['body'])

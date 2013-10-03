@@ -1,0 +1,135 @@
+Especificacion de la API para el subsistema de noticias.
+==========================================================================
+
+#Creacion de Noticias
+    URL: http://localhost:8000/api/news
+# METHOD POST:
+## Parametros del form:
+	Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide"
+        }
+        
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide",
+            "error-code": 0,
+            "error-description": "",
+        }			
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  		error-description = ''
+	error-code = 1 -> ERROR HEADER VACIO            error-description = 'El título no puede quedar en blanco'
+	error-code = 2 -> ERROR IMAGE VACIA		error-description = 'La imagen nu puede quedar en blanco'
+	error-code = 3 -> ERROR DE CREACION DE LA NOTICIA   error-description = 'Error al crear la noticia'
+        error-code = 6 -> ERROR PARAMETROS INVALIDOS	error-description = 'Parametros Invalidos'
+        
+==========================================================================
+
+#Obtencion de Listado de Noticias
+    URL: http://localhost:8000/api/news
+# METHOD GET:
+## Parametros del get:
+	http://localhost:8000/api/news?begin=0&end=10
+        
+        El parametro begin indica que noticia sera la primera que otengamos. Tener en cuenta que estan ordenadas de mas reciente a menos reciente, entonces la primera sera la mas reciente.
+        El parametro end indica cual de las noticias sera la ultima.
+        
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	[{
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide"
+            "pk":1 -> Es la referencia que tenemos a la noticia, se utilizara para visualizar, editar y borrar.
+        },....]
+        
+==========================================================================
+
+#Obtencion de Noticia
+    URL: http://localhost:8000/api/news-viewer
+# METHOD GET:
+## Parametros del get:
+	http://localhost:8000/api/news-viewer?pk=1
+        
+        El parametro pk indica que noticia sera la que queremos obtener.
+        
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide",
+            "error-code": 0,
+            "error-description": "",
+        }
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  		    error-description = ''
+	error-code = 1 -> ERROR NOTICIA NO ESPECIFICADA     error-description = 'La noticia no ha sido especificada'
+	error-code = 2 -> ERROR NOTICIA INEXISTENTE	    error-description = 'La noticia especificada no existe'
+        
+        
+        
+==========================================================================
+
+#Edicion de Noticias
+    URL: http://localhost:8000/api/news
+# METHOD POST:
+## Parametros del form:
+	Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+            "pk":1,   -> Tiene que estar. De no ser asi, se creara una noticia nueva
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide"
+        }
+        
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+            "header": "titulo",
+            "subheader": "subtitulo",
+            "body": "Cuerpo de la noticia",
+            "image":"/imagen/para/slide",
+            "error-code": 0,
+            "error-description": "",
+        }			
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  		    error-description = ''
+	error-code = 1 -> ERROR HEADER VACIO                error-description = 'El título no puede quedar en blanco'
+	error-code = 2 -> ERROR IMAGE VACIA		    error-description = 'La imagen nu puede quedar en blanco'
+	error-code = 3 -> ERROR DE CREACION DE LA NOTICIA   error-description = 'Error al crear la noticia'
+        error-code = 4 -> ERROR NOTICIA INEXISTENTE         error-description = 'La noticia que se intenta editar no existe'
+        error-code = 6 -> ERROR PARAMETROS INVALIDOS	    error-description = 'Parametros Invalidos'
+        
+==========================================================================
+
+#Eliminacion de Noticias
+    URL: http://localhost:8000/api/news-delete
+# METHOD POST:
+## Parametros del form:
+	Los parametros se esperan en formato JSON. Seran validos los siguientes campos.
+	{
+            "pk":1,   -> Indica que noticia se eliminara
+        }
+        
+##Valores devueltos:
+En caso de error de registro se devolvera la siguiente estructura en formato JSON:
+	{
+            "error-code": 0,
+            "error-description": "",
+        }			
+Codigos de errores con sus respectivas descripciones:
+	error-code = 0 -> NO HUBO ERRORES  		    error-description = ''
+	error-code = 1 -> ERROR NO SE ESPECIFICA NOTICIA    error-description = 'Se debe especificar la noticia a eliminar'
+	error-code = 2 -> ERROR NOTICIA INEXISTENTE	    error-description = 'La noticia que se intenta eliminar no existe'
+        error-code = 6 -> ERROR PARAMETROS INVALIDOS	    error-description = 'Parametros Invalidos'
