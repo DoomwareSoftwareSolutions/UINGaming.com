@@ -142,7 +142,7 @@ class New(models.Model):
 		return news
 	
 	@classmethod
-	def delete(self, new):
+	def remove(self, pk):
 		try:
 			n = New.objects.filter(pk = pk).get()
 		except ObjectDoesNotExist:

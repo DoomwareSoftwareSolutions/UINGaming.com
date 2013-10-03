@@ -83,7 +83,7 @@ def NewsAPI(request, pk=None):
 		news = New.getList(begin,end)
 		return api.render_to_json(map(New.toDic,news))
 	elif request.method == 'POST':
-		# POST METHOD: Aca valido la informacion de creacion de usuario
+		# POST METHOD:
 		# Obtengo los parametros del JSON enviado
 		params = api.json_to_dict(request.body)
 		information = {}
@@ -131,4 +131,34 @@ def NewsAPI(request, pk=None):
 		return api.render_to_json(information);
 	else:
 		return HttpResponseNotAllowed(['POST','GET'])
+	
+
+def NewsDeleteAPI(request):
+	if request.method == 'POST':
+		# POST METHOD:
+		# Obtengo los parametros del JSON enviado
+		params = api.json_to_dict(request.body)
+		information = {}
+		
+		# Si los parametros son invalidos
+		if params is None:
+			# ERROR PARAMETROS INVALIDOS
+			api.set_error(information,6,_("Invalid parameters"))
+			return api.render_to_json(information);
+		
+		# Obtengo la informacon ingresada
+		pk = params.get('pk', None)
+		if pk is None:
+			api.set_error(information,1,_("You must specify a new to delete"))
+			return api.render_to_json(information)
+		else:
+			if New.remove(pk):
+				api.set_error(information,0)
+			else:
+				api.set_error(information,2,_("The new you are trying to delete does not exist"))
+		
+		return api.render_to_json(information)
+	else:
+		return HttpResponseNotAllowed(['POST'])
+
 	
