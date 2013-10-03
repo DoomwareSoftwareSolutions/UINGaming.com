@@ -18,6 +18,10 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
         pathEventEdit: '/eventEdit',
+        pathNews: '/news',
+        pathNewsViewer: '/news',
+        pathNewsAdd: '/newsAdd',
+        pathNewsEdit: '/newsEdit',
     }
     PropertyService.properties.navBar = {
         es: {
@@ -26,6 +30,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             logOut: 'Cerrar Sesión',
             register: 'Registrarse',
             home: 'Home',
+            news: 'Noticias',
             events: 'Eventos',
             eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Registrarse a Evento'
@@ -36,6 +41,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             logOut: 'LogOut',
             register: 'Register',
             home: 'Home',
+            news: 'News',
             events: 'Events',
             eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Event Register'
@@ -94,7 +100,34 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             teamMembersPlaceholder: 'Miembros del team',
         }
     };
-
+    
+    PropertyService.properties.eventsdetail = {
+        es: {
+            registerToEvent: "Registrar al evento",
+            editEvent: "Editar el evento",
+            deleteEvent: "Eliminar el evento"
+        },
+        en: {
+            registerToEvent: "Register to event",
+            editEvent: "Edit event",
+            deleteEvent: "Delete event"
+        }
+        
+    };
+    
+    PropertyService.properties.news = {
+        es: {
+            continueReadingPlaceholder: 'Continuar leyendo',
+            editNewPlaceholder:'Editar noticia',
+            addNewPlaceholder:'Crear noticia',
+        },
+        en: {
+            continueReadingPlaceholder: 'Continue reading',
+            editNewPlaceholder:'Edit new',
+            addNewPlaceholder:'Add new',
+        }
+    };
+    
     PropertyService.getProperties = function () {
         return PropertyService.properties;
     }

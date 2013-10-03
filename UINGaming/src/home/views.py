@@ -56,27 +56,79 @@ def FeaturesAPI(request):
 		return render_to_json(featuresList)
 	#elif request.method == 'POST':
 
-def NewsViewerAPI(request, newpk):
+def NewsViewerAPI(request):
 	if request.method == 'GET':
 		information = {}
+		newpk = request.GET.get('pk',None)
+		if newpk is None:
+			api.set_error(information,1,_("No new was specify"))
+			return api.render_to_json(information)
 		try:
 			new = New.objects.filter(pk=newpk).get()
 		except:
-			api.set_error(information,1,_("The new does not exist"))
+			api.set_error(information,2,_("The new does not exist"))
 			return api.render_to_json(information)
 		
 		information = new.toDic()
 		api.set_error(information,0,'')
-		return api.render_to_json(information)	
+		return api.render_to_json(information)
 	else:
 		return HttpResponseNotAllowed(['GET'])
 	
-def NewsListAPI(request):
+def NewsAPI(request, pk=None):
 	if request.method == 'GET':
 		begin = request.GET.get('begin',0)
 		end = request.GET.get('end',10)
 		information = {}
 		news = New.getList(begin,end)
 		return api.render_to_json(map(New.toDic,news))
+	elif request.method == 'POST':
+		# POST METHOD: Aca valido la informacion de creacion de usuario
+		# Obtengo los parametros del JSON enviado
+		params = api.json_to_dict(request.body)
+		information = {}
+		
+		# Si los parametros son invalidos
+		if params is None:
+			# ERROR PARAMETROS INVALIDOS
+			api.set_error(information,6,_("Invalid parameters"))
+			return api.render_to_json(information);
+		
+		# Obtengo la informacon ingresada
+		information['header'] = params.get('header', '')
+		information['subheader'] = params.get('subheader', '')
+		information['body'] = params.get('body', '')
+		information['image'] = params.get('image', '')
+		# NO ERROR!
+		api.set_error(information,0)
+		
+		# Valido los datos.
+		if information['header'] == '':
+			# ERROR TITULO EN BLANCO
+			api.set_error(information,1,_("Header can't be blank"))
+		elif information['image'] == '':
+			# ERROR IMAGEN EN BLANCO
+			api.set_error(information,2,_("Image can't be blank"))
+		else:
+			if pk is None:
+				new = New.add(information['header'],information['subheader'],information['body'],information['image'])
+			else:
+				try:
+					new = New.objects.filter(pk=pk).get()
+				except:
+					api.set_error(information,4,_("The new you are trying to edit does not exist"))
+					api.render_to_json(information);
+				new.updateHeader(information['header'])
+				new.updateSubHeader(information['subheader'])
+				new.updateBody(information['body'])
+				new.updateImage(information['image'])
+				new.save()
+					
+			if  new == None:
+				# ERROR AL CREAR NOTICIA
+				api.set_error(information,3,_("Error creating new"))
+				
+		return api.render_to_json(information);
 	else:
-		return HttpResponseNotAllowed(['GET'])
+		return HttpResponseNotAllowed(['POST','GET'])
+	

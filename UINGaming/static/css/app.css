@@ -231,8 +231,19 @@
 }
 
 .event{
-	margin-left: auto;
-	margin-right: auto;
+	width: 85%%;
+}
+
+.event-description{
+    float: left;
+    width: 80%;
+    text-align: center;
+}
+
+.event-management{
+    float: right;
+    text-align: center;
+    width: 20%;
 }
 
 td{
@@ -243,6 +254,7 @@ text-align:center;
 .table-whole{
     border-radius: 10px;
     border-color: black;
+    margin: auto;
 }
 
 .table-head{

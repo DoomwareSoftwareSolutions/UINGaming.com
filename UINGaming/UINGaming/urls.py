@@ -22,12 +22,13 @@ urlpatterns = patterns('',
 	url(r'^signin$',src.utils.api.IndexRequestHandler),
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
+	url(r'^news$',src.utils.api.IndexRequestHandler),
 	url(r'^eventsEnrolled$',src.utils.api.IndexRequestHandler),
 	url(r'^eventAdd$',src.utils.api.IndexRequestHandler),
 	url(r'^eventEdit$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
 	url(r'^events/[0-9]+$',src.utils.api.IndexRequestHandler),
-	#url(r'^passwd_recover/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.PasswordRecoverFormView),
+	url(r'^news/[0-9]+$',src.utils.api.IndexRequestHandler),
 	
 	
 	
@@ -57,14 +58,12 @@ urlpatterns = patterns('',
 	url(r'^api/eventMembership$',src.events.views.EventMembershipAPI),
 	url(r'^api/slides$',src.home.views.SlidesAPI),
 	url(r'^api/features$',src.home.views.FeaturesAPI),
-	url(r'^api/news',src.home.views.NewsListAPI),
-	url(r'^api/news-viewer/(?P<newpk>[a-zA-Z0-9]*$)$',src.home.views.NewsViewerAPI),
+	url(r'^api/news$',src.home.views.NewsAPI),
+	url(r'^api/news/(?P<pk>[0-9]+$)$',src.home.views.NewsAPI),
+	url(r'^api/news-viewer$',src.home.views.NewsViewerAPI),
 	
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
 	url(r'^partials/(?P<page>[a-zA-Z]*$)',src.utils.api.PartialsRequestHandler),
-	
-	# PERMALINKS#    
-	url(r'^events/(?P<pk>[a-zA-Z]*$)',src.utils.api.IndexRequestHandler),
 )
