@@ -14,12 +14,12 @@
 			<div ng-if="memberships.length!=0">    
 			<br>
 			<p style="size=20px;color:white">Inscriptos:</p>
-			<table border="1" class="table-whole">
+			<table border="1" class="table-whole" ng-if="memberships.length!=0">
 				<tr class="table-head">
 				<td>Team</td> 
 				<td>Tag</td> 
 				<td>Miembros</td> 
-			  <td ng-if="admin">Pagó?</td> 
+			 	<td ng-if="admin">Pagó?</td> 
 				</tr>
 				  <tr class="table-body" ng-repeat="membership in memberships"> 
 					<td>{{membership.fields.teamName}}</td> 
@@ -42,10 +42,10 @@
 			Ya estas anotado en este evento, con el team <b>{{suscribedTeam}}</b>.
 			</p>
 		</span>
-		<span class="event-management">
+		<span class="event-management" ng-if="admin">
 			<h2 style="color: white;">Event Management</h2>
-			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="editEventf(foundEvent.pk)">{{editEvent}}</button>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="admin" ng-click="deleteEventf(foundEvent.pk)">{{deleteEvent}}</button>
+			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;"  ng-click="editEventf(foundEvent.pk)">{{editEvent}}</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="deleteEventf(foundEvent.pk)">{{deleteEvent}}</button>
 		</span>    
     </div>  
    

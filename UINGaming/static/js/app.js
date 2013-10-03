@@ -56,7 +56,7 @@ angular.module('myApp', depList).
                 controller: 'EventRegisterCtrl'
             }).
             when('/events/:pk',{
-            	templateUrl: 'partials/EventDetail',
+            	templateUrl: 'partials/EventDetailView',
             	controller: 'EventDetailCtrl'
             }).
             when('/eventDelete',{
