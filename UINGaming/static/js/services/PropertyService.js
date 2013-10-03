@@ -20,8 +20,8 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathEventEdit: '/eventEdit',
         pathNews: '/news',
         pathNewsViewer: '/news',
-        pathNewsAdd: '/newsAdd',
-        pathNewsEdit: '/newsEdit',
+        pathNewsAdd: '/news/add',
+        pathNewsEdit: '/news/edit',
     }
     PropertyService.properties.navBar = {
         es: {
@@ -118,11 +118,19 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     PropertyService.properties.news = {
         es: {
             continueReadingPlaceholder: 'Continuar leyendo',
+            newHeaderPlaceholder: "Título",
+            newSubheaderPlaceholder: "Subtítulo",
+            newBodyPlaceholder: "Cuerpo de la noticia",
+            newImagePlaceholder: "Imagen para el slider",
             editNewPlaceholder:'Editar noticia',
             addNewPlaceholder:'Crear noticia',
         },
         en: {
             continueReadingPlaceholder: 'Continue reading',
+            newHeaderPlaceholder: "Title",
+            newSubheaderPlaceholder: "Subtitle",
+            newBodyPlaceholder: "New's Body",
+            newImagePlaceholder: "Image for slider",
             editNewPlaceholder:'Edit new',
             addNewPlaceholder:'Add new',
         }

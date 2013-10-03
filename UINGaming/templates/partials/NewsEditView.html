@@ -1,0 +1,27 @@
+<div class="signin-container">
+    <div class="container form-container">
+        <div class="form-padding" style="text-align:center">
+            <label> 
+                {{newHeaderPlaceholder}}</label>
+                <input type="text" class="form-control signin-field" ng-model="nnew.header">
+            
+            <br>
+            <label> 
+                {{newSubheaderPlaceholder}}</label>
+            <input type="text" class="form-control signin-field" ng-model="nnew.subheader">
+			
+			<br>
+            <label> 
+                {{newBodyPlaceholder}}</label>
+			<textarea rows="15" ng-model="nnew.body" style="resize: none; width: 100%; "></textarea>
+			
+            <br>
+			<label style="margin-top: 10px;"> 
+               {{newImagePlaceholder}}</label>
+                <input type="text" class="form-control signin-field" ng-model="nnew.image">
+
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="addNew()">{{addNewPlaceholder}}</button>
+        </div>
+    </div>
+</div>

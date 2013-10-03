@@ -36,7 +36,17 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             
         return deferred.promise;
     }
-	
+    
+    NewsService.addNew = function ($q, nnew) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http.post(serverUrl+'/api/news', nnew)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
+    
     return NewsService;
 
 }]);
