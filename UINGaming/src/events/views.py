@@ -8,7 +8,8 @@ from django.utils.translation import ugettext as _
 from django.core import serializers
 from django.core.exceptions import *
 from django.core.serializers.json import DeserializationError
-from src.utils.api import render_to_json
+from src.utils.api import render_to_json, list_to_json
+import json
 
 def EventsAPI(request):
 	#QUERY ALL EVENTS
@@ -86,8 +87,17 @@ def EventsByUserAPI(request):
 		if memberships.count() == 0:
 			return render_to_json( [] );
 		
-		data = serializers.serialize("json",Event.objects.filter(pk=memberships[0].event.pk))
-		response = HttpResponse(data, content_type='application/json')
+		retVal = []
+		
+		for membership in memberships:
+			data = Event.objects.filter(pk=membership.event.pk)
+			retVal.append( {"eventHead" : data[0].head, "eventBody" : data[0].body, 
+							"eventGame" : data[0].game, "eventDate" : str(data[0].date),
+							"eventPk" : data[0].pk, "membershipTeamName" : membership.teamName, 
+							"membershipPaid" : membership.paid} )
+		
+		
+		response = HttpResponse( json.dumps(retVal), content_type='application/json')
 		return response
 
 #TODO separar los edits y adds en servicios distintos, el que inserta no sabe pk

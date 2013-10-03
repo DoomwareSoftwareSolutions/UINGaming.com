@@ -19,6 +19,8 @@ def render_to_json(dictionary):
     response = HttpResponse(json_txt, content_type='application/json')
     return response
 
+def list_to_json(l):
+    return json.dumps(l)
 
 def json_to_dict(data):
 	try:
