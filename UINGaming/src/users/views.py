@@ -20,12 +20,12 @@ def SessionInfoApi(request):
         information = {}
         username = request.get_signed_cookie('user_id',None)
         if username != None:
-			user = User.getByUsername(username)
-			information['permission'] = user.permission
-			information['pk'] = user.pk
-			information['username'] = username
-			information['loggedIn'] = True
-			return api.render_to_json(information);
+            user = User.getByUsername(username)
+            information['permission'] = user.permission
+            information['pk'] = user.pk
+            information['username'] = username
+            information['loggedIn'] = True
+            return api.render_to_json(information);
         else:
             information['loggedIn'] = False
             return api.render_to_json(information);
@@ -62,12 +62,17 @@ def SignInAPI(request):
             return api.render_to_json(information)
         else:
             # NO HUBO ERRORES!
+            user = User.getByUsername(information['username'])
             api.set_error(information,0)
             response = api.render_to_json(information)
             if not remember:
                 Crypt.set_secure_cookie(response,'user_id',information['username'],expires=True) # Expira al cerrar el navegador
+                if user.permission == 'AD':
+                    Crypt.set_secure_cookie(response,'user_admin',information['username']+'AD',expires=True) # Expira al cerrar el navegador
             else:
                 Crypt.set_secure_cookie(response,'user_id',information['username'],expires=False) # No expira la cookie
+                if user.permission == 'AD':
+                    Crypt.set_secure_cookie(response,'user_admin',information['username']+'admin',expires=False) # Expira al cerrar el navegador
             return response
     else:
         return HttpResponseNotAllowed(['POST'])

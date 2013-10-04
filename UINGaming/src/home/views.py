@@ -85,8 +85,13 @@ def NewsAPI(request):
 	elif request.method == 'POST':
 		# POST METHOD:
 		# Obtengo los parametros del JSON enviado
-		params = api.json_to_dict(request.body)
 		information = {}
+		admin = request.get_signed_cookie('user_admin',None)
+		if admin is None:
+			api.set_error(information,5,_("You are not allowed to change news"))
+			return api.render_to_json(information);
+				
+		params = api.json_to_dict(request.body)
 		
 		# Si los parametros son invalidos
 		if params is None:
@@ -138,8 +143,13 @@ def NewsDeleteAPI(request):
 	if request.method == 'POST':
 		# POST METHOD:
 		# Obtengo los parametros del JSON enviado
-		params = api.json_to_dict(request.body)
 		information = {}
+		if request.get_signed_cookie('user_admin',None) is None:
+			api.set_error(information,5,_("You are not allowed to change news"))
+			return api.render_to_json(information);
+		
+		params = api.json_to_dict(request.body)
+		
 		
 		# Si los parametros son invalidos
 		if params is None:
