@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var controllerName = 'EventsEnrolledCtrl';
+var controllerName = 'ProfileCtrl';
 
 // $location: http://docs.angularjs.org/api/ng.$location
 
@@ -14,6 +14,7 @@ angular.module(controllerName, []).
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
+		PropertyService.loadFields('profile', 'en', $scope);
 		
 		AuthService.getSessionInfo($q).then(function(results) {
 			if (results.loggedIn) {
@@ -27,6 +28,9 @@ angular.module(controllerName, []).
 				EventService.getEventsByUser($q, $scope, userPk)
 				.then(function (results) {
 					$scope.events = results;
+					for (var i = 0; i < results.length; i++) {
+						$scope.events[i].eventDate = new Date(results[i].eventDate).toString();
+					}
 					PropertyService.loadPaths($scope);
 					$scope.$emit("HideSpinner");
 				}, errorOnREST);
