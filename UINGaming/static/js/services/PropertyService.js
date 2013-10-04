@@ -124,6 +124,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             newImagePlaceholder: "Imagen para el slider",
             editNewPlaceholder:'Editar noticia',
             addNewPlaceholder:'Crear noticia',
+            deleteNewPlaceholder:'Eliminar noticia',
         },
         en: {
             continueReadingPlaceholder: 'Continue reading',
@@ -133,6 +134,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             newImagePlaceholder: "Image for slider",
             editNewPlaceholder:'Edit new',
             addNewPlaceholder:'Add new',
+            deleteNewPlaceholder:'Delete new',
         }
     };
     

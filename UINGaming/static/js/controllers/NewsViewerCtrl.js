@@ -14,6 +14,7 @@ angular.module(controllerName, []).
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
+		$scope.error = false
 		
 		var begin = 0;
 		var end = 10;
@@ -26,7 +27,22 @@ angular.module(controllerName, []).
                 $scope.$emit("HideSpinner");
             }, errorOnREST);
 
-       
-    
+		$scope.deleteNew = function(pk) {
+			NewsService.deleteNew($q, pk)
+				.then(function (results) {
+					$scope.$emit("HideSpinner");
+					if (results['error-code'] != 0) {
+						$scope.error = true
+					} else {
+						$location.url($scope.pathNews)
+						$scope.error = false
+					}
+					
+			}, errorOnREST);
+		}
+		
+		$scope.editNew = function(pk) {
+			$location.url($scope.pathNewsEdit+'/'+pk)
+		}
 
     }]);
