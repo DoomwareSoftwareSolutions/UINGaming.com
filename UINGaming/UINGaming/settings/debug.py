@@ -85,7 +85,7 @@ STATICFILES_DIRS = (
 	'/home/fede/Desktop/UINGaming.com/UINGaming/static',
 	'/home/tomas/workspace/UINGaming.com/UINGaming/static',
 	'/home/tboccardo/workspace/UINGaming.com/UINGaming/static',
-
+	'/home/federico/Escritorio/UINGaming.com/UINGaming/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -133,6 +133,7 @@ TEMPLATE_DIRS = (
 	'/home/fede/Desktop/UINGaming.com/UINGaming/templates',
 	'/home/tomas/workspace/UINGaming.com/UINGaming/templates',
 	'/home/tboccardo/workspace/UINGaming.com/UINGaming/templates',
+	'/home/federico/Escritorio/UINGaming.com/UINGaming/templates',
 )
 
 SOUTH_TESTS_MIGRATE = False

@@ -1,0 +1,32 @@
+
+
+<div class="events-container">
+
+    <div class="event-list">
+		<div class="profile-info-container">
+			<h2 class="profile-header">Perfil</h2>
+			<div>Nombre: {{user.firstname}}</div>
+			<div>Apellido: {{user.lastname}}</div>
+			<div>Email: {{user.email}}</div>
+		</div>
+		<h2>Eventos a los que te inscribiste</h2>
+		<div class="no-events" ng-if="events.length === 0">
+			"No hay eventos capo"
+		</div>
+		
+        <div class="media" ng-repeat="event in events">
+            <a class="pull-left event-icon-a" href="events/{{event.eventPk}}">
+                <img class="media-object" ng-src="static/img/event.png" alt="Image" err-src="static/img/event.png">
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading" style="color:white">{{event.eventHead}}</h4>
+                Fecha realización: {{event.eventDate}}<br>
+                Team inscripto: {{event.membershipTeamName}}<br>
+            </div>
+            <hr>
+        </div>
+        
+    </div>
+  
+</div>

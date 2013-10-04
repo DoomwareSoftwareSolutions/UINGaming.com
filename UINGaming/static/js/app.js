@@ -40,7 +40,7 @@ angular.module('myApp', depList).
                 controller: 'EventsCtrl'
             }).
             when('/eventsEnrolled', {
-                templateUrl: 'partials/EventsView',
+                templateUrl: 'partials/EventsEnrolledView',
                 controller: 'EventsEnrolledCtrl'
             }).
             when('/signin', {
