@@ -1,52 +1,60 @@
 <div class="events-container">
-    <div class="event" >
+    <div class="event">
 		<span class="event-description">
-			<img  ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png" />
+			<img ng-src="{{foundEvent.fields.image}}" alt="Image" err-src="static/img/event.png"/>
 			<br>
 			<div class="media-body" style="text-align:center;color:white">
-				<h4 class="media-heading"><strong>{{foundEvent.fields.head}}</strong></h4>
-				<br>
-				{{foundEvent.fields.body}}
-			</div>
+                <h4 class="media-heading"><strong>{{foundEvent.fields.head}}</strong></h4>
+                <br>
+                {{foundEvent.fields.body}}
+            </div>
 			<br>
 			<p style="size=20px;color:white"> Teams inscriptos hasta ahora: {{memberships.length}} </p>
 			<!-- enrolled teams -->
-			<div ng-show="memberships.length!=0">    
-			<br>
-			<p style="size=20px;color:white">Inscriptos:</p>
-			<div class="event-table" ng-show="memberships.length !== 0">
-				<div class="row header">
-					<div class="column">Team</div>
-					<div class="column">Tag</div>
-					<div class="column">Miembros</div>
-					<div ng-show="admin" class="column">Pago</div>
-				</div>
-				<div class="row" ng-repeat="membership in memberships">
-					<div class="column">{{membership.fields.teamName}}</div>
-					<div class="column">{{membership.fields.teamTag}}</div>
-					<div class="column">{{membership.fields.teamMembers}}</div>
-					<div class="column" ng-show="admin && membership.fields.paid">Si</div>
-					<div class="column" ng-show="admin && !membership.fields.paid">No</div>
-				</div>
-			</div>
-			</div>
+			<div ng-if="memberships.length!=0">
+                <br>
+
+                <p style="size=20px;color:white">Inscriptos:</p>
+
+                <div class="table-container center-vert">
+                    <div class="event-table" ng-if="memberships.length !== 0">
+                        <div class="table-header">
+                            <div class="column">Team</div>
+                            <div class="column">Tag</div>
+                            <div class="column">Miembros</div>
+                            <div ng-if="admin" class="column">Pago</div>
+                        </div>
+                        <div class="table-row" ng-repeat="membership in memberships">
+                            <div class="column">{{membership.fields.teamName}}</div>
+                            <div class="column">{{membership.fields.teamTag}}</div>
+                            <div class="column">{{membership.fields.teamMembers}}</div>
+                            <div class="column" ng-if="admin && membership.fields.paid">Si</div>
+                            <div class="column" ng-if="admin && !membership.fields.paid">No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			
 		<span ng-if="memberships.length === 0" style="color:white;">
 			<br>
 			No hay anotados en este evento, inscribite! 
-			</span> <a class="btn btn-success" ng-if="!subscribed" ng-href="{{pathEventRegister}}">{{registerToEvent}}</a>
+			</span> <a class="btn btn-success" ng-if="!subscribed"
+                       ng-href="{{pathEventRegister}}">{{registerToEvent}}</a>
 			<br>
 			<p ng-if="subscribed" style="color:pink">
-			Ya estas anotado en este evento, con el team <b>{{suscribedTeam}}</b>.
-			</p>
+                Ya estas anotado en este evento, con el team <b>{{suscribedTeam}}</b>.
+            </p>
 		</span>
 		<span class="event-management" ng-if="admin">
 			<h2 style="color: white;">Event Management</h2>
-			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;"  ng-click="editEventf(foundEvent.pk)">{{editEvent}}</button>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="deleteEventf(foundEvent.pk)">{{deleteEvent}}</button>
-		</span>    
-    </div>  
-   
-   
-      
+			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;"
+                    ng-click="editEventf(foundEvent.pk)">{{editEvent}}
+            </button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;"
+                    ng-click="deleteEventf(foundEvent.pk)">{{deleteEvent}}
+            </button>
+		</span>
+    </div>
+
+
 </div>
