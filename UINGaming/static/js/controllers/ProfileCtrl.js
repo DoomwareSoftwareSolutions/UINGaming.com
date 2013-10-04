@@ -28,6 +28,9 @@ angular.module(controllerName, []).
 				EventService.getEventsByUser($q, $scope, userPk)
 				.then(function (results) {
 					$scope.events = results;
+					for (var i = 0; i < results.length; i++) {
+						$scope.events[i].eventDate = new Date(results[i].eventDate).toString();
+					}
 					PropertyService.loadPaths($scope);
 					$scope.$emit("HideSpinner");
 				}, errorOnREST);
