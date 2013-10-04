@@ -9,6 +9,7 @@ from django.core import serializers
 from django.core.exceptions import *
 from django.core.serializers.json import DeserializationError
 from src.utils.api import render_to_json, list_to_json
+from src.utils import api
 import json
 
 def EventsAPI(request):
@@ -37,6 +38,11 @@ def EventsAPI(request):
 	#ADD EVENT
 	elif request.method == 'POST':
 		returnData = {}
+		
+		if request.get_signed_cookie('user_admin',None) is None:
+			api.set_error(returnData,5,_("You are not allowed to change events"))
+			return api.render_to_json(returnData);
+		
 		returnData['error_code'] = 0 # NO ERROR!
 		returnData['error_description'] = ""
 		# Obtengo los parametros del JSON enviado
@@ -197,6 +203,11 @@ def EventDeleteAPI(request):
 	if request.method == 'GET':
 		eventPk = request.GET.get('pk')
 		returnData = {}
+		
+		if request.get_signed_cookie('user_admin',None) is None:
+			api.set_error(returnData,5,_("You are not allowed to change events"))
+			return api.render_to_json(returnData);
+		
 		if eventPk == None:
 			returnData['error-code'] = 1 # Event Not Found!
 			returnData['error-description'] = _("Event not found")
