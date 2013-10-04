@@ -46,6 +46,17 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             });
         return deferred.promise;
     }
+	
+	NewsService.editNew = function ($q, pk, nnew) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+		nnew.pk = pk
+        var deferred = $q.defer();
+        $http.post(serverUrl+'/api/news', nnew)
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
     
 	NewsService.deleteNew = function ($q, pk) {
         // Promise: http://docs.angularjs.org/api/ng.$q

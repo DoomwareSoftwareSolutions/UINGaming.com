@@ -27,8 +27,8 @@ angular.module(controllerName, []).
                 $scope.$emit("HideSpinner");
             }, errorOnREST);
 
-		$scope.deleteNew = function(pk) {
-			NewsService.deleteNew($q, pk)
+		$scope.deleteNew = function() {
+			NewsService.deleteNew($q, routeParam.pk)
 				.then(function (results) {
 					$scope.$emit("HideSpinner");
 					if (results['error-code'] != 0) {
@@ -41,8 +41,8 @@ angular.module(controllerName, []).
 			}, errorOnREST);
 		}
 		
-		$scope.editNew = function(pk) {
-			$location.url($scope.pathNewsEdit+'/'+pk)
+		$scope.editNew = function() {
+			$location.url($scope.pathNewsEdit+'/'+routeParam.pk)
 		}
 
     }]);

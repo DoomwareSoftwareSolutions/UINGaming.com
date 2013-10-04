@@ -1,5 +1,5 @@
 <div class="signin-container">
-    <div class="container form-container">
+    <div class="form-container">
         <div class="form-padding" style="text-align:center">
             <label> 
                 {{newHeaderPlaceholder}}</label>
@@ -21,7 +21,8 @@
                 <input type="text" class="form-control signin-field" ng-model="nnew.image">
 
             <br>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="addNew()">{{addNewPlaceholder}}</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="!edit" ng-click="addNew()">{{addNewPlaceholder}}</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-if="edit" ng-click="editNew()">{{saveNewPlaceholder}}</button>
         </div>
     </div>
 </div>

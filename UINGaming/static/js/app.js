@@ -24,6 +24,7 @@ var depList = [
     'EventAddCtrl',
     'NewsCtrl',
     'NewsAddCtrl',
+	'NewsEditCtrl',
     'NewsViewerCtrl',
     'ngCookies',
 ]
@@ -74,9 +75,13 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/NewsView',
                 controller: 'NewsCtrl'
             }).
-	    when('/news/add',{
+			when('/news/add',{
                 templateUrl: 'partials/NewsEditView',
                 controller: 'NewsAddCtrl'
+            }).
+			when('/news/edit/:pk',{
+                templateUrl: 'partials/NewsEditView',
+                controller: 'NewsEditCtrl'
             }).
             when('/news/:pk',{
                 templateUrl: 'partials/NewsViewerView',

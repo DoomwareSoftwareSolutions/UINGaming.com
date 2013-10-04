@@ -12,13 +12,14 @@ angular.module(controllerName, []).
     controller(controllerName, ['$scope', '$location', '$http', '$q', 'NewsService','PropertyService', function ($scope, $location, $http, $q, NewsService, PropertyService) {
 		
 
-        $scope.$emit("BackgroundChange", "events-background");
-        $scope.$emit("HideSpinner");
+	$scope.$emit("BackgroundChange", "events-background");
+	$scope.$emit("HideSpinner");
+	$scope.edit = false
 	
 	PropertyService.loadPaths($scope);
 	PropertyService.loadFields('news', 'en', $scope);
 		
-        $scope.addNew = function(){
+    $scope.addNew = function(){
 	    $scope.$emit("ShowSpinner");
 	    NewsService.addNew($q,$scope.nnew)
 		.then(function (results) {

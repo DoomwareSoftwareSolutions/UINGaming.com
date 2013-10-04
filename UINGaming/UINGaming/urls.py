@@ -27,8 +27,9 @@ urlpatterns = patterns('',
 	url(r'^eventEdit$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
 	url(r'^events/[0-9]+$',src.utils.api.IndexRequestHandler),
-        url(r'^news$',src.utils.api.IndexRequestHandler),
-        url(r'^news/add$',src.utils.api.IndexRequestHandler),
+	url(r'^news$',src.utils.api.IndexRequestHandler),
+	url(r'^news/add$',src.utils.api.IndexRequestHandler),
+	url(r'^news/edit/[0-9]+$',src.utils.api.IndexRequestHandler),
 	url(r'^news/[0-9]+$',src.utils.api.IndexRequestHandler),
 	
 	
