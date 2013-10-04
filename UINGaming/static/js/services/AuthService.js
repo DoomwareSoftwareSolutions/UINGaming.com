@@ -47,7 +47,7 @@ angular.module(name, []).factory(name,['$http', '$cookieStore', function ($http,
     }
 
 	
-	AuthService.logOutUser = function ($q) {
+	AuthService.logOutUser = function($q) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
         $http.get('http://localhost:8000/api/logout')
@@ -59,7 +59,7 @@ angular.module(name, []).factory(name,['$http', '$cookieStore', function ($http,
     }	
 	
 	
-	AuthService.getUserProfile = function ($q, pk) {
+	AuthService.getUserProfile = function($q, pk) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
         $http.get('http://localhost:8000/api/users/' + pk)

@@ -19,7 +19,8 @@ angular.module(controllerName, []).
 			if (results.loggedIn) {
 				var userPk = results.pk;
 							
-				AuthService.getUserProfile($q, userPk).then(function(results) {
+				AuthService.getUserProfile($q, userPk)
+				.then(function(results) {
 					$scope.user = results;	
 				})
 				
