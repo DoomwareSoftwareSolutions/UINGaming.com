@@ -1,7 +1,7 @@
 <div class="events-container">
     <div class="event-list">
-		<div class="no-events" ng-if="events.length == 0">
-			"No hay eventos capo"
+		<div class="no-events" ng-if="events.length === 0">
+			{{ noEvents }} 
 		</div>
 		
         <div class="media" ng-repeat="event in events">

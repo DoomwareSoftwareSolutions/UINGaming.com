@@ -1,7 +1,4 @@
-
-
 <div class="events-container">
-
     <div class="event-list">
 		<div class="profile-info-container">
 			<h2 class="profile-header">Perfil</h2>
@@ -11,7 +8,7 @@
 		</div>
 		<h2>Eventos a los que te inscribiste</h2>
 		<div class="no-events" ng-if="events.length === 0">
-			"No hay eventos capo"
+			{{ noEvents }} 
 		</div>
 		
         <div class="media" ng-repeat="event in events">

@@ -14,7 +14,8 @@ angular.module(controllerName, []).
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
-
+		PropertyService.loadFields('eventsView', 'en', $scope);
+		
         EventService.getEvents($q, $scope)
             .then(function (results) {
                 $scope.events = results;
