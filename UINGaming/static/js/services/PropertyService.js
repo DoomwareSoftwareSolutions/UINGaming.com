@@ -14,7 +14,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathRegister: '/register',
         pathHome: '/home',
         pathEvents: '/events',
-        pathEventsEnrolled: '/eventsEnrolled',
+        pathProfile: '/profile',
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
         pathEventEdit: '/eventEdit',
@@ -32,7 +32,6 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             home: 'Home',
             news: 'Noticias',
             events: 'Eventos',
-            eventsEnrolled: 'Eventos Inscripto',
             eventRegister: 'Registrarse a Evento'
         },
         en: {
@@ -85,7 +84,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             submitLabel: 'Register'
         }
     };
-    
+   
      PropertyService.properties.eventRegister = {
         es: {
             formTitle: 'Subscribirse a evento',
@@ -98,6 +97,24 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             teamNamePlaceholder: 'Nombre del team',
             teamTagPlaceholder: 'Tag del team',
             teamMembersPlaceholder: 'Miembros del team',
+        }
+    };
+    
+     PropertyService.properties.eventsView = {
+        es: {
+			noEvents: 'No hay eventos a los que estes inscripto.'
+        },
+        en: {
+			noEvents: 'No hay eventos a los que estes inscripto.'
+        }
+    };
+    
+     PropertyService.properties.profile = {
+        es: {
+			noEvents: 'No hay eventos a los que estes inscripto.'
+        },
+        en: {
+			noEvents: 'No hay eventos a los que estes inscripto.'
         }
     };
     
