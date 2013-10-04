@@ -31,7 +31,8 @@ En caso de error de registro se devolvera la siguiente estructura en formato JSO
 Codigos de errores con sus respectivas descripciones:
 	error_code = 0 -> NO HUBO ERRORES  		
 	error_code = 1 -> ERROR FECHA INVALIDA		
-	error_code = 2 -> (edit) event not found		
+	error_code = 2 -> (edit) event not found
+	error-code = 5 -> ERROR DE PERMISOS			         error-description = 'El usuario no tiene permisos suficientes'
 
 ## METHOD GET:
 Los valores seran devueltos en el siguiente formato:
@@ -64,5 +65,7 @@ Los valores seran devueltos en el siguiente formato:
 ## METHOD GET:
 	Recibe el pk del evento a traves de la url y borra el objeto de la db.
 	Si no se encuentra el evento se devuelve error-code 1, en otro caso error-code 0
+Errores
 
+error-code = 5 -> ERROR DE PERMISOS			         error-description = 'El usuario no tiene permisos suficientes'
 
