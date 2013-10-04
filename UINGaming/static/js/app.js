@@ -41,7 +41,7 @@ angular.module('myApp', depList).
             }).
             when('/profile', {
                 templateUrl: 'partials/Profile',
-                controller: 'profileCtrl'
+                controller: 'ProfileCtrl'
             }).
             when('/signin', {
                 templateUrl: 'partials/SignInView',
