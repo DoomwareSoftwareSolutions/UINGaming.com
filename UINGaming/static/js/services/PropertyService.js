@@ -15,6 +15,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathHome: '/home',
         pathEvents: '/events',
         pathProfile: '/profile',
+        pathProfileEdit: '/profileEdit',
         pathEventRegister: '/eventregister',
         pathEventAdd: '/eventAdd',
         pathEventEdit: '/eventEdit',

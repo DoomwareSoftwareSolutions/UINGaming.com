@@ -18,6 +18,7 @@ var depList = [
     'HomeCtrl',
     'EventsCtrl',
     'ProfileCtrl',
+    'ProfileEditCtrl',
     'EventDetailCtrl',
     'EventEditCtrl',
     'NavCtrl',
@@ -43,6 +44,10 @@ angular.module('myApp', depList).
             when('/profile/:pk', {
                 templateUrl: 'partials/Profile',
                 controller: 'ProfileCtrl'
+            }).
+            when('/profileEdit/:pk', {
+                templateUrl: 'partials/ProfileEdit',
+                controller: 'ProfileEditCtrl'
             }).
             when('/signin', {
                 templateUrl: 'partials/SignInView',

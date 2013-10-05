@@ -1,0 +1,25 @@
+<div class="signin-container">
+    <div class="container form-container">
+        <div class="form-padding" style="text-align:center">
+            <label> 
+                Nombre
+                <input type="text" class="form-control signin-field" ng-model="user.firstname">
+            </label>
+            <br>
+            
+            <label> 
+                Apellido
+            <input type="text" class="form-control signin-field" ng-model="user.lastname">
+			</label>
+			<br>
+			
+            <label> 
+                Email
+			<input type="text" class="form-control signin-field" ng-model="user.email">
+			</label>
+            <br>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 5%;" ng-click="editUserProfile()">Guardar</button>
+        </div>
+    </div>
+</div>
