@@ -27,7 +27,6 @@
                         <li class="pull-right" ng-if="login">
                             <a ng-href="/profile/{{userPk}}">{{helloUser}}</a>
                         </li>
-                    	
 
                         <li class="pull-right" ng-if="!login">
                             <a ng-href="{{pathSignIn}}">{{signIn}}</a>
@@ -35,7 +34,12 @@
                         <li class="pull-right" ng-if="!login">
                             <a ng-href="{{pathRegister}}">{{register}}</a>
                         </li>
-
+                        <li class="pull-right">
+                            <button class="btn btn-lg btn-primary search-user-button" type="submit" ng-click="">Buscar</button>
+                        </li>
+                        <li class="pull-right">
+                            <input type="text" placeholder="Usuario" class="form-control search-user-field" >
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -1,0 +1,23 @@
+<div class="events-container">
+    <div class="event-list">
+		<div class="no-events" ng-if="events.length === 0">
+			{{noEvents}} 
+		</div>
+		
+        <div class="media" ng-repeat="event in events">
+            <a class="pull-left event-icon-a" href="events/{{event.pk}}">
+                <img class="media-object" ng-src="static/img/event.png" alt="Image" err-src="static/img/event.png">
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading" style="color:white">{{event.fields.head}}</h4>
+                Fecha realización: {{event.fields.date}}<br>
+                Límite inscripción: {{event.fields.inscriptionDeadline}}
+            </div>
+            <hr>
+        </div>
+        
+        <a ng-href="{{pathEventAdd}}" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">Add event</a>
+    </div>
+  
+</div>

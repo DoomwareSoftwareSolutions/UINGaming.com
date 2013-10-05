@@ -27,6 +27,7 @@ var depList = [
     'NewsAddCtrl',
 	//'NewsEditCtrl',
     'NewsViewerCtrl',
+    'UserSearchCtrl',
     'ngCookies',
 ]
 
@@ -91,6 +92,10 @@ angular.module('myApp', depList).
             when('/news/:pk',{
                 templateUrl: 'partials/NewsViewerView',
                 controller: 'NewsViewerCtrl'
+            }).
+            when('/search/:pk',{
+                templateUrl: 'partials/UserSearchView',
+                controller: 'UserSearchCtrl'
             }).
             otherwise({
                 redirectTo: '/home'

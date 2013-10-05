@@ -50,6 +50,7 @@ urlpatterns = patterns('',
 	url(r'^api/users$',src.users.views.UserProfileAPI),
 	url(r'^api/userEdit$',src.users.views.UserEditProfile),
 	url(r'^api/users/(?P<username>[a-zA-Z0-9_-]{3,20}$)$',src.users.views.UserProfileAPI),
+	#url(r'^api/user-search-partial-username$',src.users.views.UserSearchByPartialUsername),
 	url(r'^api/signup$',src.users.views.SignUpAPI),
 	url(r'^api/signin$',src.users.views.SignInAPI),
 	url(r'^api/password_recover$',src.users.views.PasswordRecoverAPI),
@@ -65,7 +66,7 @@ urlpatterns = patterns('',
 	url(r'^api/news$',src.home.views.NewsAPI),
 	url(r'^api/news-viewer$',src.home.views.NewsViewerAPI),
     url(r'^api/news-delete$',src.home.views.NewsDeleteAPI),
-	
+
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
 	# ############################ #
