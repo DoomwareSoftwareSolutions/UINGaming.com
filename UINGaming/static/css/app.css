@@ -284,6 +284,12 @@
     margin-top: 5%;
 }
 
+.profile-edit-button {
+	width: 30%;
+	margin-top: 40px;
+	display: inline-table;
+}
+
 .addMember-button {
     margin-top: 5%;
     height: auto;
@@ -387,4 +393,9 @@ td {
 
 .table-body:hover {
     background-color: lightgray;
+}
+
+.add-news-button {
+	margin: auto;
+	width: 30%;
 }

@@ -6,7 +6,7 @@
 			<div>Apellido: {{user.lastname}}</div>
 			<div>Email: {{user.email}}</div>
 			
-			<a ng-href="{{pathProfileEdit}}/{{userPk}}" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">Editar Perfil</a>
+			<a ng-href="{{pathProfileEdit}}/{{userPk}}" ng-if="admin" class="btn btn-lg btn-primary btn-block profile-edit-button">Editar Perfil</a>
 		</div>
 		<h2>Eventos a los que te inscribiste</h2>
 		<div class="no-events" ng-if="events.length === 0">

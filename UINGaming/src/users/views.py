@@ -6,6 +6,7 @@ from django.core import serializers
 from django.core.serializers.json import DeserializationError
 from src.utils.api import render_to_json
 from django.utils.translation import ugettext as _
+import json
 
 from src.users.models import User
 from src.utils import Crypt, api
@@ -392,18 +393,17 @@ def UserProfileAPI(request, username):
 
 def UserEditProfile(request):
 	returnData = {}
-	print request.body
+
 	# Obtengo los parametros del JSON enviado
 	try:
-		for obj in serializers.deserialize("json", request.body):
-			deserialized_object = obj.object
+		deserialized_object = json.loads(request.body)[0]
 	except DeserializationError: 
 		returnData['error_code'] = 1 
 		returnData['error_description'] = _("Error en la deserializacion del usuario")
 		return render_to_json(returnData);
-		
+	
 	#PK=-1 => ADD
-	if (deserialized_object.pk==-1):
+	if (deserialized_object[u'username']==-1):
 		#We set the objects id's to None to create a new entry. (DJANGO 1.5.X BUG)
 		deserialized_object.id = None
 		deserialized_object.pk = None
@@ -414,10 +414,12 @@ def UserEditProfile(request):
 
 def userEdit(obj,returnData):
 	try:
-		user = User.objects.get(pk=obj.pk)
-		user = obj
+		user = User.objects.get(pk=obj[u'username'])
+		user.firstname = obj[u'firstname']
+		user.lastname = obj[u'lastname']
+		user.email = obj[u'email']
 		user.save()
-	except Event.DoesNotExist:
+	except User.DoesNotExist:
 		returnData['error_code'] = 2 
 		returnData['error_description'] = _("User not found")
 	

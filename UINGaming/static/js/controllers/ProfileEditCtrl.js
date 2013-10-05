@@ -21,7 +21,6 @@ angular.module(controllerName, []).
 		AuthService.getUserProfile($q, userPk)
 		.then(function(results) {
 			$scope.user = results;
-			alert(JSON.stringify(results))
 			$scope.$emit("HideSpinner");
 		});
 		
@@ -30,6 +29,7 @@ angular.module(controllerName, []).
 		    AuthService.editUserProfile($q, $scope.user)
 		   .then(function (results) {
 			  $scope.$emit("HideSpinner");
+			   $location.path( "/profile/" + $scope.user.username );
 			}, errorOnREST);
 		}
 				

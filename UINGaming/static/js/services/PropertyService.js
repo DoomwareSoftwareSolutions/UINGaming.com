@@ -24,6 +24,16 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathNewsAdd: '/news/add',
         pathNewsEdit: '/news/edit',
     }
+    PropertyService.properties.newsView = {
+        es: {
+            noNews: 'No hay noticias.',
+
+        },
+        en: {
+            noNews: 'No hay noticias.',
+
+        }
+    };
     PropertyService.properties.navBar = {
         es: {
             pageTitle: 'UIN Gaming',

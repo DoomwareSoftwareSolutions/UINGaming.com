@@ -1,7 +1,7 @@
 <div class="news-container">
     <div class="news-page">
 		<div class="no-events" ng-if="news.length == 0">
-			"No hay noticias capo"
+			{{noNews}}
 		</div>
 		
         <div class="media news-list" ng-repeat="new in news">
@@ -13,6 +13,6 @@
             </div>
         </div>
         
-        <a ng-href="{{pathNewsAdd}}" ng-if="admin" class="btn btn-lg btn-primary btn-block register-button">{{addNewPlaceholder}}</a>
+        <a ng-href="{{pathNewsAdd}}" ng-if="admin" class="btn btn-lg btn-primary btn-block add-news-button">{{addNewPlaceholder}}</a>
     </div>
 </div>
