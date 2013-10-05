@@ -25,7 +25,7 @@ var depList = [
     'EventAddCtrl',
     'NewsCtrl',
     'NewsAddCtrl',
-	//'NewsEditCtrl',
+	'NewsEditCtrl',
     'NewsViewerCtrl',
     'UserSearchCtrl',
     'ngCookies',
