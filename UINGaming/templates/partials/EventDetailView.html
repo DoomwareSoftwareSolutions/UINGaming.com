@@ -25,6 +25,7 @@
                             <div ng-if="admin" class="column">Pago</div>
                         </div>
                         <div class="table-row" ng-repeat="membership in memberships">
+                        	<div class="column">{{membership.fields.teamName}}</div>
                             <div class="column">{{membership.fields.teamName}}</div>
                             <div class="column">{{membership.fields.teamTag}}</div>
                             <div class="column">{{membership.fields.teamMembers}}</div>

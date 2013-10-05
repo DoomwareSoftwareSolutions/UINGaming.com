@@ -16,11 +16,14 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     EventService.deleteEvent = function ($q, pk) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
-        var url = serverUrl+"/"+'api/eventDelete?pk='+pk;
-        $http.get(url)
-            .success(function (jsonData) {
-                deferred.resolve(jsonData);
-            });
+        $http({
+            url: serverUrl+"/"+'api/eventDelete',
+            method: "POST",
+            data: $.param({pk: pk}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (jsonData) {
+            deferred.resolve(jsonData);
+        });
             
         return deferred.promise;
     }

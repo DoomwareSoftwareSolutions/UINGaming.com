@@ -200,10 +200,9 @@ def editMembership(obj,returnData):
 
 
 def EventDeleteAPI(request):
-	if request.method == 'GET':
-		eventPk = request.GET.get('pk')
+	if request.method == 'POST':
+		eventPk = request.POST.get('pk')
 		returnData = {}
-		
 		if request.get_signed_cookie('user_admin',None) is None:
 			api.set_error(returnData,5,_("You are not allowed to change events"))
 			return api.render_to_json(returnData);
@@ -216,7 +215,7 @@ def EventDeleteAPI(request):
 			try:
 				event = Event.objects.filter(pk=eventPk).get()
 				event.delete()
-				returnData['error-code'] = 0 # Event Not Found!
+				returnData['error-code'] = 0
 				returnData['error-description'] = ""
 				return render_to_json(returnData);
 			except Event.DoesNotExist:
