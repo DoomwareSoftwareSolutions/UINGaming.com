@@ -37,6 +37,7 @@ angular.module(controllerName, []).
                 $scope.login = false;
                 $scope.admin = false
             } else {
+				$scope.userPk = results.pk;
                 $scope.username = results.username;
 				$scope.helloUser = greeting+$scope.username
                 $scope.login = true;

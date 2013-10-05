@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var controllerName = 'ProfileCtrl';
+var controllerName = 'ProfileEditCtrl';
 
 // $location: http://docs.angularjs.org/api/ng.$location
 
@@ -20,20 +20,17 @@ angular.module(controllerName, []).
 		
 		AuthService.getUserProfile($q, userPk)
 		.then(function(results) {
-			$scope.user = results;	
-		})
-				
-		EventService.getEventsByUser($q, $scope, userPk)
-		.then(function (results) {
-			$scope.events = results;
-			for (var i = 0; i < results.length; i++) {
-				$scope.events[i].eventDate = new Date(results[i].eventDate).toString();
-			}
-			PropertyService.loadPaths($scope);
+			$scope.user = results;
+			alert(JSON.stringify(results))
 			$scope.$emit("HideSpinner");
-		}, errorOnREST);
-
-
-    
-
+		});
+		
+		
+		$scope.editUserProfile = function(){
+		    AuthService.editUserProfile($q, $scope.user)
+		   .then(function (results) {
+			  $scope.$emit("HideSpinner");
+			}, errorOnREST);
+		}
+				
     }]);

@@ -18,13 +18,14 @@ var depList = [
     'HomeCtrl',
     'EventsCtrl',
     'ProfileCtrl',
+    'ProfileEditCtrl',
     'EventDetailCtrl',
     'EventEditCtrl',
     'NavCtrl',
     'EventAddCtrl',
     'NewsCtrl',
     'NewsAddCtrl',
-	'NewsEditCtrl',
+	//'NewsEditCtrl',
     'NewsViewerCtrl',
     'ngCookies',
 ]
@@ -40,9 +41,13 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/EventsView',
                 controller: 'EventsCtrl'
             }).
-            when('/profile', {
+            when('/profile/:pk', {
                 templateUrl: 'partials/Profile',
                 controller: 'ProfileCtrl'
+            }).
+            when('/profileEdit/:pk', {
+                templateUrl: 'partials/ProfileEdit',
+                controller: 'ProfileEditCtrl'
             }).
             when('/signin', {
                 templateUrl: 'partials/SignInView',
@@ -79,10 +84,10 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/NewsEditView',
                 controller: 'NewsAddCtrl'
             }).
-			when('/news/edit/:pk',{
+			/*when('/news/edit/:pk',{
                 templateUrl: 'partials/NewsEditView',
                 controller: 'NewsEditCtrl'
-            }).
+            }).*/
             when('/news/:pk',{
                 templateUrl: 'partials/NewsViewerView',
                 controller: 'NewsViewerCtrl'

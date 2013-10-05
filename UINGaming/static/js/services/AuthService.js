@@ -70,6 +70,17 @@ angular.module(name, []).factory(name,['$http', '$cookieStore', function ($http,
     	 return deferred.promise;
     }	
 	
+    AuthService.editUserProfile = function ($q, UserData) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http.post('http://localhost:8000/api/userEdit', [UserData])
+            .success(function (jsonData) {
+                deferred.resolve(jsonData);
+            });
+        return deferred.promise;
+    }
+
+	
     return AuthService;
 
 }]);
