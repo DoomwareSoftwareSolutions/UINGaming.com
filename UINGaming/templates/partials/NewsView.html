@@ -1,18 +1,22 @@
 <div class="news-container">
     <div class="news-page">
-		<div class="no-events" ng-if="news.length == 0">
-			{{noNews}}
-		</div>
-		
-        <div class="media news-list" ng-repeat="new in news">
-            <div class="media-body new-square">
-                <h3 class="new-header">{{new.header}}</h3>
-                <br>
-                <h4 class="new-subheader">{{new.subheader}}</h4>
-		<a class="new-permalink-link" href="{{pathNewsViewer}}/{{new.pk}}">{{continueReadingPlaceholder}}</a>
-            </div>
-        </div>
-        
-        <a ng-href="{{pathNewsAdd}}" ng-if="admin" class="btn btn-lg btn-primary btn-block add-news-button">{{addNewPlaceholder}}</a>
+		<span class="new-display">
+			<div class="no-events" ng-if="news.length == 0">
+				{{noNews}}
+			</div>
+			
+			<div class="media news-list" ng-repeat="new in news">
+				<div class="media-body new-square">
+					<h3 class="new-header">{{new.header}}</h3>
+					<br>
+					<h4 class="new-subheader">{{new.subheader}}</h4>
+			<a class="new-permalink-link" href="{{pathNewsViewer}}/{{new.pk}}">{{continueReadingPlaceholder}}</a>
+				</div>
+			</div>
+		</span>
+		<span class="news-management" ng-if="admin">
+			<h2 style="color: white;">News Management</h2>
+			<a ng-href="{{pathNewsAdd}}" class="btn btn-lg btn-info btn-block">{{addNewPlaceholder}}</a>
+		</span>
     </div>
 </div>

@@ -85,10 +85,10 @@ angular.module('myApp', depList).
                 templateUrl: 'partials/NewsEditView',
                 controller: 'NewsAddCtrl'
             }).
-			/*when('/news/edit/:pk',{
+			when('/news/edit/:pk',{
                 templateUrl: 'partials/NewsEditView',
                 controller: 'NewsEditCtrl'
-            }).*/
+            }).
             when('/news/:pk',{
                 templateUrl: 'partials/NewsViewerView',
                 controller: 'NewsViewerCtrl'
