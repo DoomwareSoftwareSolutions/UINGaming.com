@@ -61,7 +61,5 @@ results
 
 npm-debug.log
 
-UINGaming/src/events/migrations/*
-UINGaming/src/home/migrations/*
-UINGaming/src/users/migrations/*
+UINGaming/src/**/migrations/*
 
