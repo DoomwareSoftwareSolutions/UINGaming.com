@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 	url(r'^signin$',src.utils.api.IndexRequestHandler),
 	url(r'^home$',src.utils.api.IndexRequestHandler),
 	url(r'^events$',src.utils.api.IndexRequestHandler),
-	url(r'^profile$',src.utils.api.IndexRequestHandler),
+	url(r'^profile/[A-Za-z0-9]*$',src.utils.api.IndexRequestHandler),
 	url(r'^eventAdd$',src.utils.api.IndexRequestHandler),
 	url(r'^eventEdit$',src.utils.api.IndexRequestHandler),
 	url(r'^eventregister$',src.utils.api.IndexRequestHandler),
@@ -62,7 +62,7 @@ urlpatterns = patterns('',
 	url(r'^api/features$',src.home.views.FeaturesAPI),
 	url(r'^api/news$',src.home.views.NewsAPI),
 	url(r'^api/news-viewer$',src.home.views.NewsViewerAPI),
-        url(r'^api/news-delete$',src.home.views.NewsDeleteAPI),
+    url(r'^api/news-delete$',src.home.views.NewsDeleteAPI),
 	
 	# ############################ #
 	# ####### PARTIALS URLS ###### #
