@@ -199,6 +199,20 @@ def editMembership(obj,returnData):
 	
 
 
+def EventSearchAPI(request):
+	if request.method == 'GET':
+		returnData = {}
+		try:
+			events = Event.objects.all().order_by('-date')
+			data = serializers.serialize("json", events)
+			return HttpResponse(data, content_type='application/json')
+		except Event.DoesNotExist:
+			returnData['error-code'] = 1 # Event Not Found!
+			returnData['error-description'] = _("Event not found")
+			return render_to_json(returnData);
+	else:
+		return HttpResponseNotAllowed(['POST'])
+
 def EventDeleteAPI(request):
 	if request.method == 'POST':
 		eventPk = request.POST.get('pk')
