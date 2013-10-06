@@ -200,10 +200,9 @@ def editMembership(obj,returnData):
 
 
 def EventDeleteAPI(request):
-	if request.method == 'GET':
-		eventPk = request.GET.get('pk')
+	if request.method == 'POST':
+		eventPk = request.POST.get('pk')
 		returnData = {}
-		
 		if request.get_signed_cookie('user_admin',None) is None:
 			api.set_error(returnData,5,_("You are not allowed to change events"))
 			return api.render_to_json(returnData);
@@ -216,12 +215,41 @@ def EventDeleteAPI(request):
 			try:
 				event = Event.objects.filter(pk=eventPk).get()
 				event.delete()
-				returnData['error-code'] = 0 # Event Not Found!
+				returnData['error-code'] = 0
 				returnData['error-description'] = ""
 				return render_to_json(returnData);
 			except Event.DoesNotExist:
 				returnData['error-code'] = 1 # Event Not Found!
 				returnData['error-description'] = _("Event not found")
+				return render_to_json(returnData);
+	else:
+		return HttpResponseNotAllowed(['GET'],['POST'])
+
+
+def EventMembershipDeleteAPI(request):
+	if request.method == 'POST':
+		eventPk = request.POST.get('eventPk')
+		userPk = request.POST.get('username')
+		returnData = {}
+		api.set_error(returnData,0,_(" "))
+		#Revisar esto 
+		"""if request.get_signed_cookie('user_normal',None) is None:
+			api.set_error(returnData,5,_("You are not allowed to unsuscribe"))
+			return render_to_json(returnData);"""
+		
+		if eventPk == None:
+			api.set_error(returnData,1,_("Event not found"))
+			return render_to_json(returnData);
+		if userPk == None:
+			api.set_error(returnData,2,_("User not found"))
+			return render_to_json(returnData);
+		else:
+			try:
+				membership = EventMembership.objects.filter(event=eventPk,user=userPk).get()
+				membership.delete()
+				return render_to_json(returnData);
+			except EventMembership.DoesNotExist:
+				api.set_error(returnData,3,_("Membership not found"))
 				return render_to_json(returnData);
 	else:
 		return HttpResponseNotAllowed(['GET'],['POST'])
