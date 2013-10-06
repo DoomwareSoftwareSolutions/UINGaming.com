@@ -21,7 +21,7 @@ angular.module(controllerName, []).
         
         var loadFields = function () {
             PropertyService.loadPaths($scope);
-            PropertyService.loadFields('navBar', 'en', $scope);
+            PropertyService.loadFields('navBar', 'es', $scope);
         }
 
         loadFields();

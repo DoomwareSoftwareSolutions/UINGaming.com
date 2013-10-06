@@ -38,7 +38,7 @@
 			
 		<span ng-if="memberships.length === 0" style="color:white;">
 			<br>
-			No hay anotados en este evento, inscribite! 
+			No hay anotados en este evento, inscribite! <br>
 			</span> <a class="btn btn-success" ng-if="!subscribed"
                        ng-href="{{pathEventRegister}}">{{registerToEvent}}</a>
 			<br>
@@ -47,7 +47,7 @@
             </p>
 		</span>
 		<span class="event-management" ng-if="admin">
-			<h2 style="color: white;">Event Management</h2>
+			<h2 style="color: red;">{{eventManagement}}</h2>
 			<button class="btn btn-lg btn-info btn-block" type="submit" style="margin-top: 5%;"
                     ng-click="editEventf(foundEvent.pk)">{{editEvent}}
             </button>

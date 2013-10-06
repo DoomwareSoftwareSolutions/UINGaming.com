@@ -29,7 +29,7 @@ angular.module(controllerName, []).controller(controllerName, ['$scope', '$locat
             	}
                 $scope.foundEvent = results[0];
                 EventService.setEventPk(results[0].pk);
-				PropertyService.loadFields('eventsdetail', 'en', $scope);
+				PropertyService.loadFields('eventsdetail', 'es', $scope);
                 $scope.$emit("HideSpinner");
             }, errorOnREST);
         //Now we look for memberships

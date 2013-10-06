@@ -123,14 +123,16 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     
     PropertyService.properties.eventsdetail = {
         es: {
-            registerToEvent: "Registrar al evento",
-            editEvent: "Editar el evento",
-            deleteEvent: "Eliminar el evento"
+            registerToEvent: "Unirse al evento",
+            editEvent: "Editar evento",
+            deleteEvent: "Eliminar evento",
+            eventManagement: "Configuracion del evento"
         },
         en: {
             registerToEvent: "Register to event",
             editEvent: "Edit event",
-            deleteEvent: "Delete event"
+            deleteEvent: "Delete event",
+            eventManagement: "Event Management"
         }
         
     };
