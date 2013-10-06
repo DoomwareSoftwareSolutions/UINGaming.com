@@ -128,6 +128,22 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         return deferred.promise;
     }	
 
+
+    EventService.deleteEventMembership = function ($q, eventPk, username) {
+        // Promise: http://docs.angularjs.org/api/ng.$q
+        var deferred = $q.defer();
+        $http({
+            url: serverUrl+"/"+'api/eventMembershipDelete',
+            method: "POST",
+            data: $.param({eventPk: eventPk, username:username}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (jsonData) {
+            deferred.resolve(jsonData);
+        });
+            
+        return deferred.promise;
+    }
+
     EventService.getEventList = function () {
         return eventList;
     }
