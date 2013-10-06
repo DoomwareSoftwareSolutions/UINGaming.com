@@ -2,27 +2,6 @@ from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
-
-def loadTestDataSlides():
-	slide = Slide(image = 'static/img/leesin.jpg',
-			  heading = 'Best Lee Sin LAS',
-			  caption = 'Torneo 1vs1 top. Sos el mejor Lee Sin del server latinoamerica?',
-			  linkText = 'Inscribirse',
-			  linkRef = '#')
-	slide.save()
-	slide = Slide(image = 'static/img/zed.jpg',
-			  heading = 'Zed',
-			  caption = 'The master of shadows.',
-			  linkText = 'Sign up today',
-			  linkRef = '#')
-	slide.save()
-	slide = Slide(image = 'static/img/thresh.jpg',
-			  heading = 'Thresh',
-			  caption = 'The chain warden.',
-			  linkText = 'Sign up today',
-			  linkRef = '#')
-	slide.save()
-
 class Slide(models.Model):
 	image = models.CharField(max_length=256)
 	heading = models.CharField(max_length=256)
@@ -33,9 +12,6 @@ class Slide(models.Model):
 	
 	@classmethod
 	def getSlides(self, quantity):
-		if (Slide.objects.count() == 0):
-			loadTestDataSlides()
-			
 		try:
 			slides = Slide.objects.all().order_by('-created')[0:quantity];
 		except ObjectDoesNotExist:
@@ -133,7 +109,10 @@ class New(models.Model):
 		return n
 	
 	@classmethod
-	def getList(self, begin=0,end=1,):
+	def getList(self, begin=0,end=1):
+		# TODO: Sacarlo. Es inficiente
+		if (New.objects.count() == 0):
+			loadTestDataNews()
 		try:
 			news = New.objects.all().order_by('-created')[begin:end];
 		except ObjectDoesNotExist:
@@ -171,3 +150,23 @@ class New(models.Model):
 		dic['body'] = self.body
 		dic['image'] = self.image
 		return dic
+	
+def loadTestDataNews():
+	new = New(image = 'static/img/leesin.jpg',
+			  header = 'Best Lee Sin LAS',
+			  subheader = 'Torneo 1vs1 top. Sos el mejor Lee Sin del server latinoamerica?',
+			  body = 'Inscribite en este super torneo 1vs1 y gana impresionantes premios. Crees ser el mejor LeeSin de LAS. Demostralo')
+	new.save()
+	print new.pk
+	new = New(image = 'static/img/zed.jpg',
+			  header = 'Zed',
+			  subheader = 'The master of shadows.',
+			  body = 'Sign up today')
+	new.save()
+	print new.pk
+	new = New(image = 'static/img/thresh.jpg',
+			  header = 'Thresh',
+			  subheader = 'The chain warden.',
+			  body = 'Sign up today')
+	new.save()
+	print new.pk
