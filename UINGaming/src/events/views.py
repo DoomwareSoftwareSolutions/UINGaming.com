@@ -201,10 +201,22 @@ def editMembership(obj,returnData):
 
 def EventSearchAPI(request):
 	if request.method == 'GET':
+		all = False
+		n = 0
+		if 'n' in request.GET.keys():
+			try:
+				n = int(request.GET['n'])
+			except ValueError:
+				all = True
+		else:
+			all = True
 		returnData = {}
 		try:
 			events = Event.objects.all().order_by('-date')
-			data = serializers.serialize("json", events)
+			if all:
+				data = serializers.serialize("json", events)
+			else:
+				data = serializers.serialize("json", events[0:n])
 			return HttpResponse(data, content_type='application/json')
 		except Event.DoesNotExist:
 			returnData['error-code'] = 1 # Event Not Found!
