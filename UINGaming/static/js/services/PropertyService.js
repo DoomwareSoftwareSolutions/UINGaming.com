@@ -24,16 +24,6 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         pathNewsAdd: '/news/add',
         pathNewsEdit: '/news/edit',
     }
-    PropertyService.properties.newsView = {
-        es: {
-            noNews: 'No hay noticias.',
-
-        },
-        en: {
-            noNews: 'No hay noticias.',
-
-        }
-    };
     PropertyService.properties.navBar = {
         es: {
             pageTitle: 'UIN Gaming',
@@ -102,12 +92,14 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
             teamNamePlaceholder: 'Nombre del team',
             teamTagPlaceholder: 'Tag del team',
             teamMembersPlaceholder: 'Miembros del team',
+			gotoEventPlaceholeder: 'Ir al evento',
         },
         en: {
             formTitle: 'Subscribirse a evento',
             teamNamePlaceholder: 'Nombre del team',
             teamTagPlaceholder: 'Tag del team',
             teamMembersPlaceholder: 'Miembros del team',
+			gotoEventPlaceholeder: 'Go to event',
         }
     };
     
@@ -146,6 +138,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     PropertyService.properties.news = {
         es: {
             continueReadingPlaceholder: 'Continuar leyendo',
+			noNews: 'No hay noticias.',
 			readPlaceholder: 'Leer',
             newHeaderPlaceholder: "Título",
             newSubheaderPlaceholder: "Subtítulo",
@@ -158,6 +151,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         },
         en: {
             continueReadingPlaceholder: 'Continue reading',
+			noNews: 'There is no news.',
 			readPlaceholder: 'Read',
             newHeaderPlaceholder: "Title",
             newSubheaderPlaceholder: "Subtitle",

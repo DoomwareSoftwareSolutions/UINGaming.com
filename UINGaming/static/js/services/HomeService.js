@@ -17,10 +17,10 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         return deferred.promise;
     }
 
-    HomeService.getFeatures = function ($q) {
+    HomeService.getEvents = function ($q) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
-        $http.get('http://localhost:8000/api/features')
+        $http.get('http://localhost:8000/api/eventSearch?n=2')
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
             });
