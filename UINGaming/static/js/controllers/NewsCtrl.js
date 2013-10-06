@@ -14,7 +14,7 @@ angular.module(controllerName, []).
 
         $scope.$emit("BackgroundChange", "events-background");
         $scope.$emit("ShowSpinner");
-		PropertyService.loadFields('newsView', 'en', $scope);
+		PropertyService.loadFields('news', 'en', $scope);
 		
 		var begin = 0;
 		var end = 10;
