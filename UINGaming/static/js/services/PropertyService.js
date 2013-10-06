@@ -146,6 +146,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
     PropertyService.properties.news = {
         es: {
             continueReadingPlaceholder: 'Continuar leyendo',
+			readPlaceholder: 'Leer',
             newHeaderPlaceholder: "Título",
             newSubheaderPlaceholder: "Subtítulo",
             newBodyPlaceholder: "Cuerpo de la noticia",
@@ -157,6 +158,7 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
         },
         en: {
             continueReadingPlaceholder: 'Continue reading',
+			readPlaceholder: 'Read',
             newHeaderPlaceholder: "Title",
             newSubheaderPlaceholder: "Subtitle",
             newBodyPlaceholder: "New's Body",

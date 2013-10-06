@@ -7,10 +7,10 @@ angular.module(name, []).factory(name, ['$http', function ($http) {
 
     var HomeService = {};
 
-    HomeService.getSlides = function ($q) {
+    HomeService.getNews = function ($q) {
         // Promise: http://docs.angularjs.org/api/ng.$q
         var deferred = $q.defer();
-        $http.get('http://localhost:8000/api/slides')
+        $http.get('http://localhost:8000/api/news?begin=0&end=2')
             .success(function (jsonData) {
                 deferred.resolve(jsonData);
             });
