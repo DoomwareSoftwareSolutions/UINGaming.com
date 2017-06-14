@@ -8,7 +8,7 @@
 *.egg-info
 dist
 build
-eggs
+eggsasd
 parts
 bin
 var
